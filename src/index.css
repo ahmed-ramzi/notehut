@@ -3,12 +3,12 @@
 @tailwind utilities;
 
 h1 {
-    @apply font-extralight text-4xl text-gray-600;
+    @apply font-extralight text-5xl text-gray-600;
 }
 
 h2,
 li {
-    @apply font-extralight text-2xl;
+    @apply font-light text-2xl;
 }
 
 p,
