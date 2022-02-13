@@ -6,11 +6,16 @@ h1 {
     @apply font-extralight text-4xl text-gray-600;
 }
 
-h2 {
+h2,
+li {
     @apply font-extralight text-2xl;
 }
 
 p,
 span {
-    @apply font-light text-lg;
+    @apply font-light text-sm;
+}
+
+.border {
+    @apply border-gray-400;
 }
