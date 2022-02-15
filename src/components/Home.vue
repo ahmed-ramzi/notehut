@@ -9,8 +9,8 @@
         <button
             class="
                 border-2
-                w-36
                 h-9
+                px-4
                 rounded-lg
                 btn-create-note
                 border-rose-500
@@ -20,7 +20,10 @@
             @click="createNote"
         >
             <!-- <span class="hidden lg:block"> + New Note </span> -->
-            <span> + Create New </span>
+            <span>
+                <span class="md:hidden">+</span>
+                <span class="hidden md:block">Create New</span></span
+            >
         </button>
     </section>
 
@@ -36,13 +39,11 @@
         >
             <ul
                 :class="
-                    !currentNote
-                        ? 'grid md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6  gap-4  mx-2'
-                        : 'grid gap-4'
+                    !currentNote ? 'flex flex-wrap   gap-4  mx-2' : 'grid gap-4'
                 "
                 v-if="notes.length"
             >
-                <li v-for="note in notes" :key="note.id">
+                <li v-for="note in notes.slice().reverse()" :key="note.id">
                     <button
                         @click="currentNote = note"
                         :class="
@@ -51,7 +52,7 @@
                                 : 'notes-unselected text-gray-500'
                         "
                     >
-                        <h2 class="">
+                        <h2 class="px-2">
                             {{ note.title || 'New note' }}
                         </h2>
                     </button>
@@ -100,13 +101,17 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 export default {
     setup() {
         const notes = ref([
             // Mock data
             { id: '1', title: 'First Note', contents: 'This is a content' },
-            { id: '2', title: 'Second Note', contents: 'This is a content' },
+            {
+                id: '2',
+                title: 'Second Note',
+                contents: 'This is a content',
+            },
             { id: '3', title: 'Third Note', contents: 'This is a content' },
             { id: '4', title: 'Third Note', contents: 'This is a content' },
         ])
@@ -120,6 +125,7 @@ export default {
             currentNote.value = newNote
             noteTitle.value.focus()
         }
+
         return {
             notes,
             currentNote,
@@ -162,7 +168,7 @@ export default {
 /* .notes-unselected {
     @apply rounded-lg md:w-44 md:h-16 md:text-center;
 } */
-
+/* grid style grid md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 */
 .notes-unselected:hover {
     @apply bg-rose-200 shadow-md shadow-rose-300;
 }
