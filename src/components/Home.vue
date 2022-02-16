@@ -28,7 +28,7 @@
 
   <!-- Seach Section Mobile Verson -->
   <section v-if="searchActive" class="px-4 py-2">
-    <input type="search" v-model="search" placeholder="Seach for note... " class="border w-full px-4 py-2 rounded-lg outline-rose-500 text-gray-400" />
+    <input type="search" v-model="search" placeholder="Seach for note... " class="border w-full px-4 py-2 rounded-lg outline-rose-500 text-gray-400" ref="searchInput" />
   </section>
 
   <!-- Notes Display and Writing Section -->
@@ -70,7 +70,7 @@
 </template>
 
 <script>
-import { ref, computed, watch } from "vue"
+import { ref, computed, watch, nextTick } from "vue"
 import BaseIcon from "./base/BaseIcon.vue"
 export default {
   components: {
@@ -91,18 +91,25 @@ export default {
     const currentNote = ref(null)
 
     const noteTitle = ref()
+    const searchInput = ref(null)
 
     const search = ref("")
-    const searchActive = ref(false)
+    const searchActive = ref()
 
     const createNote = () => {
       const newNote = { title: "", contents: "" }
       notes.value.push(newNote)
       currentNote.value = newNote
-      noteTitle.value.focus()
+      nextTick(() => {
+        noteTitle.value.focus()
+      })
     }
     const onSelectSearch = () => {
       searchActive.value = !searchActive.value
+      search.value = ""
+      nextTick(() => {
+        searchInput.value.focus()
+      })
     }
 
     const filteredNotes = computed(() => {
@@ -116,6 +123,7 @@ export default {
         }
       },
     )
+
     return {
       notes,
       currentNote,
@@ -125,6 +133,7 @@ export default {
       searchActive,
       search,
       filteredNotes,
+      searchInput,
     }
   },
 }
