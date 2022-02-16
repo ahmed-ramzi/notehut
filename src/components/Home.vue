@@ -28,7 +28,7 @@
 
   <!-- Seach Section Mobile Verson -->
   <section v-if="searchActive" class="px-4 py-2">
-    <input type="search" v-model="search" placeholder="Seach for note... " class="border w-full px-4 py-2 rounded-lg outline-rose-500 text-gray-400" ref="searchInput" />
+    <input type="text" v-model="search" placeholder="Seach for note... " class="border w-full px-4 py-2 rounded-lg outline-rose-500 text-gray-400" ref="searchInput" />
   </section>
 
   <!-- Notes Display and Writing Section -->
