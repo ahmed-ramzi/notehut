@@ -20,7 +20,7 @@
       <button class="border-2 h-10 px-3 rounded-lg btn-create-note border-rose-500 text-rose-500 uppercase" @click="createNote">
         <span>
           <span class="md:hidden text-xl">+</span>
-          <span class="hidden md:block">Create New</span></span
+          <span class="md:hidden">Create New</span></span
         >
       </button>
     </div>
@@ -140,6 +140,9 @@ export default {
 </script>
 
 <style scoped>
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 .btn-create-note:hover {
   @apply text-white bg-rose-500 shadow-md shadow-rose-300;
 }
