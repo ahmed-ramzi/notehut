@@ -1,10 +1,7 @@
 module.exports = {
-    mode: 'jit',
-    // purge: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
-    content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
-    theme: {
-        extend: {},
-    },
-
-    plugins: [],
+  content: ["./index.html", "./**/*.{vue,js,ts,jsx,tsx}", "./**/**/*.{vue,js,ts,jsx,tsx}", "./src/**/*.{vue,js,ts,jsx,tsx}", "./src/*.{vue,js,ts,jsx,tsx}"],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
 }
