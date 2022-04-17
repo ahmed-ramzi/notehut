@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from "vue"
+import { defineComponent, onBeforeMount, onMounted, ref } from "vue"
 import SearchIcon from "../components/icons/SearchIcon.vue"
 import { NoteState } from "../types/states"
 import BaseNote from "../components/base/BaseNote.vue"
@@ -29,7 +29,8 @@ import { useNotesListState, useNotesListActions } from "../store/notesList"
 import HeaderSection from "../layouts/HeaderSection.vue"
 import { randomColor } from "../composables/useRandomColor"
 
-import { useUserState, useUserActions } from "../store/user"
+import { useUserState } from "../store/user"
+import { useAuthState } from "../store/auth"
 
 export default defineComponent({
   components: {
@@ -49,6 +50,8 @@ export default defineComponent({
     const { notes } = useNotesListState()
 
     const { user } = useUserState()
+
+    const { isLoggedIn } = useAuthState()
 
     const createNote = (): void => {
       clearNoteDetailsState()
@@ -70,6 +73,12 @@ export default defineComponent({
       changeEditingState(true)
       router.push({ name: "notePanel" })
     }
+
+    onBeforeMount(() => {
+      if (!isLoggedIn.value) {
+        router.push({ name: "login" })
+      }
+    })
 
     onMounted(() => {
       getNotesList()

@@ -22,26 +22,28 @@ const useUserStore = defineStore<string, UserState, {}, UserActions>("user", {
     }
   },
   actions: {
-    async getUser(id: string): Promise<void> {
+    async getUser(id: string | null): Promise<void> {
       try {
-        const userCollection = await usersCollection.doc(id).get()
+        if (id) {
+          const userCollection = await usersCollection.doc(id).get()
 
-        const data = userCollection.data() as User
+          const data = userCollection.data() as User
 
-        this.user = data
+          this.user = data
 
-        // this.user.id = id
-        // this.user.name = userCollection.data().name
-        // this.user.email = userCollection.data().email || userData.email
-        // this.user.isAdmin = userCollection.data().isAdmin
-        // this.user.registerDate = userCollection.data().registerDate
-        // this.user.dob = userCollection.data().dob
-        // this.user.jobtitle = userCollection.data().jobtitle
-        // this.user.address = userCollection.data().address
-        // this.user.zipcode = userCollection.data().zipcode
-        // this.user.city = userCollection.data().city
-        // this.user.country = userCollection.data().country
-        // this.user.programsRegistered = userCollection.data().programsRegistered
+          // this.user.id = id
+          // this.user.name = userCollection.data().name
+          // this.user.email = userCollection.data().email || userData.email
+          // this.user.isAdmin = userCollection.data().isAdmin
+          // this.user.registerDate = userCollection.data().registerDate
+          // this.user.dob = userCollection.data().dob
+          // this.user.jobtitle = userCollection.data().jobtitle
+          // this.user.address = userCollection.data().address
+          // this.user.zipcode = userCollection.data().zipcode
+          // this.user.city = userCollection.data().city
+          // this.user.country = userCollection.data().country
+          // this.user.programsRegistered = userCollection.data().programsRegistered
+        }
       } catch (err) {
         console.log(err)
       }
