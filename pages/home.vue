@@ -27,6 +27,7 @@ import { useRouter } from "vue-router"
 import { useNoteDetailsActions, clearNoteDetailsState } from "../store/noteDetails"
 import { useNotesListState, useNotesListActions } from "../store/notesList"
 import HeaderSection from "../layouts/HeaderSection.vue"
+import { randomColor } from "../composables/useRandomColor"
 
 export default defineComponent({
   components: {
@@ -49,7 +50,7 @@ export default defineComponent({
         id: notes.value?.length ? notes.value?.length + 1 : 1,
         title: "",
         contents: "",
-        color: "teal",
+        color: randomColor(),
       } as NoteState
 
       createNewNote(note)

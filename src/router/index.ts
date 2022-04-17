@@ -12,7 +12,7 @@ export const routes = [
     component: () => import("../../pages/EditingPanel.vue"),
   },
   {
-    path: "/sign-up",
+    path: "/register",
     name: "signup",
     component: () => import("../../components/auth/Registeration.vue"),
   },
