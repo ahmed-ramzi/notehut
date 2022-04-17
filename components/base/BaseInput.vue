@@ -4,6 +4,7 @@
       <label>{{ label }}</label>
 
       <div class="pb-6 relative">
+        <!--  @ts-ignore: Unreachable -->
         <Field
           :name="name"
           :placeholder="placeholder"
@@ -11,7 +12,7 @@
           class="field"
           :value="modelValue"
           :type="type"
-          @input="$emit('update:modelValue', $event.target.value)"
+          @input="(e) => update(e)"
           :disabled="disabled"
         />
 
@@ -56,12 +57,20 @@ export default defineComponent({
       default: "",
     },
   },
+  emits: ["update:modelValue"],
 
-  setup(props) {
+  setup(props, { emit }) {
     const colorTheme = ref<string>("")
     const ringColor = ref<string>("")
     const textColor = ref<string>("")
     const randColor = randomColor() as string
+
+    const update = (e: Event) => {
+      const target = e.target as HTMLInputElement
+      if (target) {
+        emit("update:modelValue", target.value)
+      }
+    }
 
     if (!props.color) {
       ringColor.value = focusColorClass(randColor)
@@ -71,6 +80,7 @@ export default defineComponent({
       ringColor.value = focusColorClass(props.color)
     }
     return {
+      update,
       colorTheme,
       ringColor,
       textColor,

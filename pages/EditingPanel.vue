@@ -37,8 +37,8 @@ export default defineComponent({
     const router = useRouter()
     const { note: noteFromStore, isEditing } = useNoteDetailsState()
 
-    const noteLabel = ref<string | null>(noteFromStore.value?.title ? noteFromStore.value?.title : null)
-    const noteContent = ref<string | null>(noteFromStore.value?.contents ? noteFromStore.value?.contents : null)
+    const noteLabel = ref(noteFromStore.value?.title ? noteFromStore.value?.title : "")
+    const noteContent = ref(noteFromStore.value?.contents ? noteFromStore.value?.contents : "")
 
     // watch(
     //   () => noteLabel.value,
