@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted } from "vue"
+import { defineComponent, onMounted, ref } from "vue"
 import SearchIcon from "../components/icons/SearchIcon.vue"
 import { NoteState } from "../types/states"
 import BaseNote from "../components/base/BaseNote.vue"
@@ -28,6 +28,8 @@ import { useNoteDetailsActions, clearNoteDetailsState } from "../store/noteDetai
 import { useNotesListState, useNotesListActions } from "../store/notesList"
 import HeaderSection from "../layouts/HeaderSection.vue"
 import { randomColor } from "../composables/useRandomColor"
+
+import { useUserState, useUserActions } from "../store/user"
 
 export default defineComponent({
   components: {
@@ -39,10 +41,14 @@ export default defineComponent({
   setup() {
     const router = useRouter()
 
+    const loading = ref<boolean>(false)
+
     const { setNoteDetails, changeEditingState } = useNoteDetailsActions()
 
     const { getNotesList, createNewNote } = useNotesListActions()
     const { notes } = useNotesListState()
+
+    const { user } = useUserState()
 
     const createNote = (): void => {
       clearNoteDetailsState()
