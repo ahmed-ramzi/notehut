@@ -41,13 +41,17 @@ export default defineComponent({
 
 <style scoped>
 main {
-  @apply p-5 gap-8 flex-auto flex flex-col items-center justify-center;
-  /* @apply flex flex-auto w-full h-full items-center justify-center p-5; */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  @apply w-full md:max-w-min px-4;
 }
 img {
   @apply h-16 w-16  shadow-2xl rounded-2xl;
 }
 div {
-  @apply p-8  rounded-3xl shadow-2xl  w-full md:w-[450px] space-y-12 bg-slate-100 mt-[15%] md:mt-[5%];
+  @apply p-8  rounded-3xl shadow-2xl  w-full md:w-[450px] space-y-12 bg-slate-100;
 }
 </style>
