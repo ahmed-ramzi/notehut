@@ -1,7 +1,7 @@
 <template>
   <button class="flex justify-center items-center" :class="[width, gradient, colorTheme, loading ? 'cursor-wait' : 'cursor-pointer']">
     <div v-if="loading">
-      <Spinner />
+      <Spinner size="w-10 h-10" />
     </div>
     <div v-else class="text-white cursor-pointer">
       {{ label }}

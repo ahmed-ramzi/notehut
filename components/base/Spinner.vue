@@ -1,16 +1,25 @@
 <template>
-  <div class="loader-wrapper">
+  <div class="loader-wrapper" :class="size">
     <div class="loader">
       <div class="loader loader-inner"></div>
     </div>
   </div>
 </template>
 
-<style scoped>
-.loader-wrapper {
-  @apply w-10 h-10;
-}
+<script lang="ts">
+import { defineComponent } from "vue"
 
+export default defineComponent({
+  props: {
+    size: {
+      type: String,
+      default: "w-16 h-16",
+    },
+  },
+})
+</script>
+
+<style scoped>
 .loader {
   box-sizing: border-box;
   width: 100%;

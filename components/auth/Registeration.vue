@@ -64,7 +64,7 @@ export default defineComponent({
             const newUser = {
               id: newUserId,
               name: userName.value,
-              email: userName.value,
+              email: userEmail.value,
               isAdmin: false,
               registerDate: data.user.metadata.creationTime,
             } as User
