@@ -49,7 +49,7 @@ export default defineComponent({
     const { getNotesList, createNewNote } = useNotesListActions()
     const { notes } = useNotesListState()
 
-    const { user } = useUserState()
+    // const { user } = useUserState()
 
     const { isLoggedIn } = useAuthState()
 
