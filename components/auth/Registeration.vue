@@ -65,7 +65,6 @@ export default defineComponent({
               id: newUserId,
               name: userName.value,
               email: userEmail.value,
-              isAdmin: false,
               registerDate: data.user.metadata.creationTime,
             } as User
 
@@ -73,7 +72,6 @@ export default defineComponent({
               id: newUser.id,
               name: newUser.name,
               email: newUser.email,
-              isAdmin: newUser.isAdmin,
               registerDate: newUser.registerDate,
             })
 

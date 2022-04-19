@@ -15,7 +15,7 @@ export type User = {
   id: string | null
   name: string | null
   email: string | null
-  isAdmin: boolean | null
+  isAdmin?: boolean | null
   registerDate: Timestamp | null
   dob?: Timestamp | null
   jobtitle?: string | null
