@@ -69,74 +69,56 @@
   </section>
 </template>
 
-<script>
+<script setup>
 import { ref, computed, watch, nextTick } from "vue"
 import BaseIcon from "./base/BaseIcon.vue"
-export default {
-  components: {
-    BaseIcon,
+
+const notes = ref([
+  // Mock data
+  { id: "1", title: "First Note", contents: "This is a content" },
+  {
+    id: "2",
+    title: "Second Note",
+    contents: "This is a content",
   },
-  setup() {
-    const notes = ref([
-      // Mock data
-      { id: "1", title: "First Note", contents: "This is a content" },
-      {
-        id: "2",
-        title: "Second Note",
-        contents: "This is a content",
-      },
-      { id: "3", title: "Third Note", contents: "This is a content" },
-      { id: "4", title: "Third Note", contents: "This is a content" },
-    ])
-    const currentNote = ref(null)
+  { id: "3", title: "Third Note", contents: "This is a content" },
+  { id: "4", title: "Third Note", contents: "This is a content" },
+])
+const currentNote = ref(null)
 
-    const noteTitle = ref()
-    const searchInput = ref(null)
+const noteTitle = ref()
+const searchInput = ref(null)
 
-    const search = ref("")
-    const searchActive = ref()
+const search = ref("")
+const searchActive = ref()
 
-    const createNote = () => {
-      const newNote = { title: "", contents: "" }
-      notes.value.push(newNote)
-      currentNote.value = newNote
-      nextTick(() => {
-        noteTitle.value.focus()
-      })
-    }
-    const onSelectSearch = () => {
-      searchActive.value = !searchActive.value
-      search.value = ""
-      nextTick(() => {
-        searchInput.value.focus()
-      })
-    }
-
-    const filteredNotes = computed(() => {
-      return notes.value.filter((note) => note.title.toLowerCase().includes(search.value.toLowerCase()))
-    })
-    watch(
-      () => currentNote.value,
-      () => {
-        if (searchActive.value) {
-          onSelectSearch()
-        }
-      },
-    )
-
-    return {
-      notes,
-      currentNote,
-      createNote,
-      noteTitle,
-      onSelectSearch,
-      searchActive,
-      search,
-      filteredNotes,
-      searchInput,
-    }
-  },
+const createNote = () => {
+  const newNote = { title: "", contents: "" }
+  notes.value.push(newNote)
+  currentNote.value = newNote
+  nextTick(() => {
+    noteTitle.value.focus()
+  })
 }
+const onSelectSearch = () => {
+  searchActive.value = !searchActive.value
+  search.value = ""
+  nextTick(() => {
+    searchInput.value.focus()
+  })
+}
+
+const filteredNotes = computed(() => {
+  return notes.value.filter((note) => note.title.toLowerCase().includes(search.value.toLowerCase()))
+})
+watch(
+  () => currentNote.value,
+  () => {
+    if (searchActive.value) {
+      onSelectSearch()
+    }
+  },
+)
 </script>
 
 <style scoped>

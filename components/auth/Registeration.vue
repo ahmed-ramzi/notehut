@@ -10,8 +10,8 @@
   </AuthLayout>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from "vue"
+<script lang="ts" setup>
+import { ref } from "vue"
 import AuthLayout from "../../layouts/AuthLayout.vue"
 import BaseInput from "../base/BaseInput.vue"
 import BaseButton from "../base/BaseButton.vue"
@@ -23,80 +23,61 @@ import { useAuthActions } from "../../store/auth"
 import { User } from "../../types/states"
 import { useRouter } from "vue-router"
 
-export default defineComponent({
-  components: {
-    AuthLayout,
-    BaseButton,
-    BaseInput,
-    Form,
-  },
-  setup() {
-    let auth
+let auth
 
-    const userName = ref<string>("")
-    const userEmail = ref<string>("")
-    const password = ref<string>("")
+const userName = ref<string>("")
+const userEmail = ref<string>("")
+const password = ref<string>("")
 
-    const loading = ref<boolean>(false)
+const loading = ref<boolean>(false)
 
-    const router = useRouter()
+const router = useRouter()
 
-    const { setLoggedIn } = useAuthActions()
+const { setLoggedIn } = useAuthActions()
 
-    const { getUser } = useUserActions()
+const { getUser } = useUserActions()
 
-    const schema = yup.object({
-      Name: yup.string().required(),
-      Email: yup.string().required().email(),
-      Password: yup.string().required().min(8),
-    })
-
-    const register = () => {
-      if (!loading.value) {
-        loading.value = true
-        auth = getAuth()
-
-        createUserWithEmailAndPassword(auth, userEmail.value, password.value)
-          .then((data) => {
-            const newUserId = data.user.uid
-            console.log(data.user.metadata)
-
-            const newUser = {
-              id: newUserId,
-              name: userName.value,
-              email: userEmail.value,
-              registerDate: data.user.metadata.creationTime,
-            } as User
-
-            usersCollection.doc(newUserId).set({
-              id: newUser.id,
-              name: newUser.name,
-              email: newUser.email,
-              registerDate: newUser.registerDate,
-            })
-
-            getUser(newUserId)
-            console.log("Successfully Registered")
-            setLoggedIn(true)
-            router.push({ name: "home" })
-          })
-          .catch((error) => {
-            loading.value = false
-            console.log(error.code)
-            setLoggedIn(false)
-            alert(error.message)
-          })
-      }
-    }
-
-    return {
-      register,
-      schema,
-      userName,
-      userEmail,
-      password,
-      loading,
-    }
-  },
+const schema = yup.object({
+  Name: yup.string().required(),
+  Email: yup.string().required().email(),
+  Password: yup.string().required().min(8),
 })
+
+const register = () => {
+  if (!loading.value) {
+    loading.value = true
+    auth = getAuth()
+
+    createUserWithEmailAndPassword(auth, userEmail.value, password.value)
+      .then((data) => {
+        const newUserId = data.user.uid
+        console.log(data.user.metadata)
+
+        const newUser = {
+          id: newUserId,
+          name: userName.value,
+          email: userEmail.value,
+          registerDate: data.user.metadata.creationTime,
+        } as User
+
+        usersCollection.doc(newUserId).set({
+          id: newUser.id,
+          name: newUser.name,
+          email: newUser.email,
+          registerDate: newUser.registerDate,
+        })
+
+        getUser(newUserId)
+        console.log("Successfully Registered")
+        setLoggedIn(true)
+        router.push({ name: "home" })
+      })
+      .catch((error) => {
+        loading.value = false
+        console.log(error.code)
+        setLoggedIn(false)
+        alert(error.message)
+      })
+  }
+}
 </script>

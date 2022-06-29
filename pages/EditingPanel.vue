@@ -22,39 +22,37 @@
   </section>
 </template>
 
-<script lang="ts">
-import { defineComponent, onBeforeMount, ref, watch } from "vue"
+<script lang="ts" setup>
+import { onBeforeMount, ref, watch } from "vue"
 import HeaderSection from "../layouts/HeaderSection.vue"
 import { useNoteDetailsState, useNoteDetailsActions, clearNoteDetailsState } from "../store/noteDetails"
 import { NoteState } from "../types/states"
 import { useRouter } from "vue-router"
 
-export default defineComponent({
-  components: {
-    HeaderSection,
+const router = useRouter()
+const { note: noteFromStore, isEditing } = useNoteDetailsState()
+const { updateNoteTitle, updateNoteContent } = useNoteDetailsActions()
+
+const noteLabel = ref(noteFromStore.value?.title ? noteFromStore.value?.title : "")
+const noteContent = ref(noteFromStore.value?.contents ? noteFromStore.value?.contents : "")
+
+watch(
+  () => noteLabel.value,
+  () => {
+    updateNoteTitle(noteLabel.value)
   },
-  setup() {
-    const router = useRouter()
-    const { note: noteFromStore, isEditing } = useNoteDetailsState()
+)
 
-    const noteLabel = ref(noteFromStore.value?.title ? noteFromStore.value?.title : "")
-    const noteContent = ref(noteFromStore.value?.contents ? noteFromStore.value?.contents : "")
-
-    // watch(
-    //   () => noteLabel.value,
-    //   () =>
-    // )
-
-    onBeforeMount(() => {
-      if (!isEditing.value) {
-        router.push({ name: "home" })
-      }
-    })
-
-    return {
-      noteLabel,
-      noteContent,
-    }
+watch(
+  () => noteContent.value,
+  () => {
+    updateNoteContent(noteContent.value)
   },
+)
+
+onBeforeMount(() => {
+  if (!isEditing.value) {
+    router.push({ name: "home" })
+  }
 })
 </script>

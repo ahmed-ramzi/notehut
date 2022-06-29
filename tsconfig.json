@@ -16,7 +16,15 @@
     "rootDir": ".",
     "baseUrl": ".",
     "paths": {
-      "@comp/*": ["components/*"]
+      "@/*": ["../*"],
+      "@compt/*": ["../components/*"],
+      "@auth/*": ["../components/auth/*"],
+      "@/base/*": ["../components/base/*"],
+      "@icons/*": ["../components/icons/*"],
+      "@compos/*": ["../composables/*"],
+      "@store/*": ["store/*"],
+      "@types/*": ["../types/*"],
+      "@layouts/*": ["../layouts/*"]
     }
   },
 

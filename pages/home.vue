@@ -10,15 +10,15 @@
       </HeaderSection>
 
       <!-- Note List -->
-      <section v-if="notes" class="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-6">
+      <section v-if="notes" class="grid grid-cols-2 gap-4 items-start md:grid-cols-4 lg:grid-cols-6">
         <BaseNote v-for="note in notes.slice().reverse()" :key="note.id" :note="note" :color="note.color" @click="openNote(note)" />
       </section>
     </div>
   </section>
 </template>
 
-<script lang="ts">
-import { defineComponent, onBeforeMount, onMounted, ref } from "vue"
+<script lang="ts" setup>
+import { onBeforeMount, onMounted, ref } from "vue"
 import SearchIcon from "../components/icons/SearchIcon.vue"
 import { NoteState } from "../types/states"
 import BaseNote from "../components/base/BaseNote.vue"
@@ -28,67 +28,50 @@ import { useNoteDetailsActions, clearNoteDetailsState } from "../store/noteDetai
 import { useNotesListState, useNotesListActions } from "../store/notesList"
 import HeaderSection from "../layouts/HeaderSection.vue"
 import { randomColor } from "../composables/useRandomColor"
-
 import { useUserState } from "../store/user"
 import { useAuthState } from "../store/auth"
 
-export default defineComponent({
-  components: {
-    SearchIcon,
-    BaseNote,
-    ActionBtn,
-    HeaderSection,
-  },
-  setup() {
-    const router = useRouter()
+const router = useRouter()
 
-    const loading = ref<boolean>(false)
+const loading = ref<boolean>(false)
 
-    const { setNoteDetails, changeEditingState } = useNoteDetailsActions()
+const { setNoteDetails, changeEditingState } = useNoteDetailsActions()
 
-    const { getNotesList, createNewNote } = useNotesListActions()
-    const { notes } = useNotesListState()
+const { getNotesList, createNewNote } = useNotesListActions()
+const { notes } = useNotesListState()
 
-    // const { user } = useUserState()
+// const { user } = useUserState()
 
-    const { isLoggedIn } = useAuthState()
+const { isLoggedIn } = useAuthState()
 
-    const createNote = (): void => {
-      clearNoteDetailsState()
-      const note = {
-        id: notes.value?.length ? notes.value?.length + 1 : 1,
-        title: "",
-        contents: "",
-        color: randomColor(),
-      } as NoteState
+const createNote = (): void => {
+  clearNoteDetailsState()
+  const note = {
+    id: notes.value?.length ? notes.value?.length + 1 : 1,
+    title: "",
+    contents: "",
+    color: randomColor(),
+  } as NoteState
 
-      createNewNote(note)
-      setNoteDetails(note)
-      changeEditingState(true)
-      router.push({ name: "notePanel" })
-    }
+  createNewNote(note)
+  setNoteDetails(note)
+  changeEditingState(true)
+  router.push({ name: "notePanel" })
+}
 
-    const openNote = (note: NoteState): void => {
-      setNoteDetails(note)
-      changeEditingState(true)
-      router.push({ name: "notePanel" })
-    }
+const openNote = (note: NoteState): void => {
+  setNoteDetails(note)
+  changeEditingState(true)
+  router.push({ name: "notePanel" })
+}
 
-    onBeforeMount(() => {
-      if (!isLoggedIn.value) {
-        router.push({ name: "login" })
-      }
-    })
+onBeforeMount(() => {
+  if (!isLoggedIn.value) {
+    router.push({ name: "login" })
+  }
+})
 
-    onMounted(() => {
-      getNotesList()
-    })
-
-    return {
-      createNote,
-      notes,
-      openNote,
-    }
-  },
+onMounted(() => {
+  getNotesList()
 })
 </script>

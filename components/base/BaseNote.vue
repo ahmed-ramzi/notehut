@@ -7,63 +7,54 @@
   </section>
 </template>
 
-<script lang="ts">
-import { defineComponent, PropType, ref } from "vue"
+<script lang="ts" setup>
+import { PropType, ref } from "vue"
 import { NoteState } from "../../types/states"
 
-export default defineComponent({
-  props: {
-    note: {
-      required: true,
-      type: Object as PropType<NoteState>,
-    },
-    color: {
-      default: "sky",
-      type: String,
-    },
+const props = defineProps({
+  note: {
+    required: true,
+    type: Object as PropType<NoteState>,
   },
-  setup(props) {
-    const colorTheme = ref<string>("")
-    const text = ref<string>("")
-    const shadow = ref<string>("")
-
-    if (props.color === "amber") {
-      colorTheme.value = "bg-amber-500"
-      text.value = "text-white"
-      shadow.value = "shadow-amber-500"
-    } else if (props.color === "emerald") {
-      colorTheme.value = "bg-emerald-500"
-      text.value = "text-white"
-      shadow.value = "shadow-emerald-500"
-    } else if (props.color === "teal") {
-      colorTheme.value = "bg-teal-500"
-      text.value = "text-white"
-      shadow.value = "shadow-teal-500"
-    } else if (props.color === "cyan") {
-      colorTheme.value = "bg-cyan-500"
-      text.value = "text-white"
-      shadow.value = "shadow-cyan-500"
-    } else if (props.color === "pink") {
-      colorTheme.value = "bg-pink-700"
-      text.value = "text-white"
-      shadow.value = "shadow-pink-700"
-    } else if (props.color === "sky") {
-      colorTheme.value = "bg-sky-500"
-      text.value = "text-white"
-      shadow.value = "shadow-sky-500"
-    } else if (props.color === "slate") {
-      colorTheme.value = "bg-slate-500"
-      text.value = "text-white"
-      shadow.value = "shadow-slate-500"
-    }
-
-    return {
-      colorTheme,
-      text,
-      shadow,
-    }
+  color: {
+    default: "sky",
+    type: String,
   },
 })
+
+const colorTheme = ref<string>("")
+const text = ref<string>("")
+const shadow = ref<string>("")
+
+if (props.color === "amber") {
+  colorTheme.value = "bg-amber-500"
+  text.value = "text-white"
+  shadow.value = "shadow-amber-500"
+} else if (props.color === "emerald") {
+  colorTheme.value = "bg-emerald-500"
+  text.value = "text-white"
+  shadow.value = "shadow-emerald-500"
+} else if (props.color === "teal") {
+  colorTheme.value = "bg-teal-500"
+  text.value = "text-white"
+  shadow.value = "shadow-teal-500"
+} else if (props.color === "cyan") {
+  colorTheme.value = "bg-cyan-500"
+  text.value = "text-white"
+  shadow.value = "shadow-cyan-500"
+} else if (props.color === "pink") {
+  colorTheme.value = "bg-pink-700"
+  text.value = "text-white"
+  shadow.value = "shadow-pink-700"
+} else if (props.color === "sky") {
+  colorTheme.value = "bg-sky-500"
+  text.value = "text-white"
+  shadow.value = "shadow-sky-500"
+} else if (props.color === "slate") {
+  colorTheme.value = "bg-slate-500"
+  text.value = "text-white"
+  shadow.value = "shadow-slate-500"
+}
 </script>
 
 <style scoped>

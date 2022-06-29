@@ -6,15 +6,13 @@
   </div>
 </template>
 
-<script>
-export default {
-  props: {
-    svgPath: {
-      type: String,
-      required: true,
-    },
+<script setup>
+defineProps({
+  svgPath: {
+    type: String,
+    required: true,
   },
-}
+})
 </script>
 <style scoped>
 .svg-icon {

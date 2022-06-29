@@ -25,17 +25,12 @@
   </main>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue"
-
-export default defineComponent({
-  props: {
-    type: {
-      type: String,
-      required: true,
-    },
+<script lang="ts" setup>
+defineProps({
+  type: {
+    type: String,
+    required: true,
   },
-  setup() {},
 })
 </script>
 
