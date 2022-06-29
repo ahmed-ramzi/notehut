@@ -40,8 +40,6 @@ const { setNoteDetails, changeEditingState } = useNoteDetailsActions()
 const { getNotesList, createNewNote } = useNotesListActions()
 const { notes } = useNotesListState()
 
-// const { user } = useUserState()
-
 const { isLoggedIn } = useAuthState()
 
 const createNote = (): void => {
