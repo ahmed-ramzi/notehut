@@ -1,5 +1,5 @@
 import { defineStore, storeToRefs } from "pinia"
-import { NoteState } from "types/states"
+import { NoteState } from "../types/states"
 import mockNotes from "../composables/useMockNotes"
 
 type NotesList = {
