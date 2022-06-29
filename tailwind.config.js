@@ -1,9 +1,5 @@
 module.exports = {
-  // corePlugins: {
-  //   preflight: false,
-  // },
-  // mode: "jit",
-  content: ["./index.html", "./**/*.{vue,js,ts,jsx,tsx}", "./**/**/*.{vue,js,ts,jsx,tsx}", "./src/**/*.{vue,js,ts,jsx,tsx}", "./src/*.{vue,js,ts,jsx,tsx}"],
+  content: ["./public/**/*.html", "./src/**/*.{js,jsx,ts,tsx,vue}", "./index.html"],
   theme: {
     extend: {},
   },
