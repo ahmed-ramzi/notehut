@@ -1,4 +1,4 @@
-import { NoteState } from "types/states"
+import { NoteState } from "../types/states"
 
 const mockNotes = [
   {

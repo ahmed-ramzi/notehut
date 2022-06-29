@@ -5,10 +5,10 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue"
-import Spinner from "../components/base/Spinner.vue"
+import Spinner from "./components/base/Spinner.vue"
 import { getAuth, onAuthStateChanged } from "firebase/auth"
-import { useUserActions } from "../store/user"
-import { useAuthActions } from "../store/auth"
+import { useUserActions } from "./store/user"
+import { useAuthActions } from "./store/auth"
 import { useRouter } from "vue-router"
 
 export default defineComponent({

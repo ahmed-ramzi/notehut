@@ -1,8 +1,8 @@
 import { defineStore, storeToRefs } from "pinia"
 import { arrayUnion, arrayRemove } from "firebase/firestore"
-import { User } from "types/states"
+import { User } from "../types/states"
 
-import db from "../src/firebase"
+import db from "../firebase"
 import { string } from "yup"
 
 type UserState = {

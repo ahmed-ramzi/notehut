@@ -4,27 +4,27 @@ export const routes = [
   {
     path: "/",
     name: "home",
-    component: () => import("../../pages/home.vue"),
+    component: () => import("../pages/home.vue"),
   },
   {
     path: "/note",
     name: "notePanel",
-    component: () => import("../../pages/EditingPanel.vue"),
+    component: () => import("../pages/EditingPanel.vue"),
   },
   {
     path: "/register",
     name: "signup",
-    component: () => import("../../components/auth/Registeration.vue"),
+    component: () => import("../components/auth/Registeration.vue"),
   },
   {
     path: "/login",
     name: "login",
-    component: () => import("../../components/auth/Login.vue"),
+    component: () => import("../components/auth/Login.vue"),
   },
   {
     path: "/:catchAll(.*)",
     name: "NotFound",
-    component: () => import("../../pages/404.vue"),
+    component: () => import("../pages/404.vue"),
   },
 ]
 
