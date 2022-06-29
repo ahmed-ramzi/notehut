@@ -9,49 +9,38 @@
   </button>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from "vue"
+<script lang="ts" setup>
+import { ref } from "vue"
 import { randomColor, colorClass, gradientColorClass } from "../../composables/useRandomColor"
 import Spinner from "./Spinner.vue"
 
-export default defineComponent({
-  components: {
-    Spinner,
+const props = defineProps({
+  label: String,
+  width: {
+    type: String,
+    default: "w-40",
   },
-  props: {
-    label: String,
-    width: {
-      type: String,
-      default: "w-40",
-    },
-    loading: {
-      type: Boolean,
-      default: false,
-    },
-    color: {
-      type: String,
-      default: "",
-    },
+  loading: {
+    type: Boolean,
+    default: false,
   },
-  setup(props) {
-    const colorTheme = ref<string>("")
-    const gradient = ref<string>("")
-    const randColor = randomColor() as string
-
-    if (!props.color) {
-      colorTheme.value = colorClass(randColor)
-      gradient.value = gradientColorClass(randColor)
-    } else {
-      colorTheme.value = colorClass(props.color)
-      gradient.value = gradientColorClass(props.color)
-    }
-
-    return {
-      colorTheme,
-      gradient,
-    }
+  color: {
+    type: String,
+    default: "",
   },
 })
+
+const colorTheme = ref<string>("")
+const gradient = ref<string>("")
+const randColor = randomColor() as string
+
+if (!props.color) {
+  colorTheme.value = colorClass(randColor)
+  gradient.value = gradientColorClass(randColor)
+} else {
+  colorTheme.value = colorClass(props.color)
+  gradient.value = gradientColorClass(props.color)
+}
 </script>
 
 <style scoped>

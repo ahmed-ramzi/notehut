@@ -10,40 +10,28 @@
   </section>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue"
+<script lang="ts" setup>
 import ActionBtn from "../components/icons/ActionBtn.vue"
 import { useRouter } from "vue-router"
 import { clearNoteDetailsState, useNoteDetailsActions } from "../store/noteDetails"
 
-export default defineComponent({
-  components: {
-    ActionBtn,
+const props = defineProps({
+  headerLabel: {
+    type: String,
+    default: "",
   },
-  props: {
-    headerLabel: {
-      type: String,
-      default: "",
-    },
-    backBtn: {
-      type: String,
-      default: "",
-    },
-  },
-
-  setup(props) {
-    const router = useRouter()
-
-    const { changeEditingState } = useNoteDetailsActions()
-    const onClickBack = (): void => {
-      router.push({ name: props.backBtn })
-      changeEditingState(false)
-      clearNoteDetailsState()
-    }
-
-    return {
-      onClickBack,
-    }
+  backBtn: {
+    type: String,
+    default: "",
   },
 })
+
+const router = useRouter()
+
+const { changeEditingState } = useNoteDetailsActions()
+const onClickBack = (): void => {
+  router.push({ name: props.backBtn })
+  changeEditingState(false)
+  clearNoteDetailsState()
+}
 </script>

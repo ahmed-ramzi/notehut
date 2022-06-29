@@ -10,8 +10,8 @@
   </AuthLayout>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from "vue"
+<script lang="ts" setup>
+import { ref } from "vue"
 import AuthLayout from "../../layouts/AuthLayout.vue"
 import BaseInput from "../base/BaseInput.vue"
 import BaseButton from "../base/BaseButton.vue"
@@ -22,82 +22,63 @@ import { useAuthActions } from "../../store/auth"
 import { useRouter } from "vue-router"
 import { useUserActions } from "../../store/user"
 
-export default defineComponent({
-  components: {
-    AuthLayout,
-    BaseButton,
-    BaseInput,
-    Form,
-  },
-  setup() {
-    let auth
+let auth
 
-    const userEmail = ref<string>("")
-    const password = ref<string>("")
-    const errMsg = ref<string>("")
+const userEmail = ref<string>("")
+const password = ref<string>("")
+const errMsg = ref<string>("")
 
-    const loading = ref<boolean>(false)
+const loading = ref<boolean>(false)
 
-    const router = useRouter()
+const router = useRouter()
 
-    const { getUser } = useUserActions()
+const { getUser } = useUserActions()
 
-    const { setLoggedIn } = useAuthActions()
+const { setLoggedIn } = useAuthActions()
 
-    const schema = yup.object({
-      Email: yup.string().required().email(),
-      Password: yup.string().required(),
-    })
-
-    const login = () => {
-      if (!loading.value) {
-        loading.value = true
-        auth = getAuth()
-
-        signInWithEmailAndPassword(auth, userEmail.value, password.value)
-          .then((data) => {
-            console.log("Successfully signed in!")
-            // console.log("auth", auth.currentUser)
-            // console.log("data", data.user)
-
-            setLoggedIn(true)
-            getUser(data.user.uid)
-            router.push({ name: "home" })
-          })
-          .catch((error) => {
-            loading.value = false
-            setLoggedIn(false)
-
-            // console.log(error.code)
-            switch (error.code) {
-              case "auth/invalid-email":
-                errMsg.value = "Invalid email"
-                break
-
-              case "auth/user-not-found":
-                errMsg.value = "No account with that email was found"
-                break
-
-              case "auth/wrong-password":
-                errMsg.value = "Incorrect Password"
-                break
-
-              default:
-                errMsg.value = "Email or Password in incorrect"
-                break
-            }
-          })
-      }
-    }
-
-    return {
-      login,
-      schema,
-      loading,
-      userEmail,
-      password,
-      errMsg,
-    }
-  },
+const schema = yup.object({
+  Email: yup.string().required().email(),
+  Password: yup.string().required(),
 })
+
+const login = () => {
+  if (!loading.value) {
+    loading.value = true
+    auth = getAuth()
+
+    signInWithEmailAndPassword(auth, userEmail.value, password.value)
+      .then((data) => {
+        console.log("Successfully signed in!")
+        // console.log("auth", auth.currentUser)
+        // console.log("data", data.user)
+
+        setLoggedIn(true)
+        getUser(data.user.uid)
+        router.push({ name: "home" })
+      })
+      .catch((error) => {
+        loading.value = false
+        setLoggedIn(false)
+
+        // console.log(error.code)
+        switch (error.code) {
+          case "auth/invalid-email":
+            errMsg.value = "Invalid email"
+            break
+
+          case "auth/user-not-found":
+            errMsg.value = "No account with that email was found"
+            break
+
+          case "auth/wrong-password":
+            errMsg.value = "Incorrect Password"
+            break
+
+          default:
+            errMsg.value = "Email or Password in incorrect"
+            break
+        }
+      })
+  }
+}
 </script>

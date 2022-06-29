@@ -22,72 +22,57 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { Field, ErrorMessage } from "vee-validate"
-import { defineComponent, ref } from "vue"
+import { ref } from "vue"
 import { randomColor, textColorClass, focusColorClass } from "../../composables/useRandomColor"
 
-export default defineComponent({
-  components: {
-    Field,
-    ErrorMessage,
+const props = defineProps({
+  modelValue: String,
+  label: String,
+  placeholder: String,
+  type: {
+    type: String,
+    default: "text",
   },
-  props: {
-    modelValue: String,
-    label: String,
-    placeholder: String,
-    type: {
-      type: String,
-      default: "text",
-    },
-    name: {
-      type: String,
-      default: "",
-    },
-    width: {
-      type: String,
-      default: "w-full",
-    },
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
-    color: {
-      type: String,
-      default: "",
-    },
+  name: {
+    type: String,
+    default: "",
   },
-  emits: ["update:modelValue"],
-
-  setup(props, { emit }) {
-    const colorTheme = ref<string>("")
-    const ringColor = ref<string>("")
-    const textColor = ref<string>("")
-    const randColor = randomColor() as string
-
-    const update = (e: Event) => {
-      const target = e.target as HTMLInputElement
-      if (target) {
-        emit("update:modelValue", target.value)
-      }
-    }
-
-    if (!props.color) {
-      ringColor.value = focusColorClass(randColor)
-    } else {
-      //  colorTheme.value = `bg-${props}-600`
-      textColor.value = textColorClass(props.color)
-      ringColor.value = focusColorClass(props.color)
-    }
-    return {
-      update,
-      colorTheme,
-      ringColor,
-      textColor,
-      randColor,
-    }
+  width: {
+    type: String,
+    default: "w-full",
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
+  color: {
+    type: String,
+    default: "",
   },
 })
+const emit = defineEmits(["update:modelValue"])
+
+const colorTheme = ref<string>("")
+const ringColor = ref<string>("")
+const textColor = ref<string>("")
+const randColor = randomColor() as string
+
+const update = (e: Event) => {
+  const target = e.target as HTMLInputElement
+  if (target) {
+    emit("update:modelValue", target.value)
+  }
+}
+
+if (!props.color) {
+  ringColor.value = focusColorClass(randColor)
+} else {
+  //  colorTheme.value = `bg-${props}-600`
+  textColor.value = textColorClass(props.color)
+  ringColor.value = focusColorClass(props.color)
+}
 </script>
 
 <style scoped>

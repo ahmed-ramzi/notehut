@@ -7,22 +7,16 @@
   </button>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue"
-
-export default defineComponent({
-  props: {
-    icon: {
-      type: String,
-      required: true,
-    },
-    label: {
-      type: String,
-      default: "",
-    },
+<script lang="ts" setup>
+defineProps({
+  icon: {
+    type: String,
+    required: true,
   },
-  components: {},
-  setup() {},
+  label: {
+    type: String,
+    default: "",
+  },
 })
 </script>
 
