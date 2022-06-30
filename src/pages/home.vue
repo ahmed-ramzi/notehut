@@ -1,20 +1,21 @@
 <template>
-  <section class="h-screen">
-    <div class="p-4 space-y-6">
-      <!-- The header -->
-      <HeaderSection headerLabel="notehut">
-        <div class="flex items-center space-x-2">
-          <SearchIcon />
-          <ActionBtn icon="+" label="Create Note" @click="createNote" />
-        </div>
-      </HeaderSection>
+  <div class="h-screen overflow-scroll relative">
+    <div class="fixed h-[67px] bg-white w-full blur-sm"></div>
+    <HeaderSection headerLabel="notehut" class="fixed px-4 py-2 w-full bg-white">
+      <div class="flex space-x-2">
+        <SearchIcon />
+        <ActionBtn icon="+" label="Create Note" @click="createNote" />
+      </div>
+    </HeaderSection>
+    <div class="h-[66px] w-full"></div>
 
-      <!-- Note List -->
-      <section v-if="notes" class="grid grid-cols-2 gap-4 items-start md:grid-cols-4 lg:grid-cols-6">
-        <BaseNote v-for="note in notes.slice().reverse()" :key="note.id" :note="note" :color="note.color" @click="openNote(note)" />
-      </section>
+    <div v-if="notes" class="px-4 py-1 grid grid-cols-2 gap-4 items-start md:grid-cols-4 lg:grid-cols-6">
+      <BaseNote v-for="note in notes.slice().reverse()" :key="note.id" :note="note" :color="note.color" @click="openNote(note)" />
     </div>
-  </section>
+
+    <div class="rounded-t-3xl h-16 w-full"></div>
+    <div class="fixed bottom-0 bg-slate-800 rounded-t-3xl h-16 w-full"></div>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -32,8 +33,6 @@ import { useUserState } from "../store/user"
 import { useAuthState } from "../store/auth"
 
 const router = useRouter()
-
-const loading = ref<boolean>(false)
 
 const { setNoteDetails, changeEditingState } = useNoteDetailsActions()
 
