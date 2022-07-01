@@ -20,17 +20,17 @@
 
 <script lang="ts" setup>
 import { onBeforeMount, onMounted, ref } from "vue"
-import SearchIcon from "../components/icons/SearchIcon.vue"
-import { NoteState } from "../types/states"
-import BaseNote from "../components/base/BaseNote.vue"
-import ActionBtn from "../components/icons/ActionBtn.vue"
+import SearchIcon from "@/components/icons/SearchIcon.vue"
+import { NoteState } from "@ts/states"
+import BaseNote from "@/components/base/BaseNote.vue"
+import ActionBtn from "@/components/icons/ActionBtn.vue"
 import { useRouter } from "vue-router"
-import { useNoteDetailsActions, clearNoteDetailsState } from "../store/noteDetails"
-import { useNotesListState, useNotesListActions } from "../store/notesList"
-import HeaderSection from "../layouts/HeaderSection.vue"
-import { randomColor } from "../composables/useRandomColor"
-import { useUserState } from "../store/user"
-import { useAuthState } from "../store/auth"
+import { useNoteDetailsActions, clearNoteDetailsState } from "@/store/noteDetails"
+import { useNotesListState, useNotesListActions } from "@/store/notesList"
+import HeaderSection from "@/layouts/HeaderSection.vue"
+import { randomColor } from "@/composables/useRandomColor"
+import { useUserState } from "@/store/user"
+import { useAuthState } from "@/store/auth"
 
 const router = useRouter()
 

@@ -14,17 +14,11 @@
     "lib": ["esnext", "dom"],
     "outDir": "dist",
     "rootDir": ".",
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
-      "@/*": ["../*"],
-      "@compt/*": ["../components/*"],
-      "@auth/*": ["../components/auth/*"],
-      "@/base/*": ["../components/base/*"],
-      "@icons/*": ["../components/icons/*"],
-      "@compos/*": ["../composables/*"],
-      "@store/*": ["store/*"],
-      "@types/*": ["../types/*"],
-      "@layouts/*": ["../layouts/*"]
+      "@/*": ["src/*"],
+      "@ts/*": ["src/types/*"],
+      "@store/*": ["src/store/*"]
     }
   },
 
