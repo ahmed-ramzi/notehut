@@ -20,9 +20,9 @@
         </p>
       </div>
     </div>
-
+    <!-- 
     <div class="rounded-t-3xl h-16 w-full"></div>
-    <div class="fixed bottom-0 bg-slate-800 rounded-t-3xl h-16 w-full"></div>
+    <div class="fixed bottom-0 bg-slate-800 rounded-t-3xl h-16 w-full"></div> -->
   </div>
 </template>
 

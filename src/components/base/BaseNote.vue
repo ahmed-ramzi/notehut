@@ -37,11 +37,11 @@ const onDelete = (note: NoteState): void => {
 }
 
 const openNote = (note: NoteState): void => {
-  // if (!isDeleting.value) {
-  //   setNoteDetails(note)
-  //   changeEditingState(true)
-  //   router.push({ name: "notePanel" })
-  // }
+  if (!isDeleting.value) {
+    setNoteDetails(note)
+    changeEditingState(true)
+    router.push({ name: "notePanel" })
+  }
 }
 
 const props = defineProps({
