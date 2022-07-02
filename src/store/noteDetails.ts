@@ -1,5 +1,8 @@
+import { arrayRemove, arrayUnion } from "firebase/firestore"
 import { defineStore, storeToRefs } from "pinia"
 import { NoteState } from "../types/states"
+import { notesCollection, useNotesListActions } from "./notesList"
+import { useUserState } from "./user"
 
 type NoteDetail = {
   note: NoteState | undefined
@@ -26,13 +29,19 @@ const useNoteDetailsStore = defineStore<string, NoteDetail, Record<string, never
       this.note = note
     },
     updateNoteTitle(title: string): void {
+      const { uploadNoteToDB, removeNoteFromDB } = useNotesListActions()
       if (this.note) {
+        removeNoteFromDB(this.note)
         this.note.title = title
+        uploadNoteToDB(this.note)
       }
     },
     updateNoteContent(contents: string): void {
+      const { uploadNoteToDB, removeNoteFromDB } = useNotesListActions()
       if (this.note) {
+        removeNoteFromDB(this.note)
         this.note.contents = contents
+        uploadNoteToDB(this.note)
       }
     },
     changeEditingState(state: boolean): void {

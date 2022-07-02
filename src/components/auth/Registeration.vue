@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue"
+import { markRaw, ref } from "vue"
 import AuthLayout from "../../layouts/AuthLayout.vue"
 import BaseInput from "../base/BaseInput.vue"
 import BaseButton from "../base/BaseButton.vue"
@@ -22,6 +22,7 @@ import { useUserActions, usersCollection } from "../../store/user"
 import { useAuthActions } from "../../store/auth"
 import { User } from "../../types/states"
 import { useRouter } from "vue-router"
+import { notesCollection } from "@/store/notesList"
 
 let auth
 
@@ -60,11 +61,9 @@ const register = () => {
           registerDate: data.user.metadata.creationTime,
         } as User
 
-        usersCollection.doc(newUserId).set({
-          id: newUser.id,
-          name: newUser.name,
-          email: newUser.email,
-          registerDate: newUser.registerDate,
+        usersCollection.doc(newUserId).set(markRaw(newUser))
+        notesCollection.doc(newUserId).set({
+          notes: [],
         })
 
         getUser(newUserId)

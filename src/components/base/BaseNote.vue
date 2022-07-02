@@ -1,15 +1,48 @@
 <template>
-  <section class="rounded-3xl shadow-lg cursor-pointer hover:scale-110 duration-500" :class="[colorTheme, shadow]">
+  <section class="rounded-3xl shadow-lg cursor-pointer hover:scale-110 duration-500" :class="[colorTheme, shadow]" @click="openNote(note)">
     <div class="m-4 py-2 space-y-2 cursor-pointer">
-      <label :class="text" class="indent-2 font-bold text-xl cursor-pointer">{{ note.title }}</label>
+      <div class="flex justify-between items-center">
+        <label :class="text" class="indent-2 font-bold text-xl cursor-pointer">{{ note.title }}</label>
+        <div class="cursor-pointer" @click="onDelete(note)">
+          <DeleteIcon />
+        </div>
+      </div>
       <p :class="text" class="cursor-pointer">{{ note.contents }}</p>
     </div>
   </section>
 </template>
 
 <script lang="ts" setup>
+import { useNoteDetailsActions } from "@/store/noteDetails"
+import { useNotesListActions } from "@/store/notesList"
 import { PropType, ref } from "vue"
+import { useRouter } from "vue-router"
 import { NoteState } from "../../types/states"
+import DeleteIcon from "../icons/DeleteIcon.vue"
+
+const router = useRouter()
+
+const { removeNoteFromDB, getNotesList } = useNotesListActions()
+
+const { setNoteDetails, changeEditingState } = useNoteDetailsActions()
+
+const isDeleting = ref<boolean>(false)
+
+const onDelete = (note: NoteState): void => {
+  console.log("delete")
+  isDeleting.value = true
+  removeNoteFromDB(note)
+  getNotesList()
+  isDeleting.value = false
+}
+
+const openNote = (note: NoteState): void => {
+  // if (!isDeleting.value) {
+  //   setNoteDetails(note)
+  //   changeEditingState(true)
+  //   router.push({ name: "notePanel" })
+  // }
+}
 
 const props = defineProps({
   note: {

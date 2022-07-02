@@ -12,15 +12,15 @@ export type NoteState = {
 export type Timestamp = string | number | null
 
 export type User = {
-  id: string | null
-  name: string | null
-  email: string | null
-  isAdmin?: boolean | null
-  registerDate: Timestamp | null
-  dob?: Timestamp | null
-  jobtitle?: string | null
-  address?: string | null
-  zipcode?: string | null
-  city?: string | null
-  country?: string | null
+  id: string
+  name: string
+  email: string
+  isAdmin?: boolean
+  registerDate: Timestamp
+  dob?: Timestamp
+  jobtitle?: string
+  address?: string
+  zipcode?: string
+  city?: string
+  country?: string
 }

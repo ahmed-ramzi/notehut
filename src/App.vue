@@ -4,12 +4,14 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue"
-import Spinner from "./components/base/Spinner.vue"
+import { ref, watch } from "vue"
+import Spinner from "@/components/base/Spinner.vue"
 import { getAuth, onAuthStateChanged } from "firebase/auth"
-import { useUserActions } from "./store/user"
-import { useAuthActions } from "./store/auth"
+import { useUserActions, useUserState } from "@/store/user"
+import { useAuthActions } from "@/store/auth"
+
 import { useRouter } from "vue-router"
+import { useNotesListActions } from "@/store/notesList"
 
 const loading = ref<boolean>(true)
 
@@ -17,6 +19,22 @@ const { getUser } = useUserActions()
 const { setLoggedIn } = useAuthActions()
 
 const router = useRouter()
+const { user } = useUserState()
+
+const { getNotesList, addMockData } = useNotesListActions()
+
+watch(
+  () => user.value,
+  () => {
+    loading.value = true
+    if (user.value?.id) {
+      getNotesList()
+      // addMockData()
+      loading.value = false
+    }
+  },
+  { deep: true, immediate: true },
+)
 
 onAuthStateChanged(getAuth(), (userData) => {
   // console.log(userData)

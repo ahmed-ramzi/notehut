@@ -1,36 +1,88 @@
 import { defineStore, storeToRefs } from "pinia"
 import { NoteState } from "../types/states"
 import mockNotes from "../composables/useMockNotes"
+import db from "@/firebase"
+import { useUserState } from "./user"
+import { arrayRemove, arrayUnion } from "firebase/firestore"
+import { markRaw } from "vue"
+import { stat } from "fs"
+
+export const notesCollection = db.collection("notes")
 
 type NotesList = {
   notes: NoteState[] | null
 }
 
+type NotesListGetters = {
+  notesCount(state: NotesList): number
+}
+
 interface NotesListActions {
   getNotesList(): void
   createNewNote(note: NoteState): void
-  updateNoteLabel(note: NoteState): void
+  addMockData(): Promise<void>
+  removeNoteFromDB(note: NoteState): void
+  uploadNoteToDB(note: NoteState): void
 }
 
-const useNotesListStore = defineStore<string, NotesList, {}, NotesListActions>("notesList", {
+const useNotesListStore = defineStore<string, NotesList, NotesListGetters, NotesListActions>("notesList", {
   state: () => {
     return {
       notes: [],
     }
   },
-  getters: {},
+  getters: {
+    notesCount(state: NotesList): number {
+      return state.notes?.length || 0
+    },
+  },
 
   actions: {
-    getNotesList(): void {
-      this.notes = mockNotes
+    async getNotesList(): Promise<void> {
+      try {
+        const { user } = useUserState()
+        const collection = await notesCollection.doc(user.value?.id).get()
+        const data = collection.data()?.notes as []
+        this.notes = data
+      } catch (e) {
+        console.log(e)
+        alert("Something went wrong. \nContact Ahmed...")
+      }
     },
     createNewNote(note: NoteState): void {
-      this.notes?.push(note)
+      const { user } = useUserState()
+
+      try {
+        this.uploadNoteToDB(note)
+        this.notes?.push(note)
+      } catch (e) {
+        console.log(e)
+        alert("Something went wrong. \nContact Ahmed...")
+      }
     },
 
-    updateNoteLabel(note: NoteState): void {
-      // const objIndex = this.notes?.findIndex((obj => obj.id == note.id));
-      // console.log(this.notes?[objIndex])
+    async addMockData(): Promise<void> {
+      const { user } = useUserState()
+
+      const randomNotes = mockNotes[Math.floor(Math.random() * mockNotes.length)]
+
+      await notesCollection.doc(user.value?.id).update({
+        notes: arrayUnion(markRaw(randomNotes as NoteState)),
+      })
+    },
+
+    removeNoteFromDB(note: NoteState): void {
+      const { user } = useUserState()
+      notesCollection.doc(user.value?.id).update({
+        notes: arrayRemove(note),
+      })
+    },
+
+    uploadNoteToDB(note: NoteState): void {
+      const { user } = useUserState()
+      notesCollection.doc(user.value?.id).update({
+        notes: arrayUnion(note),
+      })
     },
   },
 })

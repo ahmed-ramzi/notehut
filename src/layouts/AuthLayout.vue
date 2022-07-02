@@ -41,12 +41,20 @@ main {
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-  @apply w-full md:max-w-min px-4;
+  @apply w-full  px-4;
 }
 img {
-  @apply h-16 w-16  shadow-2xl rounded-2xl;
+  @apply h-10 w-10  border rounded-xl;
 }
 div {
-  @apply p-8  rounded-3xl shadow-2xl  w-full md:w-[450px] space-y-12 bg-slate-100;
+  @apply p-8 rounded-3xl shadow-2xl space-y-12 bg-slate-100;
+}
+@media (min-width: 450px) {
+  main {
+    @apply max-w-[450px];
+  }
+  img {
+    @apply h-16 w-16;
+  }
 }
 </style>
