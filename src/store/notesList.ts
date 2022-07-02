@@ -6,6 +6,7 @@ import { useUserState } from "./user"
 import { arrayRemove, arrayUnion } from "firebase/firestore"
 import { markRaw } from "vue"
 import { stat } from "fs"
+import { useAppState } from "./app"
 
 export const notesCollection = db.collection("notes")
 
@@ -39,12 +40,16 @@ const useNotesListStore = defineStore<string, NotesList, NotesListGetters, Notes
 
   actions: {
     async getNotesList(): Promise<void> {
+      const { isLoading } = useAppState()
+      const { user } = useUserState()
       try {
-        const { user } = useUserState()
+        isLoading.value = true
         const collection = await notesCollection.doc(user.value?.id).get()
         const data = collection.data()?.notes as []
         this.notes = data
+        isLoading.value = false
       } catch (e) {
+        isLoading.value = false
         console.log(e)
         alert("Something went wrong. \nContact Ahmed...")
       }

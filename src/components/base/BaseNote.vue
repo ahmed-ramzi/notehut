@@ -1,12 +1,13 @@
 <template>
-  <section class="rounded-3xl shadow-lg cursor-pointer hover:scale-110 duration-500" :class="[colorTheme, shadow]" @click="openNote(note)">
-    <div class="m-4 py-2 space-y-2 cursor-pointer">
-      <div class="flex justify-between items-center">
+  <section class="rounded-3xl shadow-lg cursor-pointer hover:scale-110 duration-500 relative" :class="[colorTheme, shadow]">
+    <div class="absolute top-3 right-3 cursor-pointer z-10" @click="onDelete(note)">
+      <DeleteIcon />
+    </div>
+    <div class="m-4 py-2 space-y-2 cursor-pointer" @click="openNote(note)">
+      <div class="border max-w-[90%]">
         <label :class="text" class="indent-2 font-bold text-xl cursor-pointer">{{ note.title }}</label>
-        <div class="cursor-pointer" @click="onDelete(note)">
-          <DeleteIcon />
-        </div>
       </div>
+
       <p :class="text" class="cursor-pointer">{{ note.contents }}</p>
     </div>
   </section>

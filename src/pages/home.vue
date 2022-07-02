@@ -9,20 +9,29 @@
     </HeaderSection>
     <div class="h-[66px] w-full"></div>
 
-    <div v-if="notesCount" class="px-4 py-1 grid grid-cols-2 gap-4 items-start md:grid-cols-4 lg:grid-cols-6">
+    <div v-if="isLoading" class="flex justify-center items-center text-center h-[60%]">
+      <Spinner />
+    </div>
+    <div v-else-if="notesCount" class="px-4 py-1 grid grid-cols-2 gap-4 items-start md:grid-cols-4 lg:grid-cols-6">
       <BaseNote v-for="note in notes?.slice().reverse()" :key="note.id" :note="note" :color="note.color" />
     </div>
-    <div class="flex justify-center items-center text-center h-[60%]" v-else>
+    <div v-else class="flex justify-center items-center text-center h-[60%]">
       <div>
         <p>
           You have no notes<br />
-          Create a new note by clicking on the [ + ] button
+
+          Create a new note by clicking on the
+          <span class="px-2">
+            <ActionBtn icon="+" @click="createNote" />
+          </span>
+          button
         </p>
       </div>
     </div>
     <!-- 
     <div class="rounded-t-3xl h-16 w-full"></div>
-    <div class="fixed bottom-0 bg-slate-800 rounded-t-3xl h-16 w-full"></div> -->
+    <div class="fixed bottom-0 bg-slate-800 rounded-t-3xl h-16 w-full"></div> 
+    -->
   </div>
 </template>
 
@@ -39,6 +48,8 @@ import HeaderSection from "@/layouts/HeaderSection.vue"
 import { randomColor } from "@/composables/useRandomColor"
 import { usersCollection, useUserState } from "@/store/user"
 import { useAuthState } from "@/store/auth"
+import Spinner from "@/components/base/Spinner.vue"
+import { useAppState } from "@/store/app"
 
 const router = useRouter()
 
@@ -49,6 +60,7 @@ const { notesCount } = useNotesListGetters()
 const { notes } = useNotesListState()
 
 const { isLoggedIn } = useAuthState()
+const { isLoading } = useAppState()
 
 const createNote = (): void => {
   clearNoteDetailsState()

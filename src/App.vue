@@ -26,11 +26,9 @@ const { getNotesList, addMockData } = useNotesListActions()
 watch(
   () => user.value,
   () => {
-    loading.value = true
     if (user.value?.id) {
       getNotesList()
       // addMockData()
-      loading.value = false
     }
   },
   { deep: true, immediate: true },
@@ -44,8 +42,8 @@ onAuthStateChanged(getAuth(), (userData) => {
     router.push({ name: "home" })
     loading.value = false
   } else {
-    setLoggedIn(false)
     router.push({ name: "login" })
+    setLoggedIn(false)
     loading.value = false
   }
 })
