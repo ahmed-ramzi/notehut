@@ -53,7 +53,7 @@ const login = () => {
         // console.log("data", data.user)
 
         setLoggedIn(true)
-        getUser(data.user.uid)
+        getUser()
         router.push({ name: "home" })
       })
       .catch((error) => {

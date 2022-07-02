@@ -66,7 +66,7 @@ const register = () => {
           notes: [],
         })
 
-        getUser(newUserId)
+        getUser()
         console.log("Successfully Registered")
         setLoggedIn(true)
         router.push({ name: "home" })

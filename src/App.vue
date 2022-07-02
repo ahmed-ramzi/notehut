@@ -37,7 +37,7 @@ watch(
 onAuthStateChanged(getAuth(), (userData) => {
   // console.log(userData)
   if (userData) {
-    getUser(userData.uid)
+    getUser()
     setLoggedIn(true)
     router.push({ name: "home" })
     loading.value = false

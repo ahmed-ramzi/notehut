@@ -5,4 +5,4 @@ import router from "./router"
 import { createPinia } from "pinia"
 import "./firebase"
 
-createApp(App).use(router).use(createPinia()).mount("#app")
+createApp(App).use(createPinia()).use(router).mount("#app")

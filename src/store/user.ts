@@ -1,16 +1,14 @@
 import { defineStore, storeToRefs } from "pinia"
-import { arrayUnion, arrayRemove } from "firebase/firestore"
 import { User } from "../types/states"
-
 import db from "../firebase"
-import { string } from "yup"
+import { getAuth } from "firebase/auth"
 
 type UserState = {
   user: User | null
 }
-
 interface UserActions {
-  getUser(id: string): Promise<void>
+  getUser(): Promise<void>
+  setUser(data: any): void
 }
 
 export const usersCollection = db.collection("users")
@@ -22,8 +20,9 @@ const useUserStore = defineStore<string, UserState, {}, UserActions>("user", {
     }
   },
   actions: {
-    async getUser(id: string | null): Promise<void> {
+    async getUser(): Promise<void> {
       try {
+        const id = getAuth().currentUser?.uid
         if (id) {
           const userCollection = await usersCollection.doc(id).get()
 
@@ -47,6 +46,9 @@ const useUserStore = defineStore<string, UserState, {}, UserActions>("user", {
       } catch (err) {
         console.log(err)
       }
+    },
+    setUser(data: any): void {
+      this.user = data
     },
   },
 })
