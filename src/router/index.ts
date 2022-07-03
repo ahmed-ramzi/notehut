@@ -1,7 +1,7 @@
 import { useNoteDetailsState } from "@/store/noteDetails"
 import { useUserActions } from "@/store/user"
 import { getAuth, onAuthStateChanged } from "firebase/auth"
-import { createRouter, createWebHashHistory, createWebHistory } from "vue-router"
+import { createRouter, createWebHistory } from "vue-router"
 
 export const routes = [
   {
@@ -32,6 +32,11 @@ export const routes = [
   },
   {
     path: "/:catchAll(.*)",
+    name: "NotFound",
+    component: () => import("../pages/404.vue"),
+  },
+  {
+    path: "/:pathMatch(.*)",
     name: "NotFound",
     component: () => import("../pages/404.vue"),
   },
