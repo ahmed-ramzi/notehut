@@ -36,7 +36,6 @@
 </template>
 
 <script lang="ts" setup>
-import { onBeforeMount } from "vue"
 import SearchIcon from "@/components/icons/SearchIcon.vue"
 import { NoteState } from "@ts/states"
 import BaseNote from "@/components/base/BaseNote.vue"
@@ -46,8 +45,6 @@ import { useNoteDetailsActions, clearNoteDetailsState } from "@/store/noteDetail
 import { useNotesListState, useNotesListActions, useNotesListGetters } from "@/store/notesList"
 import HeaderSection from "@/layouts/HeaderSection.vue"
 import { randomColor } from "@/composables/useRandomColor"
-import { usersCollection, useUserState } from "@/store/user"
-import { useAuthState } from "@/store/auth"
 import Spinner from "@/components/base/Spinner.vue"
 import { useAppState } from "@/store/app"
 
@@ -59,7 +56,6 @@ const { createNewNote } = useNotesListActions()
 const { notesCount } = useNotesListGetters()
 const { notes } = useNotesListState()
 
-const { isLoggedIn } = useAuthState()
 const { isLoading } = useAppState()
 
 const createNote = (): void => {
@@ -76,10 +72,4 @@ const createNote = (): void => {
   changeEditingState(true)
   router.push({ name: "notePanel" })
 }
-
-onBeforeMount(() => {
-  if (!isLoggedIn.value) {
-    router.push({ name: "login" })
-  }
-})
 </script>

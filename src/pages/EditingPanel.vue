@@ -23,14 +23,11 @@
 </template>
 
 <script lang="ts" setup>
-import { onBeforeMount, ref, watch } from "vue"
+import { onBeforeMount, onUnmounted, ref, watch } from "vue"
 import HeaderSection from "../layouts/HeaderSection.vue"
 import { useNoteDetailsState, useNoteDetailsActions, clearNoteDetailsState } from "../store/noteDetails"
-import { NoteState } from "../types/states"
-import { useRouter } from "vue-router"
 
-const router = useRouter()
-const { note: noteFromStore, isEditing } = useNoteDetailsState()
+const { note: noteFromStore } = useNoteDetailsState()
 const { updateNoteTitle, updateNoteContent } = useNoteDetailsActions()
 
 const noteLabel = ref(noteFromStore.value?.title ? noteFromStore.value?.title : "")
@@ -50,9 +47,7 @@ watch(
   },
 )
 
-onBeforeMount(() => {
-  if (!isEditing.value) {
-    router.push({ name: "home" })
-  }
+onUnmounted(() => {
+  clearNoteDetailsState()
 })
 </script>

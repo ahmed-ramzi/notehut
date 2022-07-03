@@ -1,24 +1,12 @@
 <template>
-  <Spinner v-if="loading" class="spinner" />
-  <router-view v-else />
+  <router-view />
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from "vue"
-import Spinner from "@/components/base/Spinner.vue"
-import { getAuth, onAuthStateChanged } from "firebase/auth"
-import { useUserActions, useUserState } from "@/store/user"
-import { useAuthActions } from "@/store/auth"
-
-import { useRouter } from "vue-router"
+import { watch } from "vue"
+import { useUserState } from "@/store/user"
 import { useNotesListActions } from "@/store/notesList"
 
-const loading = ref<boolean>(true)
-
-const { getUser } = useUserActions()
-const { setLoggedIn } = useAuthActions()
-
-const router = useRouter()
 const { user } = useUserState()
 
 const { getNotesList, addMockData } = useNotesListActions()
@@ -33,20 +21,6 @@ watch(
   },
   { deep: true, immediate: true },
 )
-
-onAuthStateChanged(getAuth(), (userData) => {
-  // console.log(userData)
-  if (userData) {
-    getUser()
-    setLoggedIn(true)
-    router.push({ name: "home" })
-    loading.value = false
-  } else {
-    router.push({ name: "login" })
-    setLoggedIn(false)
-    loading.value = false
-  }
-})
 </script>
 
 <style scoped>

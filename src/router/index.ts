@@ -1,4 +1,6 @@
-import { useUserActions, useUserState } from "@/store/user"
+import { useNoteDetailsState } from "@/store/noteDetails"
+import { useUserActions } from "@/store/user"
+import { getAuth, onAuthStateChanged } from "firebase/auth"
 import { createRouter, createWebHashHistory } from "vue-router"
 
 export const routes = [
@@ -39,30 +41,49 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes,
 })
+const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const removeListener = onAuthStateChanged(
+      getAuth(),
+      (user) => {
+        removeListener()
+        resolve(user)
+      },
+      reject,
+    )
+  })
+}
 
-// router.beforeEach(async (to, from, next) => {
-//   const { getUser, getTest } = useUserActions()
-//   const { user } = useUserState()
+router.beforeEach(async (to, from, next) => {
+  const { getUser } = useUserActions()
+  const { isEditing } = useNoteDetailsState()
 
-//   console.log(user.value?.id)
-//   let isLoggedin = false
-//   if (await getTest()) {
-//     isLoggedin = true
-//   }
-//   console.log(isLoggedin)
-//   if (to.matched.some((record) => record.meta.requiresAuth)) {
-//     if (isLoggedin) {
-//       next()
-//     } else {
-//       next("/login")
-//     }
-//   } else {
-//     if ((to.name === "login" || to.name === "signup") && isLoggedin) {
-//       next("/")
-//     } else {
-//       next()
-//     }
-//   }
-// })
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (await getCurrentUser()) {
+      // have to make a LoadApp function here
+      await getUser()
+
+      if (to.name === "notePanel") {
+        if (isEditing.value) {
+          next()
+        } else {
+          next({ name: "home" })
+        }
+      } else {
+        next()
+      }
+    } else {
+      next({ name: "login" })
+    }
+  } else {
+    if (to.name === "login" || to.name === "signup") {
+      if (await getCurrentUser()) {
+        next({ name: "home" })
+      } else {
+        next()
+      }
+    }
+  }
+})
 
 export default router
