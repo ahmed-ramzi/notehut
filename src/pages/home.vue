@@ -4,7 +4,7 @@
     <HeaderSection headerLabel="notehut" class="fixed px-4 py-2 w-full bg-white">
       <div class="flex space-x-2">
         <SearchIcon />
-        <ActionBtn icon="+" label="Create Note" @click="createNote" />
+        <ActionBtn v-if="notesCount" icon="+" label="Create Note" @click="createNote" />
       </div>
     </HeaderSection>
     <div class="h-[66px] w-full"></div>
@@ -22,7 +22,7 @@
 
           Create a new note by clicking on the
           <span class="px-2">
-            <ActionBtn icon="+" @click="createNote" />
+            <ActionBtn icon="+" label="Create Note" @click="createNote" />
           </span>
           button
         </p>
