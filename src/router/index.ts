@@ -35,11 +35,11 @@ export const routes = [
     name: "NotFound",
     component: () => import("../pages/404.vue"),
   },
-  {
-    path: "/:pathMatch(.*)",
-    name: "NotFound",
-    component: () => import("../pages/404.vue"),
-  },
+  // {
+  //   path: "/:pathMatch(.*)",
+  //   name: "NotFound",
+  //   component: () => import("../pages/404.vue"),
+  // },
 ]
 
 const router = createRouter({
@@ -62,6 +62,10 @@ const getCurrentUser = () => {
 router.beforeEach(async (to, from, next) => {
   const { getUser } = useUserActions()
   const { isEditing } = useNoteDetailsState()
+
+  if (to.name === "NotFound") {
+    next()
+  }
 
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (await getCurrentUser()) {
