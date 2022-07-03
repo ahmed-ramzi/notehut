@@ -4,10 +4,9 @@
       <DeleteIcon />
     </div>
     <div class="m-4 py-2 space-y-2 cursor-pointer" @click="openNote(note)">
-      <div class="max-w-[90%]">
+      <div class="max-w-[90%] md:max-w-[85%]">
         <label :class="text" class="indent-2 font-bold text-xl cursor-pointer">{{ note.title }}</label>
       </div>
-
       <p :class="text" class="cursor-pointer">{{ note.contents }}</p>
     </div>
   </section>
