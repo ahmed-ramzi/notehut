@@ -97,7 +97,7 @@ const logout = () => {
 
 <style scoped>
 .modal {
-  @apply absolute top-0 left-0  bg-slate-300/40 z-10 w-full h-full flex py-2 px-4 backdrop-blur-sm;
+  @apply absolute top-0 left-0  bg-slate-300/40 z-10 w-full h-screen flex py-2 px-4 backdrop-blur-sm;
 }
 button {
   @apply flex h-12 items-center  space-x-2 rounded text-left;
