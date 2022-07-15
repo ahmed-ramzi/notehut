@@ -46,6 +46,7 @@
           <button>
             <SettingsIcon />
             <h4>Settings</h4>
+            <small>(soon)</small>
           </button>
           <button @click="logout">
             <LogoutIcon />
