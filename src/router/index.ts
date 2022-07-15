@@ -2,6 +2,7 @@ import { useNoteDetailsState } from "@/store/noteDetails"
 import { useUserActions } from "@/store/user"
 import { getAuth, onAuthStateChanged } from "firebase/auth"
 import { createRouter, createWebHistory } from "vue-router"
+import { useAuthActions } from "@/store/auth"
 
 export const routes = [
   {
@@ -62,6 +63,7 @@ const getCurrentUser = () => {
 router.beforeEach(async (to, from, next) => {
   const { getUser } = useUserActions()
   const { isEditing } = useNoteDetailsState()
+  const { setLoggedIn } = useAuthActions()
 
   if (to.name === "NotFound") {
     next()
@@ -71,6 +73,7 @@ router.beforeEach(async (to, from, next) => {
     if (await getCurrentUser()) {
       // have to make a LoadApp function here
       await getUser()
+      setLoggedIn(true)
 
       if (to.name === "notePanel") {
         if (isEditing.value) {
@@ -82,13 +85,16 @@ router.beforeEach(async (to, from, next) => {
         next()
       }
     } else {
+      setLoggedIn(false)
       next({ name: "login" })
     }
   } else {
     if (to.name === "login" || to.name === "signup") {
       if (await getCurrentUser()) {
+        setLoggedIn(true)
         next({ name: "home" })
       } else {
+        setLoggedIn(false)
         next()
       }
     }

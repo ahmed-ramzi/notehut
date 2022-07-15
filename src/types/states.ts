@@ -1,4 +1,6 @@
-import { string } from "yup"
+type Layout = {
+  layout: "grid" | "flex"
+}
 
 export type NoteState = {
   id: number
@@ -23,4 +25,9 @@ export type User = {
   zipcode?: string
   city?: string
   country?: string
+}
+
+export type Settings = {
+  layout: Layout
+  avatar: string
 }

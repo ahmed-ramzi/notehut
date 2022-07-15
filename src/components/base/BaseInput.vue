@@ -2,9 +2,7 @@
   <div :class="width">
     <div class="flex flex-col space-y-2">
       <label>{{ label }}</label>
-
       <div class="pb-6 relative">
-        <!--  @ts-ignore: Unreachable -->
         <Field
           :name="name"
           :placeholder="placeholder"

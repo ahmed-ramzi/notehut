@@ -1,25 +1,22 @@
 <template>
-  <section class="p-4 h-screen space-y-4">
-    <HeaderSection backBtn="home"></HeaderSection>
+  <!-- <div class="h-full px-4 border-4 space-y-4"> -->
+  <HeaderSection backBtn="home" class="p-4"></HeaderSection>
+  <input
+    type="text"
+    name="title"
+    v-model="noteLabel"
+    :placeholder="noteLabel || 'New note'"
+    class="font-extralight text-3xl text-slate-500 py-4 px-6 w-full outline-none rounded-md"
+    ref="noteTitle"
+  />
 
-    <div class="space-y-4">
-      <input
-        type="text"
-        name="title"
-        v-model="noteLabel"
-        :placeholder="noteLabel || 'New note'"
-        class="font-extralight text-3xl text-slate-500 w-full p-2 outline-none rounded-md"
-        ref="noteTitle"
-      />
-      <textarea
-        name="contents"
-        rows="25"
-        class="w-full h-max rounded-md outline-none px-2 py-2 text-slate-500 font-light resize-none"
-        v-model="noteContent"
-        :placeholder="noteContent || 'Jot something here...'"
-      ></textarea>
-    </div>
-  </section>
+  <textarea
+    name="contents"
+    class="w-full h-full rounded-md outline-none py-4 px-6 text-slate-500 font-light resize-none"
+    v-model="noteContent"
+    :placeholder="noteContent || 'Jot something here...'"
+  ></textarea>
+  <!-- </div> -->
 </template>
 
 <script lang="ts" setup>
@@ -51,3 +48,17 @@ onUnmounted(() => {
   clearNoteDetailsState()
 })
 </script>
+
+<style scoped>
+@media (max-height: 459px) {
+  textarea {
+    @apply mb-12;
+  }
+}
+
+@media (min-height: 460px) {
+  textarea {
+    @apply mb-7;
+  }
+}
+</style>

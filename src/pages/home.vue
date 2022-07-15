@@ -1,13 +1,13 @@
 <template>
-  <div class="h-screen overflow-scroll relative">
-    <div class="fixed h-[67px] bg-white w-full blur-sm"></div>
-    <HeaderSection headerLabel="notehut" class="fixed px-4 py-2 w-full bg-white">
+  <div class="h-full overflow-scroll relative">
+    <div class="fixed h-[67px] bg-white blur-sm w-full z-20"></div>
+    <HeaderSection headerLabel="notehut" class="fixed px-4 py-2 w-full z-20 bg-white">
       <div class="flex space-x-2">
-        <!-- <SearchIcon /> -->
+        <LayoutIcon />
         <ActionBtn v-if="notesCount" icon="+" label="Create Note" @click="createNote" />
       </div>
     </HeaderSection>
-    <div class="h-[66px] w-full"></div>
+    <div class="h-[67px] w-full bg-transparent z-20"></div>
 
     <div v-if="isLoading" class="flex justify-center items-center text-center h-[60%]">
       <Spinner />
@@ -28,8 +28,6 @@
         </p>
       </div>
     </div>
-    <FooterNavigator />
-    <SideNavigator v-if="isMenuActive" />
   </div>
 </template>
 
@@ -44,9 +42,8 @@ import HeaderSection from "@/layouts/HeaderSection.vue"
 import { randomColor } from "@/composables/useRandomColor"
 import Spinner from "@/components/base/Spinner.vue"
 import { useAppState } from "@/store/app"
-import FooterNavigator from "@/components/navigators/FooterNavigator.vue"
-import SideNavigator from "@/components/navigators/SideNavigator.vue"
-import { useNavState } from "@/store/navigators"
+
+import LayoutIcon from "@/components/icons/LayoutIcon.vue"
 
 const router = useRouter()
 
@@ -57,7 +54,6 @@ const { notesCount } = useNotesListGetters()
 const { notes } = useNotesListState()
 
 const { isLoading } = useAppState()
-const { isMenuActive } = useNavState()
 
 const createNote = (): void => {
   clearNoteDetailsState()

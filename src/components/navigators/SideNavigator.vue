@@ -1,8 +1,8 @@
 <template>
   <teleport to="body">
-    <div class="modal">
+    <div class="modal" @click="toggleMenu">
       <nav class="bg-slate-50 opacity-95 p-6 rounded-xl flex flex-col justify-between border-slate-600 border-2 border-opacity-40 overflow-scroll">
-        <div class="flex flex-col space-y-4">
+        <div class="flex flex-col space-y-6">
           <div class="flex items-center space-x-4">
             <!-- Avatar -->
             <div class="border-2 rounded-lg w-14 h-14 flex justify-center items-center" :class="gradientColorClass(avatarColor)">
@@ -98,7 +98,7 @@ const logout = () => {
 
 <style scoped>
 .modal {
-  @apply absolute top-0 left-0  bg-slate-300/40 z-10 w-full h-screen flex py-2 px-4 backdrop-blur-sm;
+  @apply absolute top-0 left-0  bg-slate-300/40 z-50 w-full h-full overscroll-contain flex py-2 px-4 backdrop-blur-sm;
 }
 button {
   @apply flex h-12 items-center  space-x-2 rounded text-left;

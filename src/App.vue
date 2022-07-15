@@ -1,13 +1,23 @@
 <template>
-  <router-view />
+  <div class="h-screen flex flex-col justify-between">
+    <router-view />
+    <FooterNavigator v-if="isLoggedIn" />
+    <SideNavigator v-if="isMenuActive && isLoggedIn" />
+  </div>
 </template>
 
 <script lang="ts" setup>
 import { watch } from "vue"
 import { useUserState } from "@/store/user"
 import { useNotesListActions } from "@/store/notesList"
+import { useAuthState } from "@/store/auth"
+import FooterNavigator from "@/components/navigators/FooterNavigator.vue"
+import SideNavigator from "@/components/navigators/SideNavigator.vue"
+import { useNavState } from "./store/navigators"
 
 const { user } = useUserState()
+const { isMenuActive } = useNavState()
+const { isLoggedIn } = useAuthState()
 
 const { getNotesList, addMockData } = useNotesListActions()
 
