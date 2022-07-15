@@ -3,7 +3,7 @@
     <div class="fixed h-[67px] bg-white w-full blur-sm"></div>
     <HeaderSection headerLabel="notehut" class="fixed px-4 py-2 w-full bg-white">
       <div class="flex space-x-2">
-        <SearchIcon />
+        <!-- <SearchIcon /> -->
         <ActionBtn v-if="notesCount" icon="+" label="Create Note" @click="createNote" />
       </div>
     </HeaderSection>
@@ -28,15 +28,12 @@
         </p>
       </div>
     </div>
-    <!-- 
-    <div class="rounded-t-3xl h-16 w-full"></div>
-    <div class="fixed bottom-0 bg-slate-800 rounded-t-3xl h-16 w-full"></div> 
-    -->
+    <FooterNavigator />
+    <SideNavigator v-if="isMenuActive" />
   </div>
 </template>
 
 <script lang="ts" setup>
-import SearchIcon from "@/components/icons/SearchIcon.vue"
 import { NoteState } from "@ts/states"
 import BaseNote from "@/components/base/BaseNote.vue"
 import ActionBtn from "@/components/icons/ActionBtn.vue"
@@ -47,6 +44,9 @@ import HeaderSection from "@/layouts/HeaderSection.vue"
 import { randomColor } from "@/composables/useRandomColor"
 import Spinner from "@/components/base/Spinner.vue"
 import { useAppState } from "@/store/app"
+import FooterNavigator from "@/components/navigators/FooterNavigator.vue"
+import SideNavigator from "@/components/navigators/SideNavigator.vue"
+import { useNavState } from "@/store/navigators"
 
 const router = useRouter()
 
@@ -57,6 +57,7 @@ const { notesCount } = useNotesListGetters()
 const { notes } = useNotesListState()
 
 const { isLoading } = useAppState()
+const { isMenuActive } = useNavState()
 
 const createNote = (): void => {
   clearNoteDetailsState()

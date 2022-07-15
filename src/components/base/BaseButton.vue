@@ -1,5 +1,5 @@
 <template>
-  <button class="flex justify-center items-center" :class="[width, gradient, colorTheme, loading ? 'cursor-wait' : 'cursor-pointer']">
+  <button class="flex justify-center items-center" :class="[width, colorTheme, loading ? 'cursor-wait bg-gray-500' : gradient]">
     <div v-if="loading">
       <Spinner size="w-10 h-10" />
     </div>
@@ -45,9 +45,9 @@ if (!props.color) {
 
 <style scoped>
 button {
-  @apply h-12 rounded-3xl motion-safe:hover:scale-110;
+  @apply h-12 rounded-lg motion-safe:hover:scale-110;
 }
 button:hover {
-  @apply scale-110 duration-300;
+  @apply scale-105 shadow-lg duration-300;
 }
 </style>
