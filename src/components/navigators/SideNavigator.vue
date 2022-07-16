@@ -1,7 +1,7 @@
 <template>
   <teleport to="body">
     <div class="modal">
-      <nav class="bg-slate-50 opacity-95 p-6 rounded-xl flex flex-col justify-between border-slate-600 border-2 border-opacity-40 overflow-scroll">
+      <nav class="bg-slate-50 shadow-2xl shadow-slate-900 opacity-95 p-6 rounded-xl flex flex-col justify-between border-slate-600 border-2 border-opacity-40 overflow-scroll">
         <div class="flex flex-col space-y-4">
           <div class="flex items-center space-x-4">
             <!-- Avatar -->
