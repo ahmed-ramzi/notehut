@@ -16,9 +16,7 @@
     "rootDir": ".",
     "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"],
-      "@ts/*": ["src/types/*"],
-      "@store/*": ["src/store/*"]
+      "@/*": ["src/*"]
     }
   },
 

@@ -1,9 +1,9 @@
 import { randomColor } from "@/composables/useRandomColor"
-import { arrayRemove, arrayUnion } from "firebase/firestore"
 import { defineStore, storeToRefs } from "pinia"
 import { NoteState } from "../types/states"
-import { notesCollection, useNotesListActions, useNotesListGetters, useNotesListState } from "./notesList"
-import { useUserState } from "./user"
+import moment from "moment"
+import { useNotesListActions, useNotesListGetters, useNotesListState } from "./notesList"
+import useDate from "@/composables/useDate"
 
 type NoteDetail = {
   note: NoteState | undefined
@@ -30,13 +30,14 @@ const useNoteDetailsStore = defineStore<string, NoteDetail, Record<string, never
     createNote(): void {
       const { notes } = useNotesListState()
       const { notesCount } = useNotesListGetters()
-      const { createNewNote } = useNotesListActions()
 
       const note = {
         id: notes.value?.length ? notesCount.value + 1 : 1,
         title: "",
         contents: "",
         color: randomColor(),
+        created_date: useDate.shortDate(),
+        last_modified: useDate.shortDate(),
       } as NoteState
 
       this.isEditing = true
@@ -52,6 +53,7 @@ const useNoteDetailsStore = defineStore<string, NoteDetail, Record<string, never
       if (this.note) {
         removeNoteFromDB(this.note)
         this.note.title = title
+        this.note.last_modified = useDate.shortDate()
         uploadNoteToDB(this.note)
       }
     },
@@ -60,6 +62,7 @@ const useNoteDetailsStore = defineStore<string, NoteDetail, Record<string, never
       if (this.note) {
         removeNoteFromDB(this.note)
         this.note.contents = contents
+        this.note.last_modified = useDate.shortDate()
         uploadNoteToDB(this.note)
       }
     },

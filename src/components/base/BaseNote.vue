@@ -16,6 +16,7 @@
         disabled
         v-model="note.contents"
       ></textarea>
+      <small v-if="note.last_modified" class="absolute bottom-1 text-xs italic text-slate-100 right-3">Updated: {{ useDate.displayDate(note.last_modified) }}</small>
     </div>
   </section>
 </template>
@@ -27,6 +28,7 @@ import { PropType, ref } from "vue"
 import { useRouter } from "vue-router"
 import { NoteState } from "../../types/states"
 import DeleteIcon from "../icons/DeleteIcon.vue"
+import useDate from "@/composables/useDate"
 
 const props = defineProps({
   note: {

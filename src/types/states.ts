@@ -1,17 +1,16 @@
 type Layout = {
   layout: "grid" | "flex"
 }
+export type Timestamp = string | number | null
 
 export type NoteState = {
   id: number
   title: string
   contents: string
   color: string
-  //   created_date: Date,
-  // last_modified: Date,
+  created_date: Timestamp
+  last_modified: any
 }
-
-export type Timestamp = string | number | null
 
 export type User = {
   id: string
