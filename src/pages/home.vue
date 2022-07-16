@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full overflow-scroll relative">
+  <div class="h-screen overflow-scroll relative">
     <div class="fixed h-[67px] bg-white blur-sm w-full z-20"></div>
     <HeaderSection headerLabel="notehut" class="fixed px-4 py-2 w-full z-20 bg-white">
       <div class="flex space-x-2">
