@@ -15,7 +15,10 @@ import { randomColor, colorClass, gradientColorClass } from "../../composables/u
 import Spinner from "./Spinner.vue"
 
 const props = defineProps({
-  label: String,
+  label: {
+    type: String,
+    default: "",
+  },
   width: {
     type: String,
     default: "w-40",

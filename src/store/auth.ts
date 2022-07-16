@@ -8,7 +8,7 @@ interface AuthActions {
   setLoggedIn(value: boolean): void
 }
 
-const useAuthStore = defineStore<string, AuthState, {}, AuthActions>("auth", {
+const useAuthStore = defineStore<string, AuthState, Record<any, never>, AuthActions>("auth", {
   state: () => {
     return {
       isLoggedIn: false,

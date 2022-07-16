@@ -1,7 +1,7 @@
 <template>
   <AuthLayout type="register">
     <!-- Form -->
-    <Form @submit="register" :validation-schema="schema" class="w-full flex flex-col items-center">
+    <Form :validation-schema="schema" class="w-full flex flex-col items-center" @submit="register">
       <BaseInput v-model="userName" label="Name" placeholder="Tell us your name" name="Name" />
       <BaseInput v-model="userEmail" label="Email" placeholder="example@mail.com" name="Email" />
       <BaseInput v-model="password" label="Password" placeholder="Your Password" name="Password" type="password" />

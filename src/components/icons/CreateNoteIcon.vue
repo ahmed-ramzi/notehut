@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts" setup>
-import { randomColor, gradientColorClass, shadowColorClass } from "@/composables/useRandomColor"
+import { gradientColorClass, shadowColorClass } from "@/composables/useRandomColor"
 import { useNoteDetailsActions } from "@/store/noteDetails"
 import { useRouter } from "vue-router"
 

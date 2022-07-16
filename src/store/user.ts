@@ -2,6 +2,7 @@ import { defineStore, storeToRefs } from "pinia"
 import { User } from "../types/states"
 import db from "../firebase"
 import { getAuth } from "firebase/auth"
+import { markRaw } from "vue"
 
 type UserState = {
   user: User | null
@@ -13,7 +14,7 @@ interface UserActions {
 
 export const usersCollection = db.collection("users")
 
-const useUserStore = defineStore<string, UserState, {}, UserActions>("user", {
+const useUserStore = defineStore<string, UserState, Record<any, never>, UserActions>("user", {
   state: () => {
     return {
       user: null,
@@ -28,7 +29,7 @@ const useUserStore = defineStore<string, UserState, {}, UserActions>("user", {
 
           const data = userCollection.data() as User
 
-          this.user = data
+          this.user = markRaw(data)
 
           // this.user.id = id
           // this.user.name = userCollection.data().name

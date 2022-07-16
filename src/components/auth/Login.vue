@@ -1,7 +1,7 @@
 <template>
   <AuthLayout type="login">
     <!-- Form -->
-    <Form @submit="login" :validation-schema="schema" class="w-full flex flex-col items-center">
+    <Form :validation-schema="schema" class="w-full flex flex-col items-center" @submit="login">
       <BaseInput v-model="userEmail" label="Email" placeholder="example@mail.com" name="Email" />
       <BaseInput v-model="password" label="Password" placeholder="Your Password" name="Password" type="password" />
       <p v-if="errMsg" class="text-red-500 font-medium">{{ errMsg }}</p>
@@ -17,7 +17,7 @@ import BaseInput from "../base/BaseInput.vue"
 import BaseButton from "../base/BaseButton.vue"
 import { Form } from "vee-validate"
 import * as yup from "yup"
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth"
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
 import { useAuthActions } from "../../store/auth"
 import { useRouter } from "vue-router"
 import { useUserActions } from "../../store/user"
@@ -47,7 +47,7 @@ const login = () => {
     auth = getAuth()
 
     signInWithEmailAndPassword(auth, userEmail.value, password.value)
-      .then((data) => {
+      .then(() => {
         console.log("Successfully signed in!")
         // console.log("auth", auth.currentUser)
         // console.log("data", data.user)

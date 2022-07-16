@@ -1,5 +1,5 @@
 <template>
-  <div id="navMenu" @click="toggleMenu" class="cursor-pointer" :class="isMenuActive ? 'active' : null">
+  <div id="navMenu" class="cursor-pointer" :class="isMenuActive ? 'active' : null" @click="toggleMenu">
     <span :class="black ? 'bg-black' : 'bg-white'"></span>
     <span :class="black ? 'bg-black' : 'bg-white'"></span>
     <span :class="black ? 'bg-black' : 'bg-white'"></span>

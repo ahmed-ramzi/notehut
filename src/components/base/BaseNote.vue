@@ -8,15 +8,13 @@
       <div class="max-w-[90%] md:max-w-[85%]">
         <label :class="text" class="indent-2 font-bold text-xl cursor-pointer">{{ note.title }}</label>
       </div>
-      <!-- <p :class="text" class="cursor-pointer">{{ note.contents }}</p> -->
-
       <textarea
+        v-model="note.contents"
         name="contents"
         class="w-full h-full rounded-md outline-none text-white bg-transparent font-light resize-none cursor-pointer"
         disabled
-        v-model="note.contents"
       ></textarea>
-      <small v-if="note.last_modified" class="absolute bottom-1 text-xs italic text-slate-100 right-3">Updated: {{ useDate.displayDate(note.last_modified) }}</small>
+      <small v-if="note.last_modified" class="absolute bottom-1 text-xs italic text-slate-100 right-3">Updated: {{ updated_time }}</small>
     </div>
   </section>
 </template>
@@ -24,12 +22,11 @@
 <script lang="ts" setup>
 import { useNoteDetailsActions } from "@/store/noteDetails"
 import { useNotesListActions } from "@/store/notesList"
-import { PropType, ref } from "vue"
+import { onMounted, PropType, ref, watch } from "vue"
 import { useRouter } from "vue-router"
 import { NoteState } from "../../types/states"
 import DeleteIcon from "../icons/DeleteIcon.vue"
 import useDate from "@/composables/useDate"
-
 const props = defineProps({
   note: {
     required: true,
@@ -40,16 +37,25 @@ const props = defineProps({
     type: String,
   },
 })
+const currentTime = ref<any>(0)
+const updated_time = ref()
 
+onMounted(() => {
+  currentTime.value = new Date()
+  window.setInterval(() => {
+    currentTime.value = new Date()
+  }, 60000)
+})
+watch(
+  () => currentTime.value,
+  () => {
+    updated_time.value = useDate.displayDate(props.note.last_modified)
+  },
+)
 const router = useRouter()
-
 const { removeNoteFromDB, getNotesList } = useNotesListActions()
-
 const { setNoteDetails, changeEditingState } = useNoteDetailsActions()
-
 const isDeleting = ref<boolean>(false)
-
-const lineBreaks = (props.note.contents.match(/\n/g) || []).length
 
 const onDelete = (note: NoteState): void => {
   console.log("delete")
@@ -58,7 +64,6 @@ const onDelete = (note: NoteState): void => {
   getNotesList()
   isDeleting.value = false
 }
-
 const openNote = (note: NoteState): void => {
   if (!isDeleting.value) {
     setNoteDetails(note)
@@ -66,11 +71,9 @@ const openNote = (note: NoteState): void => {
     router.push({ name: "notePanel" })
   }
 }
-
 const colorTheme = ref<string>("")
 const text = ref<string>("")
 const shadow = ref<string>("")
-
 if (props.color === "amber") {
   colorTheme.value = "bg-amber-500"
   text.value = "text-white"
@@ -106,7 +109,6 @@ if (props.color === "amber") {
 label,
 textarea {
   display: -webkit-box;
-
   -webkit-box-orient: vertical;
   overflow: hidden;
 }

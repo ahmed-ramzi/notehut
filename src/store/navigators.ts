@@ -2,7 +2,7 @@ import { defineStore, storeToRefs } from "pinia"
 
 type NavState = {
   isMenuActive: boolean
-  currentSelection: String
+  currentSelection: string
 }
 
 interface NavActions {
@@ -10,7 +10,7 @@ interface NavActions {
   changeCurrentSelection(page: string): void
 }
 
-const useNavStore = defineStore<string, NavState, {}, NavActions>("navigator", {
+const useNavStore = defineStore<string, NavState, Record<any, never>, NavActions>("navigator", {
   state: () => {
     return {
       isMenuActive: false,
