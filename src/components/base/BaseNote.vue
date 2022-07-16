@@ -13,6 +13,7 @@
         <textarea
           name="contents"
           class="w-full rounded-md outline-none text-white bg-transparent font-light resize-none cursor-pointer"
+          :rows="lineBreaks > 5 ? 5 : lineBreaks"
           disabled
           v-model="note.contents"
         ></textarea>
@@ -29,6 +30,17 @@ import { useRouter } from "vue-router"
 import { NoteState } from "../../types/states"
 import DeleteIcon from "../icons/DeleteIcon.vue"
 
+const props = defineProps({
+  note: {
+    required: true,
+    type: Object as PropType<NoteState>,
+  },
+  color: {
+    default: "sky",
+    type: String,
+  },
+})
+
 const router = useRouter()
 
 const { removeNoteFromDB, getNotesList } = useNotesListActions()
@@ -36,6 +48,8 @@ const { removeNoteFromDB, getNotesList } = useNotesListActions()
 const { setNoteDetails, changeEditingState } = useNoteDetailsActions()
 
 const isDeleting = ref<boolean>(false)
+
+const lineBreaks = (props.note.contents.match(/\n/g) || []).length
 
 const onDelete = (note: NoteState): void => {
   console.log("delete")
@@ -52,17 +66,6 @@ const openNote = (note: NoteState): void => {
     router.push({ name: "notePanel" })
   }
 }
-
-const props = defineProps({
-  note: {
-    required: true,
-    type: Object as PropType<NoteState>,
-  },
-  color: {
-    default: "sky",
-    type: String,
-  },
-})
 
 const colorTheme = ref<string>("")
 const text = ref<string>("")
@@ -107,9 +110,9 @@ textarea {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-textarea {
+/* textarea {
   -webkit-line-clamp: 4;
-}
+} */
 label {
   -webkit-line-clamp: 2;
 }
