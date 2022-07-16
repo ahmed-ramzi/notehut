@@ -6,10 +6,12 @@ import { markRaw } from "vue"
 
 type UserState = {
   user: User | null
+  all_users: any[]
 }
 interface UserActions {
   getUser(): Promise<void>
   setUser(data: any): void
+  getAllUsers(): void
 }
 
 export const usersCollection = db.collection("users")
@@ -18,6 +20,7 @@ const useUserStore = defineStore<string, UserState, Record<any, never>, UserActi
   state: () => {
     return {
       user: null,
+      all_users: [],
     }
   },
   actions: {
@@ -47,6 +50,16 @@ const useUserStore = defineStore<string, UserState, Record<any, never>, UserActi
       } catch (err) {
         console.log(err)
       }
+    },
+    getAllUsers(): void {
+      const data = usersCollection
+      data.get().then((querySnapshot) => {
+        const tempDoc = [] as any[]
+        querySnapshot.forEach((doc) => {
+          tempDoc.push({ id: doc.id, ...doc.data() })
+        })
+        this.all_users = tempDoc
+      })
     },
     setUser(data: any): void {
       this.user = data

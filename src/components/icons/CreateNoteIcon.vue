@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex justify-center items-center cursor-pointer rounded-2xl h-[60px] w-[60px] text-slate-500 border-2 border-white shadow-md"
+    class="flex justify-center items-center cursor-pointer rounded-[1.25rem] h-[60px] w-[60px] text-slate-500 border-2 border-white shadow-md"
     :class="[gradientColorClass(btnColor), shadowColorClass(btnColor)]"
     @click="create"
   >

@@ -1,69 +1,67 @@
 <template>
-  <teleport to="body">
-    <div class="modal">
-      <nav class="bg-slate-50 shadow-2xl shadow-slate-900 opacity-95 p-6 rounded-xl flex flex-col justify-between border-slate-600 border-2 border-opacity-40 overflow-scroll">
-        <div class="flex flex-col space-y-4">
-          <div class="flex items-center space-x-4">
-            <!-- Avatar -->
-            <div class="border-2 rounded-lg w-14 h-14 flex justify-center items-center" :class="gradientColorClass(avatarColor)">
-              <h2 class="text-white">
-                {{ user?.name.charAt(0).toUpperCase() }}
-              </h2>
-            </div>
-            <div>
-              <h3 class="text-slate-800 font-bold">{{ user?.name }}</h3>
-              <p>{{ user?.email }}</p>
-            </div>
+  <Modal>
+    <nav class="bg-slate-50 shadow-2xl shadow-slate-900 opacity-95 p-6 rounded-r-[5rem] flex flex-col justify-between overflow-scroll">
+      <div class="flex flex-col space-y-4">
+        <div class="flex items-center space-x-2">
+          <!-- Avatar -->
+          <div class="rounded-2xl shadow-lg w-[84px] h-[60px] flex justify-center items-center" :class="gradientColorClass(avatarColor)">
+            <h2 class="text-white">
+              {{ user?.name.charAt(0).toUpperCase() }}
+            </h2>
           </div>
-          <!-- Personal Stuff -->
-          <div class="flex flex-col">
-            <button @click="toggleMenu">
+          <div class="truncate w-full">
+            <h3 class="text-slate-800 font-bold truncate">{{ user?.name }}</h3>
+            <p>{{ user?.email }}</p>
+          </div>
+        </div>
+        <!-- Personal Stuff -->
+        <div class="flex flex-col">
+          <button @click="toggleMenu">
+            <div>
               <NoteIcon />
               <h4>Notes</h4>
-              <small>({{ notesCount }})</small>
-            </button>
-            <button>
+            </div>
+            <small>({{ notesCount }})</small>
+          </button>
+          <button>
+            <div>
               <NotificationsIcon />
               <h4>Notifications</h4>
-              <small>(soon)</small>
-            </button>
-          </div>
-          <!-- Shared -->
-          <div>
-            <div class="separator"></div>
-            <small class="px-2">Shared</small>
-          </div>
-
-          <div class="flex flex-col">
-            <button>
-              <h4>Groups</h4>
-              <small>(soon)</small>
-            </button>
-            <button>
-              <h4>Family</h4>
-              <small>(soon)</small>
-            </button>
-          </div>
-        </div>
-
-        <div class="flex flex-col">
-          <button>
-            <SettingsIcon />
-            <h4>Settings</h4>
+            </div>
             <small>(soon)</small>
           </button>
-          <button class="nh-logout" @click="logout">
+        </div>
+        <!-- Shared -->
+        <MembersNavigator />
+      </div>
+
+      <div class="flex flex-col">
+        <button>
+          <div>
+            <SettingsIcon />
+            <h4>Settings</h4>
+          </div>
+          <small>(soon)</small>
+        </button>
+
+        <button class="nh-logout" @click="logout">
+          <div>
             <LogoutIcon />
             <h4>Logout</h4>
-          </button>
-          <button class="px-2 space-x-4" @click="toggleMenu">
-            <HamburgerMenu black />
+          </div>
+        </button>
+
+        <button @click="toggleMenu" class="px-2 space-x-4">
+          <div>
+            <div>
+              <HamburgerMenu black />
+            </div>
             <h4>Close Menu</h4>
-          </button>
-        </div>
-      </nav>
-    </div>
-  </teleport>
+          </div>
+        </button>
+      </div>
+    </nav>
+  </Modal>
 </template>
 <script lang="ts" setup>
 import HamburgerMenu from "../icons/HamburgerMenu.vue"
@@ -78,6 +76,8 @@ import { getAuth, signOut } from "firebase/auth"
 import { resetApp } from "@/store"
 import { useRouter } from "vue-router"
 import { useNotesListGetters } from "@/store/notesList"
+import MembersNavigator from "./MembersNavigator.vue"
+import Modal from "../modals/Modal.vue"
 
 const avatarColor = randomColor() as string
 
@@ -103,13 +103,11 @@ const logout = () => {
 }
 </script>
 
-<style scoped>
-.modal {
-  @apply absolute top-0 left-0  bg-slate-300/40 z-50 w-full h-screen overscroll-none flex py-2 px-4 backdrop-blur-sm;
-}
+<style>
 button {
-  @apply flex h-12 items-center  space-x-2 rounded text-left;
+  @apply flex h-12 items-center  justify-between space-x-2 rounded text-left;
 }
+
 button:hover {
   @apply bg-slate-300;
 }
@@ -117,12 +115,11 @@ button:active {
   @apply opacity-70;
 }
 
+button > div {
+  @apply flex space-x-2 h-full items-center;
+}
 small {
   @apply italic text-slate-400;
-}
-
-.separator {
-  @apply h-0 w-full border border-slate-500;
 }
 
 /* button > h4:hover,
@@ -130,15 +127,15 @@ button > p:hover {
   @apply text-white;
 } */
 
-@media (max-width: 399px) {
+@media (max-width: 299px) {
   nav {
     @apply w-full;
   }
 }
 
-@media (min-width: 400px) {
+@media (min-width: 300px) {
   nav {
-    @apply min-w-[350px];
+    @apply min-w-[280px] max-w-[350px];
   }
 }
 </style>

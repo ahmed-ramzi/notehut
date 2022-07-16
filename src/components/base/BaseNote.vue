@@ -42,6 +42,7 @@ const updated_time = ref()
 
 onMounted(() => {
   currentTime.value = new Date()
+
   window.setInterval(() => {
     currentTime.value = new Date()
   }, 60000)
