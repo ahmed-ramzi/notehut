@@ -1,13 +1,22 @@
 <template>
-  <section class="rounded-3xl shadow-lg cursor-pointer hover:scale-110 duration-500 relative" :class="[colorTheme, shadow]">
+  <section class="rounded-3xl shadow-lg cursor-pointer hover:scale-105 duration-500 relative" :class="[colorTheme, shadow]">
     <div class="absolute top-3 right-3 cursor-pointer z-10" @click="onDelete(note)">
       <DeleteIcon />
     </div>
-    <div class="m-4 py-2 space-y-2 cursor-pointer" @click="openNote(note)">
+
+    <div class="m-4 py-2 space-y-2 cursor-pointer flex flex-col" @click="openNote(note)">
       <div class="max-w-[90%] md:max-w-[85%]">
         <label :class="text" class="indent-2 font-bold text-xl cursor-pointer">{{ note.title }}</label>
       </div>
-      <p :class="text" class="cursor-pointer">{{ note.contents }}</p>
+      <!-- <p :class="text" class="cursor-pointer">{{ note.contents }}</p> -->
+      <div>
+        <textarea
+          name="contents"
+          class="w-full rounded-md outline-none text-white bg-transparent font-light resize-none cursor-pointer"
+          disabled
+          v-model="note.contents"
+        ></textarea>
+      </div>
     </div>
   </section>
 </template>
@@ -92,13 +101,13 @@ if (props.color === "amber") {
 
 <style scoped>
 label,
-p {
+textarea {
   display: -webkit-box;
 
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-p {
+textarea {
   -webkit-line-clamp: 4;
 }
 label {
