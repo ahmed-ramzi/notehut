@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen flex flex-col justify-between">
+  <div class="h-screen flex flex-col">
     <router-view />
     <FooterNavigator v-if="isLoggedIn" />
     <SideNavigator v-if="isMenuActive && isLoggedIn" />
