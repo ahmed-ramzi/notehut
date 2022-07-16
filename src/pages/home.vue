@@ -27,6 +27,8 @@
         </p>
       </div>
     </div>
+    <FooterNavigator />
+    <SideNavigator v-if="isMenuActive" />
   </div>
 </template>
 
@@ -43,10 +45,15 @@ import Spinner from "@/components/base/Spinner.vue"
 import { useAppState } from "@/store/app"
 import LayoutIcon from "@/components/icons/LayoutIcon.vue"
 import CreateNoteIcon from "@/components/icons/CreateNoteIcon.vue"
+import { useNavState } from "@/store/navigators"
+import FooterNavigator from "@/components/navigators/FooterNavigator.vue"
+import SideNavigator from "@/components/navigators/SideNavigator.vue"
 
 const router = useRouter()
 
 const { setNoteDetails, changeEditingState } = useNoteDetailsActions()
+
+const { isMenuActive } = useNavState()
 
 const { createNewNote } = useNotesListActions()
 const { notesCount } = useNotesListGetters()

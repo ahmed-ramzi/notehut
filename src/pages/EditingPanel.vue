@@ -1,22 +1,23 @@
 <template>
-  <!-- <div class="h-full px-4 border-4 space-y-4"> -->
-  <HeaderSection backBtn="home" class="p-4"></HeaderSection>
-  <input
-    type="text"
-    name="title"
-    v-model="noteLabel"
-    :placeholder="noteLabel || 'New note'"
-    class="font-extralight text-3xl text-slate-500 py-4 px-6 w-full outline-none rounded-md"
-    ref="noteTitle"
-  />
+  <div class="h-screen p-4 space-y-4 flex flex-col">
+    <HeaderSection backBtn="home"></HeaderSection>
+    <input
+      type="text"
+      name="title"
+      v-model="noteLabel"
+      :placeholder="noteLabel || 'New note'"
+      class="font-extralight text-3xl text-slate-500 w-full outline-none rounded-md"
+      ref="noteTitle"
+    />
+    <div></div>
 
-  <textarea
-    name="contents"
-    class="w-full h-full rounded-md outline-none py-4 px-6 text-slate-500 font-light resize-none"
-    v-model="noteContent"
-    :placeholder="noteContent || 'Jot something here...'"
-  ></textarea>
-  <!-- </div> -->
+    <textarea
+      name="contents"
+      class="w-full h-full rounded-md outline-none text-slate-500 font-light resize-none"
+      v-model="noteContent"
+      :placeholder="noteContent || 'Jot something here...'"
+    ></textarea>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -50,7 +51,7 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-@media (max-height: 459px) {
+/* @media (max-height: 459px) {
   textarea {
     @apply mb-12;
   }
@@ -60,5 +61,5 @@ onUnmounted(() => {
   textarea {
     @apply mb-7;
   }
-}
+} */
 </style>
