@@ -4,7 +4,7 @@
       <DeleteIcon />
     </div>
 
-    <div class="m-4 py-2 space-y-2 cursor-pointer flex flex-col" @click="openNote(note)">
+    <div class="m-4 h-28 py-2 space-y-2 cursor-pointer flex flex-col" @click="openNote(note)">
       <div class="max-w-[90%] md:max-w-[85%]">
         <label :class="text" class="indent-2 font-bold text-xl cursor-pointer">{{ note.title }}</label>
       </div>
@@ -12,8 +12,7 @@
       <div>
         <textarea
           name="contents"
-          class="w-full rounded-md outline-none text-white bg-transparent font-light resize-none cursor-pointer"
-          :rows="lineBreaks > 5 ? 5 : lineBreaks"
+          class="w-full h-[75px] rounded-md outline-none text-white bg-transparent font-light resize-none cursor-pointer"
           disabled
           v-model="note.contents"
         ></textarea>
