@@ -1,13 +1,12 @@
 import { randomColor } from "@/composables/useRandomColor"
 import { defineStore, storeToRefs } from "pinia"
 import { NoteState } from "../types/states"
-import moment from "moment"
 import { useNotesListActions, useNotesListGetters, useNotesListState } from "./notesList"
 import useDate from "@/composables/useDate"
 
 type NoteDetail = {
   note: NoteState | undefined
-  isEditing: Boolean
+  isEditing: boolean
 }
 
 interface NoteDetailsAction {

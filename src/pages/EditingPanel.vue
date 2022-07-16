@@ -1,27 +1,27 @@
 <template>
   <div class="h-screen p-4 space-y-4 flex flex-col">
-    <HeaderSection backBtn="home"></HeaderSection>
+    <HeaderSection back-btn="home"></HeaderSection>
     <input
+      ref="noteTitle"
+      v-model="noteLabel"
       type="text"
       name="title"
-      v-model="noteLabel"
       :placeholder="noteLabel || 'New note'"
       class="font-extralight text-3xl text-slate-500 w-full outline-none rounded-md"
-      ref="noteTitle"
     />
     <div></div>
 
     <textarea
+      v-model="noteContent"
       name="contents"
       class="w-full h-full rounded-md outline-none text-slate-500 font-light resize-none"
-      v-model="noteContent"
       :placeholder="noteContent || 'Jot something here...'"
     ></textarea>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { onBeforeMount, onUnmounted, ref, watch } from "vue"
+import { onUnmounted, ref, watch } from "vue"
 import HeaderSection from "../layouts/HeaderSection.vue"
 import { useNoteDetailsState, useNoteDetailsActions, clearNoteDetailsState } from "../store/noteDetails"
 

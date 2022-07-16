@@ -5,7 +5,6 @@ import db from "@/firebase"
 import { useUserState } from "./user"
 import { arrayRemove, arrayUnion } from "firebase/firestore"
 import { markRaw } from "vue"
-import { stat } from "fs"
 import { useAppState } from "./app"
 
 export const notesCollection = db.collection("notes")
@@ -55,8 +54,6 @@ const useNotesListStore = defineStore<string, NotesList, NotesListGetters, Notes
       }
     },
     createNewNote(note: NoteState): void {
-      const { user } = useUserState()
-
       try {
         this.uploadNoteToDB(note)
         this.notes?.push(note)

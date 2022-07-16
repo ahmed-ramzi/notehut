@@ -4,7 +4,7 @@ type AppState = {
   isLoading: boolean
 }
 
-const useAppStore = defineStore<string, AppState, {}, {}>("app", {
+const useAppStore = defineStore<string, AppState, Record<any, never>, Record<any, never>>("app", {
   state: () => {
     return {
       isLoading: false,

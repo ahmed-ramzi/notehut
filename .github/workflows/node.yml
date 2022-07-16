@@ -7,9 +7,23 @@ on:
     branches: ["master"]
 
 jobs:
-  test-and-build:
+  lint:
     runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Pipeline
+        uses: actions/checkout@v3
 
+      - name: Initializing Yarn
+        uses: Borales/actions-yarn@v3
+
+      - name: Installing Dependencies
+        run: yarn install
+
+      - name: Linting
+        run: yarn lint
+
+  typescript-check:
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Pipeline
         uses: actions/checkout@v3
@@ -22,6 +36,18 @@ jobs:
 
       - name: Checking Typescript
         run: yarn ts-check
+
+  test-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Pipeline
+        uses: actions/checkout@v3
+
+      - name: Initializing Yarn
+        uses: Borales/actions-yarn@v3
+
+      - name: Installing Dependencies
+        run: yarn install
 
       - name: Building
         run: yarn build

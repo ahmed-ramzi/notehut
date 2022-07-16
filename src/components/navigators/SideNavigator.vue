@@ -56,7 +56,7 @@
             <LogoutIcon />
             <h4>Logout</h4>
           </button>
-          <button @click="toggleMenu" class="px-2 space-x-4">
+          <button class="px-2 space-x-4" @click="toggleMenu">
             <HamburgerMenu black />
             <h4>Close Menu</h4>
           </button>
@@ -74,7 +74,7 @@ import NoteIcon from "../icons/NoteIcon.vue"
 import SettingsIcon from "../icons/SettingsIcon.vue"
 import LogoutIcon from "../icons/LogoutIcon.vue"
 import NotificationsIcon from "../icons/NotificationsIcon.vue"
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth"
+import { getAuth, signOut } from "firebase/auth"
 import { resetApp } from "@/store"
 import { useRouter } from "vue-router"
 import { useNotesListGetters } from "@/store/notesList"

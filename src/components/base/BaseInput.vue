@@ -10,8 +10,8 @@
           class="field"
           :value="modelValue"
           :type="type"
-          @input="(e) => update(e)"
           :disabled="disabled"
+          @input="(e) => update(e)"
         />
 
         <ErrorMessage :name="name" class="errMsg"></ErrorMessage>
@@ -26,9 +26,18 @@ import { ref } from "vue"
 import { randomColor, textColorClass, focusColorClass } from "../../composables/useRandomColor"
 
 const props = defineProps({
-  modelValue: String,
-  label: String,
-  placeholder: String,
+  modelValue: {
+    type: [String, Number],
+    default: "",
+  },
+  label: {
+    type: String,
+    default: "",
+  },
+  placeholder: {
+    type: String,
+    default: "",
+  },
   type: {
     type: String,
     default: "text",
@@ -52,7 +61,7 @@ const props = defineProps({
 })
 const emit = defineEmits(["update:modelValue"])
 
-const colorTheme = ref<string>("")
+// const colorTheme = ref<string>("")
 const ringColor = ref<string>("")
 const textColor = ref<string>("")
 const randColor = randomColor() as string
