@@ -1,6 +1,6 @@
 <template>
   <teleport to="body">
-    <div class="modal" @click="toggleMenu">
+    <div class="modal">
       <nav class="bg-slate-50 opacity-95 p-6 rounded-xl flex flex-col justify-between border-slate-600 border-2 border-opacity-40 overflow-scroll">
         <div class="flex flex-col space-y-6">
           <div class="flex items-center space-x-4">
@@ -20,6 +20,7 @@
             <button @click="toggleMenu">
               <NoteIcon />
               <h4>Notes</h4>
+              <small>({{ notesCount }})</small>
             </button>
             <button>
               <NotificationsIcon />
@@ -73,11 +74,14 @@ import NotificationsIcon from "../icons/NotificationsIcon.vue"
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth"
 import { resetApp } from "@/store"
 import { useRouter } from "vue-router"
+import { useNotesListGetters } from "@/store/notesList"
 
 const avatarColor = randomColor() as string
 
 const { toggleMenu } = useNavActions()
 const { user } = useUserState()
+const { notesCount } = useNotesListGetters()
+
 const router = useRouter()
 
 let auth

@@ -4,7 +4,7 @@
     <HeaderSection headerLabel="notehut" class="fixed px-4 py-2 w-full z-20 bg-white">
       <div class="flex space-x-2">
         <LayoutIcon />
-        <ActionBtn v-if="notesCount" icon="+" label="Create Note" @click="createNote" />
+        <!-- <ActionBtn v-if="notesCount" icon="+" label="Create Note" @click="createNote" /> -->
       </div>
     </HeaderSection>
     <div class="h-[67px] w-full bg-transparent z-20"></div>
@@ -15,16 +15,15 @@
     <div v-else-if="notesCount" class="px-4 py-1 grid grid-cols-2 gap-4 items-start md:grid-cols-4 lg:grid-cols-6">
       <BaseNote v-for="note in notes?.slice().reverse()" :key="note.id" :note="note" :color="note.color" />
     </div>
-    <div v-else class="flex justify-center items-center text-center h-[60%]">
-      <div>
-        <p>
-          You have no notes<br />
-
-          Create a new note by clicking on the
+    <div v-else class="inline-flex flex-col justify-center items-center w-full h-[60%]">
+      <p>You have no notes</p>
+      <div class="inline-flex flex-col">
+        <p class="inline-flex items-center">
+          <span> Create a new note by clicking on the </span>
           <span class="px-2">
-            <ActionBtn icon="+" label="Create Note" @click="createNote" />
+            <CreateNoteIcon />
           </span>
-          button
+          <span> button </span>
         </p>
       </div>
     </div>
@@ -42,8 +41,8 @@ import HeaderSection from "@/layouts/HeaderSection.vue"
 import { randomColor } from "@/composables/useRandomColor"
 import Spinner from "@/components/base/Spinner.vue"
 import { useAppState } from "@/store/app"
-
 import LayoutIcon from "@/components/icons/LayoutIcon.vue"
+import CreateNoteIcon from "@/components/icons/CreateNoteIcon.vue"
 
 const router = useRouter()
 
@@ -55,18 +54,18 @@ const { notes } = useNotesListState()
 
 const { isLoading } = useAppState()
 
-const createNote = (): void => {
-  clearNoteDetailsState()
-  const note = {
-    id: notes.value?.length ? notesCount.value + 1 : 1,
-    title: "",
-    contents: "",
-    color: randomColor(),
-  } as NoteState
+// const create= (): void => {
+//   clearNoteDetailsState()
+//   const note = {
+//     id: notes.value?.length ? notesCount.value + 1 : 1,
+//     title: "",
+//     contents: "",
+//     color: randomColor(),
+//   } as NoteState
 
-  createNewNote(note)
-  setNoteDetails(note)
-  changeEditingState(true)
-  router.push({ name: "notePanel" })
-}
+//   changeEditingState(true)
+//   router.push({ name: "notePanel" })
+//   createNewNote(note)
+//   setNoteDetails(note)
+// }
 </script>
