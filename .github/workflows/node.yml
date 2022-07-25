@@ -37,7 +37,7 @@ jobs:
       - name: Checking Typescript
         run: yarn ts-check
 
-  test-and-build:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Pipeline
