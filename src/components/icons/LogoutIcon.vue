@@ -31,20 +31,12 @@
   /* fill: #4691f6; */
   @apply fill-slate-700;
 }
-.svg-icon:hover {
-  /* fill: #4691f6; */
-  @apply fill-slate-700;
-}
-
-.svg-icon circle {
+Modal .svg-icon circle {
   /* stroke: #4691f6;
   stroke-width: 1; */
   @apply stroke-slate-500 stroke-1;
 }
-div:hover {
-  @apply text-white bg-slate-500 shadow-md
-   /* shadow-slate-100; */;
-}
+
 div:active {
   @apply bg-slate-400;
 }

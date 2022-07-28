@@ -2,7 +2,7 @@
   <MenuLayout header-label="notehut" footer>
     <template #Header>
       <div class="flex space-x-2">
-        <LayoutIcon class="layout-btn" />
+        <!-- <LayoutIcon class="layout-btn" /> -->
       </div>
     </template>
     <div v-if="isLoading" class="centered">
@@ -33,7 +33,6 @@ import BaseNote from "@/components/base/BaseNote.vue"
 import { useNotesListState, useNotesListGetters } from "@/store/notesList"
 import Spinner from "@/components/base/Spinner.vue"
 import { useAppState } from "@/store/app"
-import LayoutIcon from "@/components/icons/LayoutIcon.vue"
 import CreateNoteIcon from "@/components/icons/CreateNoteIcon.vue"
 import MenuLayout from "@/layouts/MenuLayout.vue"
 

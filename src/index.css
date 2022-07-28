@@ -30,6 +30,9 @@ span {
   transform: translate(-50%, -50%);
   @apply px-4;
 }
+body {
+  @apply bg-slate-100;
+}
 /* .border {
   @apply border-gray-400;
 } */

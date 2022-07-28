@@ -12,17 +12,20 @@
           <small class="text-slate-500 text-size italic">Created: {{ group.created_at }}</small>
         </div>
 
-        <div class="h-full relative">
+        <div class="h-full space-x-2 flex items-center">
           <!-- TODO Fix not more than 3 Icons to appear -->
+          <div class="relative h-full">
+            <Avatar
+              v-for="(member, index) in group.members"
+              :key="member.id"
+              :name="member.name"
+              width="w-16"
+              class="absolute"
+              :class="index === 0 ? `right-0` : index === 1 ? 'right-10' : index === 2 ? `right-20` : 'hidden'"
+            />
+          </div>
 
-          <Avatar
-            v-for="(member, index) in group.members"
-            :key="member.id"
-            :name="member.name"
-            width="w-16"
-            class="absolute"
-            :class="index === 0 ? `right-0` : index === 1 ? 'right-10' : index === 2 ? `right-20` : 'hidden'"
-          />
+          <!-- <Preferences /> -->
         </div>
       </div>
     </div>
@@ -34,6 +37,7 @@ import { useGroupsState } from "@/store/groups"
 import Avatar from "@/components/Avatar.vue"
 import { useRouter } from "vue-router"
 import MenuLayout from "@/layouts/MenuLayout.vue"
+// import Preferences from "@/components/Preferences.vue"
 
 const router = useRouter()
 const { groups } = useGroupsState()

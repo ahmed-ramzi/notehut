@@ -1,8 +1,8 @@
 <template>
   <div class="h-screen overflow-scroll relative">
     <!-- The Header -->
-    <div class="fixed h-[67px] bg-white blur-sm w-full z-20"></div>
-    <HeaderSection :back-btn="backBtn" :header-label="headerLabel" class="fixed px-4 py-2 w-full z-20 bg-white nh-header">
+    <div class="fixed h-[67px] bg-slate-100 blur-sm w-full z-20"></div>
+    <HeaderSection :back-btn="backBtn" :header-label="headerLabel" class="fixed px-4 py-2 w-full z-20 bg-slate-100 nh-header">
       <slot name="Header" />
     </HeaderSection>
     <div class="h-[67px] w-full bg-transparent z-20"></div>
@@ -13,7 +13,7 @@
       <slot />
     </div>
     <FooterNavigator v-if="footer" />
-    <SideNavigator v-if="isMenuActive && footer" />
+    <SideNavigator v-if="footer" />
   </div>
 </template>
 
@@ -21,9 +21,6 @@
 import HeaderSection from "@/layouts/HeaderSection.vue"
 import FooterNavigator from "@/components/navigators/FooterNavigator.vue"
 import SideNavigator from "@/components/navigators/SideNavigator.vue"
-import { useNavState } from "@/store/navigators"
-
-const { isMenuActive } = useNavState()
 
 defineProps({
   headerLabel: {

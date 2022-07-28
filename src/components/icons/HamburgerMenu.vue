@@ -1,5 +1,5 @@
 <template>
-  <div id="navMenu" class="cursor-pointer" :class="isMenuActive ? 'active' : null" @click="toggleMenu">
+  <div id="navMenu" class="cursor-pointer" :class="isMenuActive ? 'active' : null">
     <span :class="black ? 'bg-black' : 'bg-white'"></span>
     <span :class="black ? 'bg-black' : 'bg-white'"></span>
     <span :class="black ? 'bg-black' : 'bg-white'"></span>
@@ -7,10 +7,9 @@
 </template>
 
 <script lang="ts" setup>
-import { useNavState, useNavActions } from "@/store/navigators"
+import { useNavState } from "@/store/navigators"
 
 const { isMenuActive } = useNavState()
-const { toggleMenu } = useNavActions()
 
 defineProps({
   black: {
