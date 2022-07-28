@@ -3,6 +3,7 @@ node_modules
 dist
 dist-ssr
 *.localgit 
+*.local
 
 #CYPRESS
 cypress/screenshots/*

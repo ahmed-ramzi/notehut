@@ -10,6 +10,9 @@ import { useNotesListActions } from "@/store/notesList"
 const { user } = useUserState()
 const { getNotesList } = useNotesListActions()
 
+console.log(process.env.VITE_API_KEY ? "Proccess" : "No Process")
+console.log(import.meta.env.VITE_API_KEY ? "Meta" : "No Meta")
+
 watch(
   () => user.value,
   () => {
