@@ -54,3 +54,26 @@ Cypress.Commands.add("visitPath", (path: string): void => {
 Cypress.Commands.add("checkUrl", (param: string): void => {
   cy.url().should("include", host + "/" + param)
 })
+/**
+ * Clearing Indexed DB
+ */
+
+Cypress.Commands.add("clearIndexedDB", async (): Promise<void> => {
+  const databases = await window.indexedDB.databases()
+
+  await Promise.all(
+    databases.map(
+      ({ name }: IDBDatabaseInfo) =>
+        new Promise((resolve, reject) => {
+          // @ts-ignore
+          const request = window.indexedDB.deleteDatabase(name)
+
+          request.addEventListener("success", resolve)
+          // Note: we need to also listen to the "blocked" event
+          // (and resolve the promise) due to https://stackoverflow.com/a/35141818
+          request.addEventListener("blocked", resolve)
+          request.addEventListener("error", reject)
+        }),
+    ),
+  )
+})

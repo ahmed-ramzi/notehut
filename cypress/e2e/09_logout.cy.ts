@@ -2,7 +2,7 @@ import { cg } from "../support/methods"
 const nav = ".nh-hamburger"
 const logout = ".nh-logout"
 
-describe("Login Test", () => {
+describe("Logout Test", () => {
   it("Logout", (): void => {
     cy.visitPath("")
     cy.checkUrl("")
