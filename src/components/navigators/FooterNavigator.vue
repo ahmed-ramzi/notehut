@@ -4,7 +4,7 @@
 
   <div class="fixed z-10 bottom-0 bg-slate-800 rounded-t-3xl h-16 w-full">
     <div class="flex justify-between items-center px-6 h-full relative">
-      <HamburgerMenu class="nh-hamburger" />
+      <HamburgerMenu class="nh-hamburger" @click="toggleMenu" />
       <SearchIcon />
       <div></div>
       <CreateNoteIcon class="absolute -top-5 right-10" />
@@ -16,4 +16,6 @@
 import HamburgerMenu from "../icons/HamburgerMenu.vue"
 import CreateNoteIcon from "../icons/CreateNoteIcon.vue"
 import SearchIcon from "@/components/icons/SearchIcon.vue"
+import { useNavActions } from "@/store/navigators"
+const { toggleMenu } = useNavActions()
 </script>

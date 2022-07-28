@@ -15,14 +15,14 @@ export const routes = [
     },
   },
 
-  {
-    path: "/test",
-    name: "TestPage",
-    component: () => import("../pages/TestPage.vue"),
-    meta: {
-      requiresAuth: true,
-    },
-  },
+  // {
+  //   path: "/test",
+  //   name: "TestPage",
+  //   component: () => import("../pages/TestPage.vue"),
+  //   meta: {
+  //     requiresAuth: true,
+  //   },
+  // },
   {
     path: "/groups",
     name: "GroupsPage",
@@ -30,6 +30,11 @@ export const routes = [
     meta: {
       requiresAuth: true,
     },
+    props: (route: any) => ({
+      initData: {
+        groupId: route.params.groupId,
+      },
+    }),
   },
   {
     path: "/group/:groupId?",

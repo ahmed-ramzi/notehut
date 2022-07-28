@@ -7,14 +7,14 @@
       type="text"
       name="title"
       :placeholder="noteLabel || 'New note'"
-      class="font-extralight text-3xl text-slate-500 w-full outline-none rounded-md"
+      class="font-extralight text-3xl text-slate-500 w-full bg-transparent outline-none rounded-md"
     />
     <div></div>
 
     <textarea
       v-model="noteContent"
       name="contents"
-      class="w-full h-full rounded-md outline-none text-slate-500 font-light resize-none"
+      class="w-full h-full rounded-md outline-none text-slate-500 bg-transparent font-light resize-none"
       :placeholder="noteContent || 'Jot something here...'"
     ></textarea>
   </div>

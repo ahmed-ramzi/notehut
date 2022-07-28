@@ -32,7 +32,7 @@
   @apply stroke-slate-500 stroke-1;
 }
 div:hover {
-  /* @apply text-white bg-slate-500 shadow-md */
+  /*  */
   /* shadow-slate-100; */
 }
 div:active {
