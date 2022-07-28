@@ -52,7 +52,7 @@
             <h4>Settings</h4>
             <small>(soon)</small>
           </button>
-          <button @click="logout">
+          <button @click="logout" class="nh-logout">
             <LogoutIcon />
             <h4>Logout</h4>
           </button>
