@@ -3,7 +3,7 @@ const nav = ".nh-hamburger"
 const logout = ".nh-logout"
 
 describe("Logout Test", () => {
-  it.skip("Logout", (): void => {
+  it("Logout", (): void => {
     cy.visitPath("")
     cy.checkUrl("")
 

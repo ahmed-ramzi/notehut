@@ -1,6 +1,7 @@
 import { defineConfig } from "cypress"
 
 export default defineConfig({
+  projectId: "xgi1a2",
   video: true,
   videoUploadOnPasses: false,
   viewportHeight: 1080,
