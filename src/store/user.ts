@@ -1,6 +1,6 @@
 import { defineStore, storeToRefs } from "pinia"
 import { User } from "../types/states"
-import db from "../firebase"
+import db from "../firestore"
 import { getAuth } from "firebase/auth"
 import { markRaw } from "vue"
 

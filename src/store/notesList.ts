@@ -1,7 +1,7 @@
 import { defineStore, storeToRefs } from "pinia"
 import { NoteState } from "../types/states"
 import mockNotes from "../composables/useMockNotes"
-import db from "@/firebase"
+import db from "@/firestore"
 import { useUserState } from "./user"
 import { arrayRemove, arrayUnion } from "firebase/firestore"
 import { markRaw } from "vue"
