@@ -49,17 +49,3 @@ onUnmounted(() => {
   clearNoteDetailsState()
 })
 </script>
-
-<style scoped>
-/* @media (max-height: 459px) {
-  textarea {
-    @apply mb-12;
-  }
-}
-
-@media (min-height: 460px) {
-  textarea {
-    @apply mb-7;
-  }
-} */
-</style>

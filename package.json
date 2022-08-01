@@ -18,6 +18,7 @@
     "cypress:prod-run": "CYPRESS_BASE_URL=https://notehut.app ./node_modules/.bin/cypress run"
   },
   "dependencies": {
+    "@types/uuid": "^8.3.4",
     "firebase": "^9.6.11",
     "moment": "^2.29.4",
     "pinia": "^2.0.13",

@@ -1,7 +1,9 @@
 <template>
   <section class="flex justify-between items-center">
-    <ActionBtn v-if="backBtn" icon="<" label="Back" @click="onClickBack" />
-    <h1 class="font-semibold">{{ headerLabel }}</h1>
+    <div class="flex items-center" :class="backBtn ? 'space-x-2' : null">
+      <ActionBtn v-if="backBtn" icon="<" label="Back" class="mt-2" @click="onClickBack" />
+      <h1 class="font-semibold">{{ headerLabel }}</h1>
+    </div>
     <div class="flex">
       <div>
         <slot />

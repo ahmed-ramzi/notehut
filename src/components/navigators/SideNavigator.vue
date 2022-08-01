@@ -4,11 +4,7 @@
       <div class="flex flex-col space-y-4">
         <div class="flex items-center space-x-2">
           <!-- Avatar -->
-          <div class="rounded-2xl shadow-lg w-[84px] h-[60px] flex justify-center items-center" :class="gradientColorClass(avatarColor)">
-            <h2 class="text-white">
-              {{ user?.name.charAt(0).toUpperCase() }}
-            </h2>
-          </div>
+          <Avatar :name="user?.name" />
           <div class="truncate w-full">
             <h3 class="text-slate-800 font-bold truncate">{{ user?.name }}</h3>
             <p>{{ user?.email }}</p>
@@ -51,7 +47,7 @@
           </div>
         </button>
 
-        <button @click="toggleMenu" class="px-2 space-x-4">
+        <button class="px-2 space-x-4" @click="toggleMenu">
           <div>
             <div>
               <HamburgerMenu black />
@@ -67,7 +63,6 @@
 import HamburgerMenu from "../icons/HamburgerMenu.vue"
 import { useNavActions } from "@/store/navigators"
 import { useUserState } from "@/store/user"
-import { randomColor, gradientColorClass } from "@/composables/useRandomColor"
 import NoteIcon from "../icons/NoteIcon.vue"
 import SettingsIcon from "../icons/SettingsIcon.vue"
 import LogoutIcon from "../icons/LogoutIcon.vue"
@@ -78,8 +73,7 @@ import { useRouter } from "vue-router"
 import { useNotesListGetters } from "@/store/notesList"
 import MembersNavigator from "./MembersNavigator.vue"
 import Modal from "../modals/Modal.vue"
-
-const avatarColor = randomColor() as string
+import Avatar from "../Avatar.vue"
 
 const { toggleMenu } = useNavActions()
 const { user } = useUserState()

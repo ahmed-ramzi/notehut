@@ -8,13 +8,16 @@ export type Timestamp = string | number | null
 export type MemberDetail = {
   id: string
   name: string
+  email: string
   role: "admin" | "member"
-  joinDate: Timestamp
+  joinDate: Timestamp | null
+  status: "active" | "pending"
 }
 
 export type GroupDetail = {
   id: string
   name: string
+  created_at: Timestamp
   members: MemberDetail[]
 }
 
@@ -38,7 +41,7 @@ export type User = {
   email: string
   isAdmin?: boolean
   registerDate: Timestamp
-  groups?: GroupDetail[]
+  groups?: string[]
   settings: Settings
 }
 

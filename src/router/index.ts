@@ -23,6 +23,14 @@ export const routes = [
     },
   },
   {
+    path: "/members",
+    name: "MembersPage",
+    component: () => import("../pages/MembersPage.vue"),
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
     path: "/note",
     name: "notePanel",
     component: () => import("../pages/EditingPanel.vue"),

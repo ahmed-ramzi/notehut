@@ -1,12 +1,12 @@
 <template>
   <section v-if="search != ''" class="fixed bottom-6 rounded-2xl min-w-[200px] max-w-xl shadow-lg bg-white">
-    <section v-for="item in items" @click="$emit('selected')" class="w-full border inline-flex flex-col">
+    <section v-for="item in items" :key="item.key" class="w-full border inline-flex flex-col" @click="$emit('selected')">
       {{ item.value }}
     </section>
   </section>
 </template>
 <script lang="ts" setup>
-import { PropType } from "vue"
+// import { PropType } from "vue"
 type Item = {
   key: string | number
   value: string | number

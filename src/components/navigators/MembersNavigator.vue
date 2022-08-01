@@ -5,6 +5,12 @@
   </div>
 
   <div class="flex flex-col">
+    <button @click="router.push({ name: 'MembersPage' })">
+      <div>
+        <MembersIcon />
+        <h4>Groups</h4>
+      </div>
+    </button>
     <button @click="isModalOpened = !isModalOpened">
       <div>
         <MembersIcon />
@@ -15,18 +21,21 @@
 
   <Modal v-if="isModalOpened">
     <ModalContainer title="Create a Group" description="You can your Friends or Family into multiple groups and share notes." @close="isModalOpened = false">
-      <Form @submit="submit" :validation-schema="schema" class="form">
+      <Form :validation-schema="schema" class="form" @submit="submit(userEmail)">
         <div>
           <h3>Group Information</h3>
-          <BaseInput v-model="groupName" label="Group Name" placeholder="The Marvels" name="GroupName" />
-          <BaseInput v-model="userEmail" label="Email" placeholder="example@mail.com" name="Email" />
+          <BaseInput v-model="groupName" label="Group Name" placeholder="eg. The Marvels" name="GroupName" />
         </div>
-        <div>
+        <div class="border-t-2 pt-4">
           <h3>Add a Member</h3>
-          <BaseInput v-model="member" label="Member Name" placeholder="Joe Martin" name="Member" type="search " class="relative border" />
-          <Dropdown search="member" class="px-4"> </Dropdown>
+          <BaseInput v-model="userEmail" type="search" label="Email" placeholder="example@mail.com" name="Email" />
+
+          <!-- <BaseInput v-model="member" label="Member Name" placeholder="Joe Martin" name="Member" type="search " /> -->
         </div>
-        <BaseButton label="Add" width="w-20" />
+        <div class="h-4">
+          <p v-if="errorMessage" class="text-red-500 italic font-bold text-center">{{ errorMessage }}</p>
+        </div>
+        <BaseButton label="Create" width="w-20" :loading="loading" />
       </Form>
     </ModalContainer>
   </Modal>
@@ -37,41 +46,94 @@ import MembersIcon from "../icons/MembersIcon.vue"
 import Modal from "../modals/Modal.vue"
 import ModalContainer from "../modals/ModalContainer.vue"
 import { Form } from "vee-validate"
-import { computed, ref, watch } from "vue"
+import { markRaw, ref } from "vue"
 import * as yup from "yup"
 import BaseInput from "../base/BaseInput.vue"
 import BaseButton from "../base/BaseButton.vue"
-import { usersCollection, useUserActions, useUserState } from "@/store/user"
-import db from "@/firebase"
-import Dropdown from "../base/Dropdown.vue"
+import { useUserActions, useUserState } from "@/store/user"
+import { useGroupsActions } from "@/store/groups"
+import { GroupDetail, User } from "@/types/states"
+import { v4 } from "uuid"
+import useDate from "@/composables/useDate"
+import { useRouter } from "vue-router"
+// import Dropdown from "../base/Dropdown.vue"
 
 const isModalOpened = ref(false)
 
 const groupName = ref<string>("")
 const userEmail = ref<string>("")
-const member = ref<string>("")
+const loading = ref<boolean>(false)
+
+const router = useRouter()
+// const member = ref<string>("")
+
+const errorMessage = ref<string>("")
 
 const { getAllUsers } = useUserActions()
-const { all_users } = useUserState()
+const { user, all_users } = useUserState()
 
-const unwatch = watch(
-  () => isModalOpened.value,
-  () => {
-    if (isModalOpened.value === true) {
-      console.log("triggered")
-      getAllUsers()
-      unwatch()
+const { createGroup } = useGroupsActions()
+
+const submit = (email: string) => {
+  // First checking if member exits
+  loading.value = true
+  if (!all_users.value.length) {
+    getAllUsers()
+  }
+
+  let member = {} as User
+  all_users.value.forEach((user: User) => {
+    if (email === user.email) {
+      member = markRaw(user)
     }
-  },
-)
-getAllUsers()
+  })
 
-const submit = () => {}
+  if (Object.keys(member).length !== 0) {
+    try {
+      console.log(member)
+
+      const groupData = {
+        id: v4(),
+        name: groupName.value,
+        created_at: useDate.shortDate(),
+        members: [
+          {
+            id: user.value?.id,
+            name: user.value?.name,
+            email: user.value?.email,
+            role: "admin",
+            joinDate: useDate.shortDate(),
+            status: "active",
+          },
+          {
+            id: member.id,
+            name: member.name,
+            email: member.email,
+            role: "member",
+            joinDate: useDate.shortDate(),
+            status: "active",
+          },
+        ],
+      } as GroupDetail
+
+      loading.value = false
+      createGroup(groupData)
+      router.push({ name: "MembersPage" })
+
+      isModalOpened.value = false
+    } catch (e) {
+      loading.value = false
+      errorMessage.value = "Something went wrong. Try again later"
+    }
+  } else {
+    loading.value = false
+    errorMessage.value = "User doesn't exist"
+  }
+}
 
 const schema = yup.object({
   Email: yup.string().required().email(),
   GroupName: yup.string().required(),
-  Member: yup.string().required(),
 })
 </script>
 
