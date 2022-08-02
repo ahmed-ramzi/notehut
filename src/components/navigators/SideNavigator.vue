@@ -103,7 +103,7 @@ onUnmounted(() => {
 
 <style>
 button {
-  @apply flex h-12 items-center  justify-between space-x-2 rounded text-left;
+  @apply flex h-12 items-center px-1 justify-between space-x-2 rounded text-left;
 }
 
 button:hover {

@@ -9,7 +9,7 @@
       >
         <div class="flex flex-col">
           <h3 class="text-slate-900 font-light">{{ group.name }}</h3>
-          <small class="text-slate-500 italic">Created on: {{ group.created_at }}</small>
+          <small class="text-slate-500 text-size italic">Created: {{ group.created_at }}</small>
         </div>
 
         <div class="h-full relative">
@@ -42,3 +42,18 @@ const onClick = async (groupId: string): Promise<void> => {
   await router.push({ name: "GroupPage", params: { groupId } })
 }
 </script>
+
+<style scoped>
+@media (min-width: 400px) {
+  .text-size {
+    font-size: 12px;
+    line-height: 16px;
+  }
+}
+@media (max-width: 399px) {
+  .text-size {
+    font-size: 8px;
+    line-height: 8px;
+  }
+}
+</style>

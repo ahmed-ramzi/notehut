@@ -17,11 +17,20 @@ interface GroupActions {
   createGroup(group: GroupDetail): Promise<void>
 }
 
-const useGroupStore = defineStore<string, GroupState, Record<never, never>, GroupActions>("groups", {
+type GroupGetters = {
+  groupsCount(state: GroupState): number
+}
+
+const useGroupStore = defineStore<string, GroupState, GroupGetters, GroupActions>("groups", {
   state: () => {
     return {
       groups: [],
     }
+  },
+  getters: {
+    groupsCount(state: GroupState): number {
+      return state.groups?.length || 0
+    },
   },
   actions: {
     async getUserGroups(): Promise<void> {
@@ -69,5 +78,6 @@ const useGroupStore = defineStore<string, GroupState, Record<never, never>, Grou
 })
 
 export const useGroupsState = () => storeToRefs(useGroupStore())
+export const useGroupsGetters = () => storeToRefs(useGroupStore())
 export const useGroupsActions = () => useGroupStore()
 export const clearGroupsState = (): void => useGroupStore().$reset()

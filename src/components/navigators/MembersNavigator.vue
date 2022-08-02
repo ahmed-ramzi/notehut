@@ -5,15 +5,16 @@
   </div>
 
   <div class="flex flex-col">
-    <button @click="onClickGroups">
+    <button v-if="groupsCount" @click="onClickGroups">
       <div>
         <MembersIcon />
         <h4>Groups</h4>
       </div>
+      <small>({{ groupsCount }})</small>
     </button>
     <button @click="isModalOpened = !isModalOpened">
       <div>
-        <MembersIcon />
+        <CreateGroupIcon />
         <h4>Create a Group</h4>
       </div>
     </button>
@@ -35,7 +36,7 @@
         <div class="h-4">
           <p v-if="errorMessage" class="text-red-500 italic font-bold text-center">{{ errorMessage }}</p>
         </div>
-        <BaseButton label="Create" width="w-20" :loading="loading" />
+        <BaseButton width="w-20" :loading="loading">Create</BaseButton>
       </Form>
     </ModalContainer>
   </Modal>
@@ -51,12 +52,13 @@ import * as yup from "yup"
 import BaseInput from "../base/BaseInput.vue"
 import BaseButton from "../base/BaseButton.vue"
 import { useUserActions, useUserState } from "@/store/user"
-import { useGroupsActions } from "@/store/groups"
+import { useGroupsActions, useGroupsGetters } from "@/store/groups"
 import { GroupDetail, User } from "@/types/states"
 import { v4 } from "uuid"
 import useDate from "@/composables/useDate"
 import { useRouter } from "vue-router"
 import { useNavActions } from "@/store/navigators"
+import CreateGroupIcon from "../icons/CreateGroupIcon.vue"
 // import Dropdown from "../base/Dropdown.vue"
 
 const isModalOpened = ref(false)
@@ -67,6 +69,8 @@ const loading = ref<boolean>(false)
 
 const router = useRouter()
 // const member = ref<string>("")
+
+const { groupsCount } = useGroupsGetters()
 
 const errorMessage = ref<string>("")
 
@@ -85,7 +89,7 @@ const submit = async (email: string) => {
   // First checking if member exits
   loading.value = true
   if (!all_users.value.length) {
-    getAllUsers()
+    await getAllUsers()
   }
 
   let member = {} as User
@@ -146,7 +150,7 @@ onUnmounted(() => {
 })
 </script>
 
-<style>
+<style scoped>
 .separator {
   @apply h-0 w-full border border-slate-500;
 }
@@ -156,5 +160,8 @@ onUnmounted(() => {
 }
 .form {
   @apply items-center;
+}
+button {
+  @apply px-1;
 }
 </style>

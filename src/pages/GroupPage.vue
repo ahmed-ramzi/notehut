@@ -3,7 +3,7 @@
     <div v-if="isLoading" class="centered">
       <Spinner />
     </div>
-    <div v-else-if="sharedNotesCount" class="py-1 notes-container">
+    <div v-else-if="sharedNotesCount" class="pb-2 notes-container">
       <BaseSharedNotes v-for="note in shared_notes?.slice().reverse()" :key="note.id" :note="note" :color="note.color" />
     </div>
     <div v-else class="centered">

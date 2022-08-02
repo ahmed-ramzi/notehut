@@ -8,19 +8,21 @@
     <div v-if="isLoading" class="centered">
       <Spinner />
     </div>
-    <div v-else-if="privateNotesCount" class="py-1 notes-container">
+    <div v-else-if="privateNotesCount" class="pb-2 notes-container">
       <BaseNote v-for="note in notes?.slice().reverse()" :key="note.id" :note="note" :color="note.color" />
     </div>
-    <div v-else class="inline-flex flex-col justify-center items-center w-full h-[60%]">
-      <p>You have no notes</p>
-      <div class="inline-flex flex-col">
-        <p class="inline-flex items-center">
-          <span class="whitespace-nowrap"> Create a new note by clicking on the </span>
-          <span class="px-2">
-            <CreateNoteIcon ignore-hidding-btn />
-          </span>
-          <span> button </span>
-        </p>
+    <div v-else class="centered">
+      <div class="inline-flex flex-col justify-center items-center w-full">
+        <p>You have no notes</p>
+        <div class="inline-flex flex-col">
+          <p class="inline-flex items-center">
+            <span class="whitespace-nowrap"> Create a new note by clicking on the </span>
+            <span class="px-2">
+              <CreateNoteIcon ignore-hidding-btn />
+            </span>
+            <span> button </span>
+          </p>
+        </div>
       </div>
     </div>
   </MenuLayout>

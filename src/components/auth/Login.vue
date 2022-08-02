@@ -5,7 +5,7 @@
       <BaseInput v-model="userEmail" label="Email" placeholder="example@mail.com" name="Email" class="nh-email" />
       <BaseInput v-model="password" label="Password" placeholder="Your Password" name="Password" type="password" class="nh-password" />
       <p v-if="errMsg" class="text-red-500 font-medium nh-error-msg">{{ errMsg }}</p>
-      <BaseButton label="Sign In" width="w-full md:w-52" :loading="loading" class="mt-4 nh-submit" />
+      <BaseButton width="w-full md:w-52" :loading="loading" class="mt-4 nh-submit">Sign In</BaseButton>
     </Form>
   </AuthLayout>
 </template>
