@@ -1,6 +1,6 @@
 <template>
   <div class="h-screen p-4 space-y-4 flex flex-col">
-    <HeaderSection back-btn="HomePage"></HeaderSection>
+    <HeaderSection back-btn="back"></HeaderSection>
     <input
       ref="noteTitle"
       v-model="noteLabel"
@@ -22,11 +22,15 @@
 
 <script lang="ts" setup>
 import { onUnmounted, ref, watch } from "vue"
+import { useRoute } from "vue-router"
 import HeaderSection from "../layouts/HeaderSection.vue"
 import { useNoteDetailsState, useNoteDetailsActions, clearNoteDetailsState } from "../store/noteDetails"
 
+const route = useRoute()
+const groupId = route.params.groupId as string
+
 const { note: noteFromStore } = useNoteDetailsState()
-const { updateNoteTitle, updateNoteContent } = useNoteDetailsActions()
+const { updateSharedNoteContent, updateSharedNoteTitle } = useNoteDetailsActions()
 
 const noteLabel = ref(noteFromStore.value?.title ? noteFromStore.value?.title : "")
 const noteContent = ref(noteFromStore.value?.contents ? noteFromStore.value?.contents : "")
@@ -34,14 +38,14 @@ const noteContent = ref(noteFromStore.value?.contents ? noteFromStore.value?.con
 watch(
   () => noteLabel.value,
   () => {
-    updateNoteTitle(noteLabel.value)
+    updateSharedNoteTitle(noteLabel.value, groupId)
   },
 )
 
 watch(
   () => noteContent.value,
   () => {
-    updateNoteContent(noteContent.value)
+    updateSharedNoteContent(noteContent.value, groupId)
   },
 )
 

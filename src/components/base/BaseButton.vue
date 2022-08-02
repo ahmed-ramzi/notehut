@@ -4,7 +4,7 @@
       <Spinner size="w-10 h-10" />
     </div>
     <div v-else class="text-white cursor-pointer">
-      {{ label }}
+      <slot />
     </div>
   </button>
 </template>
@@ -15,10 +15,6 @@ import { randomColor, colorClass, gradientColorClass } from "../../composables/u
 import Spinner from "./Spinner.vue"
 
 const props = defineProps({
-  label: {
-    type: String,
-    default: "",
-  },
   width: {
     type: String,
     default: "w-40",

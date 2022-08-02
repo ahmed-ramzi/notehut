@@ -1,15 +1,19 @@
 import { defineStore, storeToRefs } from "pinia"
 import { User } from "../types/states"
-import db from "../firebase"
+import db from "../firestore"
 import { getAuth } from "firebase/auth"
 import { markRaw } from "vue"
+import { arrayUnion } from "firebase/firestore"
 
 type UserState = {
   user: User | null
+  all_users: any[]
 }
 interface UserActions {
   getUser(): Promise<void>
   setUser(data: any): void
+  getAllUsers(): void
+  setGroupToUser(groupId: string, userId: string): void
 }
 
 export const usersCollection = db.collection("users")
@@ -18,6 +22,7 @@ const useUserStore = defineStore<string, UserState, Record<any, never>, UserActi
   state: () => {
     return {
       user: null,
+      all_users: [],
     }
   },
   actions: {
@@ -26,30 +31,31 @@ const useUserStore = defineStore<string, UserState, Record<any, never>, UserActi
         const id = getAuth().currentUser?.uid
         if (id) {
           const userCollection = await usersCollection.doc(id).get()
-
           const data = userCollection.data() as User
-
           this.user = markRaw(data)
-
-          // this.user.id = id
-          // this.user.name = userCollection.data().name
-          // this.user.email = userCollection.data().email || userData.email
-          // this.user.isAdmin = userCollection.data().isAdmin
-          // this.user.registerDate = userCollection.data().registerDate
-          // this.user.dob = userCollection.data().dob
-          // this.user.jobtitle = userCollection.data().jobtitle
-          // this.user.address = userCollection.data().address
-          // this.user.zipcode = userCollection.data().zipcode
-          // this.user.city = userCollection.data().city
-          // this.user.country = userCollection.data().country
-          // this.user.programsRegistered = userCollection.data().programsRegistered
         }
       } catch (err) {
         console.log(err)
       }
     },
+    async getAllUsers(): Promise<void> {
+      const data = usersCollection
+      await data.get().then((users) => {
+        const tempDoc = [] as any[]
+        users.forEach((doc) => {
+          tempDoc.push({ id: doc.id, ...doc.data() })
+        })
+        this.all_users = tempDoc
+      })
+    },
     setUser(data: any): void {
       this.user = data
+    },
+    setGroupToUser(groupId: string, userId: string): void {
+      usersCollection.doc(userId).update({
+        groups: arrayUnion(groupId),
+      })
+      this.user?.groups?.push(groupId)
     },
   },
 })

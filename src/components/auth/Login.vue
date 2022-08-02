@@ -1,11 +1,11 @@
 <template>
   <AuthLayout type="login">
     <!-- Form -->
-    <Form :validation-schema="schema" class="w-full flex flex-col items-center" @submit="login">
-      <BaseInput v-model="userEmail" label="Email" placeholder="example@mail.com" name="Email" />
-      <BaseInput v-model="password" label="Password" placeholder="Your Password" name="Password" type="password" />
-      <p v-if="errMsg" class="text-red-500 font-medium">{{ errMsg }}</p>
-      <BaseButton label="Sign In" width="w-full md:w-52" :loading="loading" class="mt-4" />
+    <Form :validation-schema="schema" class="w-full flex flex-col items-center nh-form" @submit="login">
+      <BaseInput v-model="userEmail" label="Email" placeholder="example@mail.com" name="Email" class="nh-email" />
+      <BaseInput v-model="password" label="Password" placeholder="Your Password" name="Password" type="password" class="nh-password" />
+      <p v-if="errMsg" class="text-red-500 font-medium nh-error-msg">{{ errMsg }}</p>
+      <BaseButton width="w-full md:w-52" :loading="loading" class="mt-4 nh-submit">Sign In</BaseButton>
     </Form>
   </AuthLayout>
 </template>
@@ -21,6 +21,7 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
 import { useAuthActions } from "../../store/auth"
 import { useRouter } from "vue-router"
 import { useUserActions } from "../../store/user"
+import { useAppActions } from "@/store/app"
 
 let auth
 
@@ -31,6 +32,7 @@ const errMsg = ref<string>("")
 const loading = ref<boolean>(false)
 
 const router = useRouter()
+const { loadApp } = useAppActions()
 
 const { getUser } = useUserActions()
 
@@ -47,14 +49,15 @@ const login = () => {
     auth = getAuth()
 
     signInWithEmailAndPassword(auth, userEmail.value, password.value)
-      .then(() => {
+      .then(async () => {
         console.log("Successfully signed in!")
         // console.log("auth", auth.currentUser)
         // console.log("data", data.user)
 
         setLoggedIn(true)
+        await router.push({ name: "HomePage" })
         getUser()
-        router.push({ name: "home" })
+        loadApp()
       })
       .catch((error) => {
         loading.value = false

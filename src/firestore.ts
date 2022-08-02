@@ -10,8 +10,8 @@ import "firebase/compat/firestore"
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyCGObptqRPGdaSvbtoksGIt4ppKtAfFb8s",
-  authDomain: "notehut-14bd0.firebaseapp.com",
+  apiKey: `${import.meta.env.VITE_API_KEY}`,
+  authDomain: `${import.meta.env.VITE_AUTH_DOMAIN}`,
   projectId: "notehut-14bd0",
   storageBucket: "notehut-14bd0.appspot.com",
   messagingSenderId: "56061727737",

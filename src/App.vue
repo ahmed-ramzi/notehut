@@ -4,17 +4,17 @@
 
 <script lang="ts" setup>
 import { watch } from "vue"
-import { useUserState } from "@/store/user"
-import { useNotesListActions } from "@/store/notesList"
+import { useAppActions } from "./store/app"
+import { useAuthState } from "./store/auth"
 
-const { user } = useUserState()
-const { getNotesList } = useNotesListActions()
+const { isLoggedIn } = useAuthState()
+const { loadApp } = useAppActions()
 
 watch(
-  () => user.value,
+  () => isLoggedIn.value,
   () => {
-    if (user.value?.id) {
-      getNotesList()
+    if (isLoggedIn.value) {
+      loadApp()
     }
   },
   { deep: true, immediate: true },

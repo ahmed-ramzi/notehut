@@ -11,6 +11,7 @@
     ></path>
   </svg>
 </template>
+<script lang="ts" setup></script>
 
 <style scoped>
 .svg-icon {

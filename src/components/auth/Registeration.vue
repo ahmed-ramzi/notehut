@@ -1,11 +1,11 @@
 <template>
+  <div></div>
   <AuthLayout type="register">
-    <!-- Form -->
     <Form :validation-schema="schema" class="w-full flex flex-col items-center" @submit="register">
       <BaseInput v-model="userName" label="Name" placeholder="Tell us your name" name="Name" />
       <BaseInput v-model="userEmail" label="Email" placeholder="example@mail.com" name="Email" />
       <BaseInput v-model="password" label="Password" placeholder="Your Password" name="Password" type="password" />
-      <BaseButton label="Register" width="w-full md:w-52" class="mt-4" :loading="loading" />
+      <BaseButton width="w-full md:w-52" class="mt-4" :loading="loading">Register</BaseButton>
     </Form>
   </AuthLayout>
 </template>
@@ -22,7 +22,7 @@ import { useUserActions, usersCollection } from "../../store/user"
 import { useAuthActions } from "../../store/auth"
 import { User } from "../../types/states"
 import { useRouter } from "vue-router"
-import { notesCollection } from "@/store/notesList"
+import { privateNotesCollection } from "@/store/notesList"
 
 let auth
 
@@ -62,14 +62,14 @@ const register = () => {
         } as User
 
         usersCollection.doc(newUserId).set(markRaw(newUser))
-        notesCollection.doc(newUserId).set({
+        privateNotesCollection.doc(newUserId).set({
           notes: [],
         })
 
         getUser()
         console.log("Successfully Registered")
         setLoggedIn(true)
-        router.push({ name: "home" })
+        router.push({ name: "HomePage" })
       })
       .catch((error) => {
         loading.value = false
