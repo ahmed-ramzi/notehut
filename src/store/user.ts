@@ -38,9 +38,9 @@ const useUserStore = defineStore<string, UserState, Record<any, never>, UserActi
         console.log(err)
       }
     },
-    getAllUsers(): void {
+    async getAllUsers(): Promise<void> {
       const data = usersCollection
-      data.get().then((users) => {
+      await data.get().then((users) => {
         const tempDoc = [] as any[]
         users.forEach((doc) => {
           tempDoc.push({ id: doc.id, ...doc.data() })

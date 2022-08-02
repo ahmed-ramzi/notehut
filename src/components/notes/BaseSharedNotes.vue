@@ -23,14 +23,14 @@
 import { useNoteDetailsActions } from "@/store/noteDetails"
 import { useNotesListActions } from "@/store/notesList"
 import { onMounted, PropType, ref, watch } from "vue"
-import { useRouter } from "vue-router"
-import { PrivateNote } from "../../types/states"
+import { useRoute, useRouter } from "vue-router"
+import { SharedNote } from "../../types/states"
 import DeleteIcon from "../icons/DeleteIcon.vue"
 import useDate from "@/composables/useDate"
 const props = defineProps({
   note: {
     required: true,
-    type: Object as PropType<PrivateNote>,
+    type: Object as PropType<SharedNote>,
   },
   color: {
     default: "sky",
@@ -39,6 +39,10 @@ const props = defineProps({
 })
 const currentTime = ref<any>(0)
 const updated_time = ref()
+
+const route = useRoute()
+
+const groupId = route.params.groupId as string
 
 onMounted(() => {
   currentTime.value = new Date()
@@ -54,21 +58,21 @@ watch(
   },
 )
 const router = useRouter()
-const { removePrivateNoteFromDB, getPrivateNotesList } = useNotesListActions()
+const { removeSharedNoteFromDB, getSharedNotesList } = useNotesListActions()
 const { setNoteDetails, changeEditingState } = useNoteDetailsActions()
 const isDeleting = ref<boolean>(false)
 
-const onDelete = (note: PrivateNote): void => {
+const onDelete = (note: SharedNote): void => {
   isDeleting.value = true
-  removePrivateNoteFromDB(note)
-  getPrivateNotesList()
+  removeSharedNoteFromDB(note, groupId)
+  getSharedNotesList(groupId)
   isDeleting.value = false
 }
-const openNote = (note: PrivateNote): void => {
+const openNote = (note: SharedNote): void => {
   if (!isDeleting.value) {
     setNoteDetails(note)
     changeEditingState(true)
-    router.push({ name: "EditPanel" })
+    router.push({ name: "SharedEditingPanel" })
   }
 }
 const colorTheme = ref<string>("")

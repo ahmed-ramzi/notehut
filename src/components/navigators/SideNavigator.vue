@@ -17,7 +17,7 @@
               <NoteIcon />
               <h4>Notes</h4>
             </div>
-            <small>({{ notesCount }})</small>
+            <small>({{ privateNotesCount }})</small>
           </button>
           <button>
             <div>
@@ -74,10 +74,11 @@ import { useNotesListGetters } from "@/store/notesList"
 import MembersNavigator from "./MembersNavigator.vue"
 import Modal from "../modals/Modal.vue"
 import Avatar from "../Avatar.vue"
+import { onUnmounted } from "vue"
 
 const { toggleMenu } = useNavActions()
 const { user } = useUserState()
-const { notesCount } = useNotesListGetters()
+const { privateNotesCount } = useNotesListGetters()
 
 const router = useRouter()
 
@@ -95,6 +96,9 @@ const logout = () => {
     alert("Could not log you out. Please try again later")
   }
 }
+onUnmounted(() => {
+  toggleMenu()
+})
 </script>
 
 <style>

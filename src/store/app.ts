@@ -20,12 +20,12 @@ const useAppStore = defineStore<string, AppState, Record<any, never>, AppActions
 
   actions: {
     loadApp(): void {
-      const { getNotesList } = useNotesListActions()
+      const { getPrivateNotesList } = useNotesListActions()
       const { setLoggedIn } = useAuthActions()
       const { getUserGroups } = useGroupsActions()
 
       setLoggedIn(true)
-      getNotesList()
+      getPrivateNotesList()
       getUserGroups()
     },
   },

@@ -21,6 +21,7 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
 import { useAuthActions } from "../../store/auth"
 import { useRouter } from "vue-router"
 import { useUserActions } from "../../store/user"
+import { useAppActions } from "@/store/app"
 
 let auth
 
@@ -31,6 +32,7 @@ const errMsg = ref<string>("")
 const loading = ref<boolean>(false)
 
 const router = useRouter()
+const { loadApp } = useAppActions()
 
 const { getUser } = useUserActions()
 
@@ -47,14 +49,15 @@ const login = () => {
     auth = getAuth()
 
     signInWithEmailAndPassword(auth, userEmail.value, password.value)
-      .then(() => {
+      .then(async () => {
         console.log("Successfully signed in!")
         // console.log("auth", auth.currentUser)
         // console.log("data", data.user)
 
         setLoggedIn(true)
+        await router.push({ name: "HomePage" })
         getUser()
-        router.push({ name: "home" })
+        loadApp()
       })
       .catch((error) => {
         loading.value = false

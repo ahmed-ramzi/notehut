@@ -1,11 +1,11 @@
 <template>
-  <div class="h-screen p-4 space-y-4 flex flex-col">
-    <HeaderSection back-btn="home" header-label="shared notes"></HeaderSection>
+  <MenuLayout back-btn="HomePage" header-label="groups">
     <div class="flex flex-col space-y-4">
       <div
         v-for="group in groups"
         :key="group.id"
         class="rounded-2xl h-24 bg-gradient-to-r p-4 from-slate-100 via-slate-300 to-slate-500 shadow-md hover:motion-safe:shadow-xl cursor-pointer duration-300 flex justify-between items-center hover:motion-safe:border-2 border-slate-900"
+        @click="onClick(group.id)"
       >
         <div class="flex flex-col">
           <h3 class="text-slate-900 font-light">{{ group.name }}</h3>
@@ -26,13 +26,19 @@
         </div>
       </div>
     </div>
-  </div>
+  </MenuLayout>
 </template>
 
 <script lang="ts" setup>
-import HeaderSection from "@/layouts/HeaderSection.vue"
 import { useGroupsState } from "@/store/groups"
 import Avatar from "@/components/Avatar.vue"
+import { useRouter } from "vue-router"
+import MenuLayout from "@/layouts/MenuLayout.vue"
 
+const router = useRouter()
 const { groups } = useGroupsState()
+
+const onClick = async (groupId: string): Promise<void> => {
+  await router.push({ name: "GroupPage", params: { groupId } })
+}
 </script>

@@ -23,7 +23,7 @@
 // import { useAuthActions } from "../../store/auth"
 // import { User } from "../../types/states"
 // import { useRouter } from "vue-router"
-// import { notesCollection } from "@/store/notesList"
+// import { privateNotesCollection } from "@/store/notesList"
 
 // let auth
 
@@ -63,14 +63,14 @@
 //         } as User
 
 //         usersCollection.doc(newUserId).set(markRaw(newUser))
-//         notesCollection.doc(newUserId).set({
+//         privateNotesCollection.doc(newUserId).set({
 //           notes: [],
 //         })
 
 //         getUser()
 //         console.log("Successfully Registered")
 //         setLoggedIn(true)
-//         router.push({ name: "home" })
+//         router.push({ name: "HomePage" })
 //       })
 //       .catch((error) => {
 //         loading.value = false

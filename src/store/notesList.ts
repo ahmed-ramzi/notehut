@@ -1,49 +1,57 @@
 import { defineStore, storeToRefs } from "pinia"
-import { NoteState } from "../types/states"
-import mockNotes from "../composables/useMockNotes"
+import { PrivateNote, SharedNote } from "../types/states"
 import db from "@/firestore"
 import { useUserState } from "./user"
 import { arrayRemove, arrayUnion } from "firebase/firestore"
-import { markRaw } from "vue"
 import { useAppState } from "./app"
 
-export const notesCollection = db.collection("notes")
+export const privateNotesCollection = db.collection("notes")
+export const sharedNotesCollection = db.collection("shared_notes")
 
-type NotesList = {
-  notes: NoteState[] | null
+type NotesListState = {
+  notes: PrivateNote[] | null
+  shared_notes: SharedNote[] | null
 }
 
 type NotesListGetters = {
-  notesCount(state: NotesList): number
+  privateNotesCount(state: NotesListState): number
+  sharedNotesCount(state: NotesListState): number
 }
 
-interface NotesListActions {
-  getNotesList(): void
-  createNewNote(note: NoteState): void
-  addMockData(): Promise<void>
-  removeNoteFromDB(note: NoteState): void
-  uploadNoteToDB(note: NoteState): void
+type NotesListActions = {
+  getPrivateNotesList(): void
+  removePrivateNoteFromDB(note: PrivateNote): void
+  uploadPrivateNoteToDB(note: PrivateNote): void
+  getSharedNotesList(groupId: string): Promise<void>
+  removeSharedNoteFromDB(sharedNote: SharedNote, groupId: string): void
+  uploadSharedNoteToDB(sharedNote: SharedNote, groupId: string): void
+  clearSharedNotes(): void
 }
 
-const useNotesListStore = defineStore<string, NotesList, NotesListGetters, NotesListActions>("notesList", {
+const useNotesListStore = defineStore<string, NotesListState, NotesListGetters, NotesListActions>("notesList", {
   state: () => {
     return {
       notes: [],
+      shared_notes: [],
     }
   },
   getters: {
-    notesCount(state: NotesList): number {
+    privateNotesCount(state: NotesListState): number {
       return state.notes?.length || 0
+    },
+    sharedNotesCount(state: NotesListState): number {
+      return state.shared_notes?.length || 0
     },
   },
 
   actions: {
-    async getNotesList(): Promise<void> {
+    // Private
+    async getPrivateNotesList(): Promise<void> {
       const { isLoading } = useAppState()
       const { user } = useUserState()
       try {
         isLoading.value = true
-        const collection = await notesCollection.doc(user.value?.id).get()
+        const collection = await privateNotesCollection.doc(user.value?.id).get()
         const data = collection.data()?.notes as []
         this.notes = data
         isLoading.value = false
@@ -53,39 +61,53 @@ const useNotesListStore = defineStore<string, NotesList, NotesListGetters, Notes
         alert("Something went wrong. \nContact Ahmed...")
       }
     },
-    createNewNote(note: NoteState): void {
-      try {
-        this.uploadNoteToDB(note)
-        this.notes?.push(note)
-      } catch (e) {
-        console.log(e)
-        alert("Something went wrong. \nContact Ahmed...")
-      }
-    },
 
-    async addMockData(): Promise<void> {
+    removePrivateNoteFromDB(note: PrivateNote): void {
       const { user } = useUserState()
-
-      const randomNotes = mockNotes[Math.floor(Math.random() * mockNotes.length)]
-
-      await notesCollection.doc(user.value?.id).update({
-        notes: arrayUnion(markRaw(randomNotes as NoteState)),
-      })
-    },
-
-    removeNoteFromDB(note: NoteState): void {
-      const { user } = useUserState()
-      notesCollection.doc(user.value?.id).update({
+      privateNotesCollection.doc(user.value?.id).update({
         notes: arrayRemove(note),
       })
     },
 
-    uploadNoteToDB(note: NoteState): void {
+    uploadPrivateNoteToDB(note: PrivateNote): void {
       const { user } = useUserState()
-      notesCollection.doc(user.value?.id).update({
+      privateNotesCollection.doc(user.value?.id).update({
         notes: arrayUnion(note),
       })
     },
+    // **** //
+
+    // Shared
+    async getSharedNotesList(groupId: string): Promise<void> {
+      const { isLoading } = useAppState()
+      try {
+        isLoading.value = true
+        const collection = await sharedNotesCollection.doc(groupId).get()
+        const data = collection.data()?.notes as SharedNote[]
+        this.shared_notes = data
+        isLoading.value = false
+      } catch (e) {
+        isLoading.value = false
+        console.log(e)
+        alert("Something went wrong. \nContact Ahmed...")
+      }
+    },
+    removeSharedNoteFromDB(sharedNote: SharedNote, groupId: string): void {
+      sharedNotesCollection.doc(groupId).update({
+        notes: arrayRemove(sharedNote),
+      })
+    },
+
+    uploadSharedNoteToDB(sharedNote: SharedNote, groupId: string): void {
+      sharedNotesCollection.doc(groupId).update({
+        notes: arrayUnion(sharedNote),
+      })
+    },
+
+    clearSharedNotes(): void {
+      this.shared_notes = []
+    },
+    // **** //
   },
 })
 

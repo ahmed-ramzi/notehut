@@ -3,12 +3,13 @@ import { useUserActions } from "@/store/user"
 import { getAuth, onAuthStateChanged } from "firebase/auth"
 import { createRouter, createWebHistory } from "vue-router"
 import { useAuthActions } from "@/store/auth"
+import { useNotesListActions } from "@/store/notesList"
 
 export const routes = [
   {
     path: "/",
-    name: "home",
-    component: () => import("../pages/home.vue"),
+    name: "HomePage",
+    component: () => import("../pages/HomePage.vue"),
     meta: {
       requiresAuth: true,
     },
@@ -16,24 +17,45 @@ export const routes = [
 
   {
     path: "/test",
-    name: "test",
+    name: "TestPage",
     component: () => import("../pages/TestPage.vue"),
     meta: {
       requiresAuth: true,
     },
   },
   {
-    path: "/members",
-    name: "MembersPage",
-    component: () => import("../pages/MembersPage.vue"),
+    path: "/groups",
+    name: "GroupsPage",
+    component: () => import("../pages/GroupsPage.vue"),
     meta: {
       requiresAuth: true,
     },
   },
   {
+    path: "/group/:groupId?",
+    name: "GroupPage",
+    component: () => import("../pages/GroupPage.vue"),
+    meta: {
+      requiresAuth: true,
+    },
+    props: (route: any) => ({
+      initData: {
+        groupId: route.params.groupId,
+      },
+    }),
+  },
+  {
     path: "/note",
-    name: "notePanel",
+    name: "EditPanel",
     component: () => import("../pages/EditingPanel.vue"),
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/shared-note",
+    name: "SharedEditingPanel",
+    component: () => import("../pages/SharedEditingPanel.vue"),
     meta: {
       requiresAuth: true,
     },
@@ -53,11 +75,6 @@ export const routes = [
     name: "NotFound",
     component: () => import("../pages/404.vue"),
   },
-  // {
-  //   path: "/:pathMatch(.*)",
-  //   name: "NotFound",
-  //   component: () => import("../pages/404.vue"),
-  // },
 ]
 
 const router = createRouter({
@@ -92,12 +109,22 @@ router.beforeEach(async (to, from, next) => {
       await getUser()
       setLoggedIn(true)
 
-      if (to.name === "notePanel") {
+      if (to.name === "EditPanel") {
         if (isEditing.value) {
           next()
         } else {
-          next({ name: "home" })
+          next({ name: "HomePage" })
         }
+      } else if (to.name === "SharedEditingPanel") {
+        if (isEditing.value) {
+          next()
+        } else {
+          next({ name: "GroupsPage" })
+        }
+      } else if (from.name === "GroupPage" && to.name !== "SharedEditingPanel") {
+        const { clearSharedNotes } = useNotesListActions()
+        clearSharedNotes()
+        next()
       } else {
         next()
       }
@@ -109,7 +136,7 @@ router.beforeEach(async (to, from, next) => {
     if (to.name === "login" || to.name === "signup") {
       if (await getCurrentUser()) {
         setLoggedIn(true)
-        next({ name: "home" })
+        next({ name: "HomePage" })
       } else {
         setLoggedIn(false)
         next()

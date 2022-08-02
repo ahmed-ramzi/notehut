@@ -21,7 +21,7 @@ export type GroupDetail = {
   members: MemberDetail[]
 }
 
-export type NoteState = {
+export type PrivateNote = {
   id: number
   title: string
   contents: string
@@ -30,7 +30,7 @@ export type NoteState = {
   last_modified: any
 }
 
-export interface SharedNoteState extends NoteState {
+export interface SharedNote extends PrivateNote {
   created_by: string
   last_modified_by: string
 }

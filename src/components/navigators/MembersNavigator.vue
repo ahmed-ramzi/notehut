@@ -1,11 +1,11 @@
 <template>
   <div>
     <div class="separator"></div>
-    <small class="px-2">Shared</small>
+    <small class="px-2">Shared Notes</small>
   </div>
 
   <div class="flex flex-col">
-    <button @click="router.push({ name: 'MembersPage' })">
+    <button @click="onClickGroups">
       <div>
         <MembersIcon />
         <h4>Groups</h4>
@@ -46,7 +46,7 @@ import MembersIcon from "../icons/MembersIcon.vue"
 import Modal from "../modals/Modal.vue"
 import ModalContainer from "../modals/ModalContainer.vue"
 import { Form } from "vee-validate"
-import { markRaw, ref } from "vue"
+import { markRaw, onUnmounted, ref } from "vue"
 import * as yup from "yup"
 import BaseInput from "../base/BaseInput.vue"
 import BaseButton from "../base/BaseButton.vue"
@@ -56,6 +56,7 @@ import { GroupDetail, User } from "@/types/states"
 import { v4 } from "uuid"
 import useDate from "@/composables/useDate"
 import { useRouter } from "vue-router"
+import { useNavActions } from "@/store/navigators"
 // import Dropdown from "../base/Dropdown.vue"
 
 const isModalOpened = ref(false)
@@ -73,8 +74,14 @@ const { getAllUsers } = useUserActions()
 const { user, all_users } = useUserState()
 
 const { createGroup } = useGroupsActions()
+const { toggleMenu } = useNavActions()
 
-const submit = (email: string) => {
+const onClickGroups = async () => {
+  await router.push({ name: "GroupsPage" })
+  toggleMenu()
+}
+
+const submit = async (email: string) => {
   // First checking if member exits
   loading.value = true
   if (!all_users.value.length) {
@@ -90,8 +97,6 @@ const submit = (email: string) => {
 
   if (Object.keys(member).length !== 0) {
     try {
-      console.log(member)
-
       const groupData = {
         id: v4(),
         name: groupName.value,
@@ -118,9 +123,8 @@ const submit = (email: string) => {
 
       loading.value = false
       createGroup(groupData)
-      router.push({ name: "MembersPage" })
-
-      isModalOpened.value = false
+      await router.push({ name: "GroupsPage" })
+      toggleMenu()
     } catch (e) {
       loading.value = false
       errorMessage.value = "Something went wrong. Try again later"
@@ -134,6 +138,11 @@ const submit = (email: string) => {
 const schema = yup.object({
   Email: yup.string().required().email(),
   GroupName: yup.string().required(),
+})
+
+onUnmounted(() => {
+  isModalOpened.value = false
+  toggleMenu()
 })
 </script>
 

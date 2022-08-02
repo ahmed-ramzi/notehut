@@ -1,7 +1,7 @@
 <template>
   <div
     class="flex justify-center items-center cursor-pointer rounded-[1.25rem] h-[60px] w-[60px] text-slate-500 border-2 border-white shadow-md"
-    :class="[gradientColorClass(btnColor), shadowColorClass(btnColor)]"
+    :class="[gradientColorClass(btnColor), shadowColorClass(btnColor), hideBtn ? 'hidden' : null]"
     @click="create"
   >
     <svg class="svg-icon pl-1" viewBox="0 0 20 20">
@@ -15,14 +15,42 @@
 <script lang="ts" setup>
 import { gradientColorClass, shadowColorClass } from "@/composables/useRandomColor"
 import { useNoteDetailsActions } from "@/store/noteDetails"
-import { useRouter } from "vue-router"
+import { useNotesListGetters } from "@/store/notesList"
+import { computed } from "vue"
+import { useRoute, useRouter } from "vue-router"
+
+const props = defineProps({
+  ignoreHiddingBtn: {
+    type: Boolean,
+    default: false,
+  },
+})
 
 const { createNote } = useNoteDetailsActions()
 const router = useRouter()
 
-const create = (): void => {
-  createNote()
-  router.push({ name: "notePanel" })
+const route = useRoute()
+const groupId = route.params.groupId as string
+
+const { privateNotesCount, sharedNotesCount } = useNotesListGetters()
+
+const hideBtn = computed((): boolean => {
+  if (groupId && !sharedNotesCount.value && !props.ignoreHiddingBtn) {
+    return true
+  } else if (!groupId && !privateNotesCount.value && !props.ignoreHiddingBtn) {
+    return true
+  }
+  return false
+})
+
+const create = async (): Promise<void> => {
+  if (groupId) {
+    createNote(true)
+    await router.push({ name: "SharedEditingPanel", params: { groupId } })
+  } else {
+    createNote()
+    await router.push({ name: "EditPanel" })
+  }
 }
 // const btnColor = randomColor() as string
 const btnColor = "amber"

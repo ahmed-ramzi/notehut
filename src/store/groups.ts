@@ -1,9 +1,9 @@
 import { defineStore, storeToRefs } from "pinia"
-// import { arrayRemove, arrayUnion } from "firebase/firestore"
 import db from "@/firestore"
 import { GroupDetail } from "@/types/states"
 import { useUserActions, useUserState } from "./user"
 import { markRaw } from "vue"
+import { sharedNotesCollection } from "./notesList"
 
 export const groupsCollection = db.collection("groups")
 
@@ -14,7 +14,7 @@ type GroupState = {
 interface GroupActions {
   getUserGroups(): void
   setGroup(group: GroupDetail): void
-  createGroup(group: GroupDetail): void
+  createGroup(group: GroupDetail): Promise<void>
 }
 
 const useGroupStore = defineStore<string, GroupState, Record<never, never>, GroupActions>("groups", {
@@ -34,27 +34,33 @@ const useGroupStore = defineStore<string, GroupState, Record<never, never>, Grou
         groups.forEach((doc) => {
           tempDoc.push({ id: doc.id, ...doc.data() })
         })
+
         all = tempDoc
       })
 
-      console.log(all)
       user.value?.groups?.forEach((groupID: string) => {
         const group = all.find((item: GroupDetail) => item.id === groupID) as GroupDetail
-        this.groups?.push(group)
+        if (group) {
+          this.groups?.push(group)
+        }
       })
     },
 
     setGroup(group: GroupDetail): void {
       this.groups?.push(group)
     },
-    createGroup(groupData: GroupDetail): void {
+    async createGroup(groupData: GroupDetail): Promise<void> {
       const { setGroupToUser } = useUserActions()
 
       if (Object.keys(groupData).length !== 0) {
-        groupsCollection.doc(groupData.id).set(markRaw(groupData))
+        await groupsCollection.doc(groupData.id).set(markRaw(groupData))
 
         groupData.members.forEach((member) => {
           setGroupToUser(groupData.id, member.id)
+        })
+
+        await sharedNotesCollection.doc(groupData.id).set({
+          notes: [],
         })
         this.setGroup(groupData)
       }
