@@ -14,7 +14,10 @@
         class="w-full h-full rounded-md outline-none text-white bg-transparent font-light resize-none cursor-pointer"
         disabled
       ></textarea>
-      <small v-if="note.last_modified" class="absolute bottom-1 text-xs italic text-slate-100 right-3">Updated: {{ updated_time }}</small>
+      <small v-if="note.last_modified" class="absolute bottom-1 text-xs italic text-slate-100 right-3">
+        <b> Updated: </b>
+        {{ updated_time }}
+      </small>
     </div>
   </section>
 </template>
@@ -64,11 +67,11 @@ const onDelete = (note: PrivateNote): void => {
   getPrivateNotesList()
   isDeleting.value = false
 }
-const openNote = (note: PrivateNote): void => {
+const openNote = async (note: PrivateNote): Promise<void> => {
   if (!isDeleting.value) {
     setNoteDetails(note)
     changeEditingState(true)
-    router.push({ name: "EditPanel" })
+    await router.push({ name: "EditPanel" })
   }
 }
 const colorTheme = ref<string>("")

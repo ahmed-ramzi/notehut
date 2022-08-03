@@ -6,7 +6,7 @@ import useDate from "@/composables/useDate"
 import { useUserState } from "./user"
 
 type NoteDetail = {
-  note: PrivateNote | SharedNote | undefined
+  note: SharedNote | PrivateNote | undefined
   isEditing: boolean
 }
 
@@ -95,19 +95,26 @@ const useNoteDetailsStore = defineStore<string, NoteDetail, Record<string, never
 
     updateSharedNoteTitle(title: string, groupId: string): void {
       const { uploadSharedNoteToDB, removeSharedNoteFromDB } = useNotesListActions()
+      const { user } = useUserState()
       if (this.note) {
         removeSharedNoteFromDB(this.note as SharedNote, groupId)
         this.note.title = title
         this.note.last_modified = useDate.shortDate()
+        // @ts-ignore
+        this.note.last_modified_by = user.value?.name as string
         uploadSharedNoteToDB(this.note as SharedNote, groupId)
       }
     },
     updateSharedNoteContent(contents: string, groupId: string): void {
       const { uploadSharedNoteToDB, removeSharedNoteFromDB } = useNotesListActions()
+      const { user } = useUserState()
+
       if (this.note) {
         removeSharedNoteFromDB(this.note as SharedNote, groupId)
         this.note.contents = contents
         this.note.last_modified = useDate.shortDate()
+        // @ts-ignore
+        this.note.last_modified_by = user.value?.name as string
         uploadSharedNoteToDB(this.note as SharedNote, groupId)
       }
     },
