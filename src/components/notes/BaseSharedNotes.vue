@@ -14,7 +14,13 @@
         class="w-full h-full rounded-md outline-none text-white bg-transparent font-light resize-none cursor-pointer"
         disabled
       ></textarea>
-      <small v-if="note.last_modified" class="absolute bottom-1 text-xs italic text-slate-100 right-3">Updated: {{ updated_time }}</small>
+      <small v-if="note.last_modified" class="absolute bottom-1 text-xs italic text-slate-100 right-3">
+        <b> Updated: </b>
+        {{ updated_time }} by
+        <b>
+          {{ note.last_modified_by }}
+        </b>
+      </small>
     </div>
   </section>
 </template>
@@ -68,11 +74,11 @@ const onDelete = (note: SharedNote): void => {
   getSharedNotesList(groupId)
   isDeleting.value = false
 }
-const openNote = (note: SharedNote): void => {
+const openNote = async (note: SharedNote): Promise<void> => {
   if (!isDeleting.value) {
     setNoteDetails(note)
     changeEditingState(true)
-    router.push({ name: "SharedEditingPanel" })
+    await router.push({ name: "SharedEditingPanel", params: { groupId } })
   }
 }
 const colorTheme = ref<string>("")

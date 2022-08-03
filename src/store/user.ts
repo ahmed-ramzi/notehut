@@ -7,7 +7,7 @@ import { arrayUnion } from "firebase/firestore"
 
 type UserState = {
   user: User | null
-  all_users: any[]
+  all_users: User[]
 }
 interface UserActions {
   getUser(): Promise<void>
@@ -41,9 +41,9 @@ const useUserStore = defineStore<string, UserState, Record<any, never>, UserActi
     async getAllUsers(): Promise<void> {
       const data = usersCollection
       await data.get().then((users) => {
-        const tempDoc = [] as any[]
+        const tempDoc = [] as User[]
         users.forEach((doc) => {
-          tempDoc.push({ id: doc.id, ...doc.data() })
+          tempDoc.push(doc.data() as User)
         })
         this.all_users = tempDoc
       })

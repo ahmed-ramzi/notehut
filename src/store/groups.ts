@@ -39,9 +39,9 @@ const useGroupStore = defineStore<string, GroupState, GroupGetters, GroupActions
       let all = [] as any[]
 
       await groupsCollection.get().then((groups) => {
-        const tempDoc = [] as any[]
+        const tempDoc = [] as GroupDetail[]
         groups.forEach((doc) => {
-          tempDoc.push({ id: doc.id, ...doc.data() })
+          tempDoc.push(doc.data() as GroupDetail)
         })
 
         all = tempDoc
