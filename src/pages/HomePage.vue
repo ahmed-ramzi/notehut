@@ -43,10 +43,10 @@ const { isLoading } = useAppState()
 
 <style scoped>
 .notes-container {
-  @apply grid gap-4 items-start;
+  @apply grid gap-2 md:gap-4 items-start;
 }
 
-@media (max-width: 459px) {
+/* @media (max-width: 459px) {
   .notes-container {
     @apply grid-cols-1;
   }
@@ -54,9 +54,9 @@ const { isLoading } = useAppState()
     @apply hidden;
   }
 }
-@media (min-width: 460px) {
-  .notes-container {
-    @apply grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5;
-  }
+@media (min-width: 460px) { */
+.notes-container {
+  @apply grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5;
 }
+/* } */
 </style>

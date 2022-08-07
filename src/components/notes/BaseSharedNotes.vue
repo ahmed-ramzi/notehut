@@ -1,26 +1,26 @@
 <template>
-  <section class="rounded-3xl shadow-lg cursor-pointer hover:scale-105 duration-500 relative" :class="[colorTheme, shadow]">
+  <section class="rounded-3xl cursor-pointer hover:scale-105 duration-500 relative shadow-md" :class="[colorTheme]">
     <div class="absolute top-3 right-3 cursor-pointer z-10" @click="onDelete(note)">
       <DeleteIcon />
     </div>
 
     <div class="m-4 h-32 py-2 space-y-2 cursor-pointer flex flex-col" @click="openNote(note)">
       <div class="max-w-[90%] md:max-w-[85%]">
-        <label :class="text" class="indent-2 font-bold text-xl cursor-pointer">{{ note.title }}</label>
+        <label :class="text" class="indent-2 font-normal text-xl cursor-pointer">{{ note.title }}</label>
       </div>
       <textarea
         v-model="note.contents"
         name="contents"
-        class="w-full h-full rounded-md outline-none text-white bg-transparent font-light resize-none cursor-pointer"
+        class="w-full h-full rounded-md outline-none text-white bg-transparent font-extralight font resize-none cursor-pointer"
         disabled
       ></textarea>
-      <small v-if="note.last_modified" class="absolute bottom-1 text-xs italic text-slate-100 right-3">
-        <b> Updated: </b>
-        {{ updated_time }} by
-        <b>
+      <div v-if="note.last_modified" class="border-t-2 rounded">
+        <small class="absolute bottom-1 text-xs font-thin italic text-slate-100 right-5">
+          Updated:
+          {{ updated_time }} by
           {{ note.last_modified_by }}
-        </b>
-      </small>
+        </small>
+      </div>
     </div>
   </section>
 </template>

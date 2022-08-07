@@ -60,7 +60,7 @@ export const routes = [
   {
     path: "/shared-note",
     name: "SharedEditingPanel",
-    component: () => import("../pages/SharedEditingPanel.vue"),
+    component: () => import("../pages/EditingPanel.vue"),
     meta: {
       requiresAuth: true,
     },

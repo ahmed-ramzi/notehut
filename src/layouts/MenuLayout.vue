@@ -1,9 +1,10 @@
 <template>
   <div class="h-screen overflow-scroll relative">
     <!-- The Header -->
-    <div class="fixed h-[67px] bg-slate-100 blur-sm w-full z-20"></div>
-    <HeaderSection :back-btn="backBtn" :header-label="headerLabel" class="fixed px-4 py-2 w-full z-20 bg-slate-100 nh-header">
+    <div class="fixed h-[67px] bg-white blur-sm w-full z-20"></div>
+    <HeaderSection :back-btn="backBtn" :header-label="headerLabel" class="fixed px-4 py-2 w-full z-20 bg-white nh-header">
       <slot name="Header" />
+      <Avatar :name="user?.name" width="w-12" height="h-12" />
     </HeaderSection>
     <div class="h-[67px] w-full bg-transparent z-20"></div>
     <!-- *** -->
@@ -21,6 +22,10 @@
 import HeaderSection from "@/layouts/HeaderSection.vue"
 import FooterNavigator from "@/components/navigators/FooterNavigator.vue"
 import SideNavigator from "@/components/navigators/SideNavigator.vue"
+import Avatar from "@/components/Avatar.vue"
+import { useUserState } from "@/store/user"
+
+const { user } = useUserState()
 
 defineProps({
   headerLabel: {

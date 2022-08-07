@@ -1,70 +1,71 @@
 <template>
   <teleport to="body">
-    <div v-if="isMenuActive" class="absolute top-0 left-0 bg-slate-300/40 w-full h-screen overscroll-none py-1 flex backdrop-blur-sm z-20"></div>
-    <Transition name="slide">
-      <nav
-        v-if="isMenuActive"
-        ref="modal"
-        class="absolute top-0 h-screen z-20 left-0 bg-slate-50 shadow-2xl shadow-slate-900 opacity-95 p-6 rounded-r-[5rem] flex flex-col justify-between overflow-scroll"
-      >
-        <div class="flex flex-col space-y-4">
-          <div class="flex items-center space-x-2">
-            <!-- Avatar -->
-            <Avatar :name="user?.name" />
-            <div class="truncate w-full">
-              <h3 class="text-slate-800 font-bold truncate">{{ user?.name }}</h3>
-              <p>{{ user?.email }}</p>
-            </div>
-          </div>
-          <!-- Personal Stuff -->
-          <div class="flex flex-col">
-            <button @click="toggleMenu">
-              <div>
-                <NoteIcon />
-                <h4>Notes</h4>
+    <div v-if="isMenuActive" class="absolute top-0 left-0 bg-slate-300/40 w-full h-screen overscroll-none flex backdrop-blur-sm z-30"></div>
+    <div class="absolute top-0 h-screen z-30 left-0 p-3">
+      <Transition name="slide">
+        <nav
+          v-if="isMenuActive"
+          ref="sideBar"
+          class="bg-white shadow-2xl shadow-slate-900 opacity-95 p-4 rounded-[2.5rem] flex flex-col justify-between overflow-scroll h-full w-full"
+        >
+          <div class="flex flex-col space-y-4">
+            <div class="flex items-center space-x-2">
+              <!-- Avatar -->
+              <Avatar :name="user?.name" />
+              <div class="truncate w-full">
+                <h3 class="text-slate-800 font-bold truncate">{{ user?.name }}</h3>
+                <p>{{ user?.email }}</p>
               </div>
-              <small>({{ privateNotesCount }})</small>
-            </button>
+            </div>
+            <!-- Personal Stuff -->
+            <div class="flex flex-col">
+              <button @click="toggleMenu">
+                <div>
+                  <NoteIcon />
+                  <h4>Notes</h4>
+                </div>
+                <small>({{ privateNotesCount }})</small>
+              </button>
+              <button>
+                <div>
+                  <NotificationsIcon />
+                  <h4>Notifications</h4>
+                </div>
+                <small>(soon)</small>
+              </button>
+            </div>
+            <!-- Shared -->
+            <MembersNavigator />
+          </div>
+
+          <div class="flex flex-col">
             <button>
               <div>
-                <NotificationsIcon />
-                <h4>Notifications</h4>
+                <SettingsIcon />
+                <h4>Settings</h4>
               </div>
               <small>(soon)</small>
             </button>
-          </div>
-          <!-- Shared -->
-          <MembersNavigator />
-        </div>
 
-        <div class="flex flex-col">
-          <button>
-            <div>
-              <SettingsIcon />
-              <h4>Settings</h4>
-            </div>
-            <small>(soon)</small>
-          </button>
-
-          <button class="nh-logout" @click="logout">
-            <div>
-              <LogoutIcon />
-              <h4>Logout</h4>
-            </div>
-          </button>
-
-          <button class="px-2 space-x-4" @click="toggleMenu">
-            <div>
+            <button class="nh-logout" @click="logout">
               <div>
-                <HamburgerMenu black />
+                <LogoutIcon />
+                <h4>Logout</h4>
               </div>
-              <h4>Close Menu</h4>
-            </div>
-          </button>
-        </div>
-      </nav>
-    </Transition>
-    <!-- </div> -->
+            </button>
+
+            <button class="px-2 space-x-4" @click="toggleMenu">
+              <div>
+                <div>
+                  <HamburgerMenu dark />
+                </div>
+                <h4>Close Menu</h4>
+              </div>
+            </button>
+          </div>
+        </nav>
+      </Transition>
+    </div>
   </teleport>
 </template>
 
@@ -87,7 +88,7 @@ import { ref } from "vue"
 
 let auth
 
-const modal = ref(null)
+const sideBar = ref(null)
 
 const { user } = useUserState()
 const { privateNotesCount } = useNotesListGetters()
@@ -97,7 +98,7 @@ const router = useRouter()
 const { isMenuActive } = useNavState()
 const { toggleMenu } = useNavActions()
 
-onClickOutside(modal, () => toggleMenu())
+onClickOutside(sideBar, () => toggleMenu())
 
 const logout = () => {
   try {
@@ -115,7 +116,7 @@ const logout = () => {
 
 <style>
 button {
-  @apply flex h-12 items-center px-1 justify-between space-x-2 rounded text-left;
+  @apply flex h-12 items-center px-1 justify-between space-x-2 rounded-xl text-left;
 }
 
 button:hover {

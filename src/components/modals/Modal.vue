@@ -1,5 +1,5 @@
 <template>
-  <teleport to="body">
+  <teleport to="#modal">
     <Transition name="modal">
       <div v-if="closeAction" class="absolute top-0 left-0 bg-slate-300/40 w-full h-screen overscroll-none py-1 flex backdrop-blur-sm" :class="[zIndex]">
         <main class="centered">

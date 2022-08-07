@@ -1,7 +1,7 @@
 <template>
   <div
-    class="flex justify-center items-center cursor-pointer rounded-[1.25rem] h-[60px] w-[60px] text-slate-500 border-2 border-white shadow-md"
-    :class="[gradientColorClass(btnColor), shadowColorClass(btnColor), hideBtn ? 'hidden' : null]"
+    class="flex justify-center items-center cursor-pointer rounded-full h-[60px] w-[60px] text-slate-500 border-2 border-white border-opacity-80 shadow-2xl"
+    :class="[gradientColorClass(btnColor), hideBtn ? 'hidden' : null]"
     @click="create"
   >
     <svg class="svg-icon pl-1" viewBox="0 0 20 20">
@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts" setup>
-import { gradientColorClass, shadowColorClass } from "@/composables/useRandomColor"
+import { gradientColorClass } from "@/composables/useRandomColor"
 import { useNoteDetailsActions } from "@/store/noteDetails"
 import { useNotesListGetters } from "@/store/notesList"
 import { computed } from "vue"
@@ -30,7 +30,7 @@ const { createNote } = useNoteDetailsActions()
 const router = useRouter()
 
 const route = useRoute()
-const groupId = route.params.groupId as string
+const groupId = (route.params.groupId as string) || ""
 
 const { privateNotesCount, sharedNotesCount } = useNotesListGetters()
 
@@ -46,7 +46,7 @@ const hideBtn = computed((): boolean => {
 const create = async (): Promise<void> => {
   if (groupId) {
     createNote(true)
-    await router.push({ name: "SharedEditingPanel", params: { groupId } })
+    await router.push({ name: "EditPanel", params: { groupId } })
   } else {
     createNote()
     await router.push({ name: "EditPanel" })

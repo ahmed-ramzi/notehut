@@ -11,10 +11,10 @@
 
 <script lang="ts" setup>
 import { ref } from "vue"
-import { randomColor, colorClass, gradientColorClass } from "../../composables/useRandomColor"
+import { colorClass, gradientColorClass } from "../../composables/useRandomColor"
 import Spinner from "./Spinner.vue"
 
-const props = defineProps({
+defineProps({
   width: {
     type: String,
     default: "w-40",
@@ -23,23 +23,14 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  color: {
-    type: String,
-    default: "",
-  },
 })
 
 const colorTheme = ref<string>("")
 const gradient = ref<string>("")
-const randColor = randomColor() as string
+const randColor = "amber" as string
 
-if (!props.color) {
-  colorTheme.value = colorClass(randColor)
-  gradient.value = gradientColorClass(randColor)
-} else {
-  colorTheme.value = colorClass(props.color)
-  gradient.value = gradientColorClass(props.color)
-}
+colorTheme.value = colorClass(randColor)
+gradient.value = gradientColorClass(randColor)
 </script>
 
 <style scoped>
