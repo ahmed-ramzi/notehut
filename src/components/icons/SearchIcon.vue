@@ -19,23 +19,25 @@
 .svg-icon polygon,
 .svg-icon rect {
   /* fill: #4691f6; */
-  @apply fill-white;
+  /* @apply fill-white; */
+  @apply fill-slate-700 stroke-2;
 }
 /* .svg-icon:hover {
   fill: #4691f6;
   @apply fill-slate-400;
 } */
 
-.svg-icon circle {
-  /* stroke: #4691f6;
-  stroke-width: 1; */
-  @apply stroke-slate-500 stroke-1;
+/* .svg-icon circle {
+  @apply  stroke-2;
+} */
+div {
+  @apply bg-slate-200;
 }
 div:hover {
   /*  */
   /* shadow-slate-100; */
 }
 div:active {
-  @apply bg-slate-400;
+  @apply bg-slate-200;
 }
 </style>

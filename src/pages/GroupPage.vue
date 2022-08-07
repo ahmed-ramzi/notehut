@@ -4,7 +4,7 @@
       <Spinner />
     </div>
     <div v-else-if="sharedNotesCount" class="pb-2 notes-container">
-      <BaseSharedNotes v-for="note in shared_notes?.slice().reverse()" :key="note.id" :note="note" :color="note.color" />
+      <BaseNote v-for="note in shared_notes?.slice().reverse()" :key="note.id" :note="note" :color="note.color" />
     </div>
     <div v-else class="centered">
       <div class="inline-flex flex-col justify-center items-center w-full">
@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts" setup>
-import BaseSharedNotes from "@/components/notes/BaseSharedNotes.vue"
+import BaseNote from "@/components/base/BaseNote.vue"
 import { useNotesListState, useNotesListGetters, useNotesListActions } from "@/store/notesList"
 import Spinner from "@/components/base/Spinner.vue"
 import { useAppState } from "@/store/app"
@@ -53,7 +53,7 @@ onMounted(() => {
 .notes-container {
   @apply grid gap-4 items-start;
 }
-
+/*
 @media (max-width: 459px) {
   .notes-container {
     @apply grid-cols-1;
@@ -66,5 +66,9 @@ onMounted(() => {
   .notes-container {
     @apply grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5;
   }
+} */
+
+.notes-container {
+  @apply grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5;
 }
 </style>

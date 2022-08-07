@@ -2,8 +2,8 @@
   <main>
     <div>
       <section class="flex justify-center mr-8 items-center space-x-2">
-        <img src="../assets/logo.png" alt="Notehut Logo" />
-        <h1 class="font-semibold justify-start">notehut</h1>
+        <img :src="imgSrc" alt="Notehut Logo" />
+        <h1 class="font-semibold justify-start drop-shadow-2xl">notehut</h1>
       </section>
 
       <!-- Form -->
@@ -26,6 +26,16 @@
 </template>
 
 <script lang="ts" setup>
+import { computed } from "vue"
+
+const isBeta = computed((): boolean => {
+  return document.location.host.includes("tajreb") || document.location.host.includes("localhost") ? true : false
+})
+
+const imgSrc = computed(() => {
+  return !isBeta.value ? "/src/assets/logo/beta.png" : "/src/assets/logo/prod.png"
+})
+
 defineProps({
   type: {
     type: String,
@@ -44,7 +54,7 @@ main {
   @apply w-full  px-4;
 }
 img {
-  @apply h-10 w-10  border rounded-xl;
+  @apply h-10 w-10 drop-shadow-lg rounded-xl;
 }
 div {
   @apply p-8 rounded-3xl shadow-2xl space-y-12 bg-slate-100;
@@ -54,7 +64,7 @@ div {
     @apply max-w-[450px];
   }
   img {
-    @apply h-16 w-16;
+    @apply h-16 w-16  rounded-2xl;
   }
 }
 </style>

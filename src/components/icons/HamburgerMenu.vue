@@ -1,8 +1,8 @@
 <template>
   <div id="navMenu" class="cursor-pointer" :class="isMenuActive ? 'active' : null">
-    <span :class="black ? 'bg-black' : 'bg-white'"></span>
-    <span :class="black ? 'bg-black' : 'bg-white'"></span>
-    <span :class="black ? 'bg-black' : 'bg-white'"></span>
+    <span :class="dark ? 'bg-slate-700' : 'bg-white'"></span>
+    <span :class="dark ? 'bg-slate-700' : 'bg-white'"></span>
+    <span :class="dark ? 'bg-slate-700' : 'bg-white'"></span>
   </div>
 </template>
 
@@ -12,7 +12,7 @@ import { useNavState } from "@/store/navigators"
 const { isMenuActive } = useNavState()
 
 defineProps({
-  black: {
+  dark: {
     type: Boolean,
     default: false,
   },
@@ -26,7 +26,7 @@ defineProps({
 }
 
 #navMenu > span:not(:last-child) {
-  @apply mb-2;
+  @apply mb-1;
 }
 
 #navMenu,
@@ -48,10 +48,10 @@ defineProps({
 }
 
 #navMenu.active > span:nth-child(1) {
-  transform: translateY(10px);
+  transform: translateY(7px);
 }
 
 #navMenu.active > span:nth-child(3) {
-  transform: translateY(-10px) rotate(90deg);
+  transform: translateY(-5px) rotate(90deg);
 }
 </style>

@@ -1,13 +1,18 @@
 <template>
   <!-- Hidden Div -->
-  <div class="rounded-t-3xl h-16 w-full"></div>
+  <div class="rounded-t-2xl h-14 w-full"></div>
+  <div class="fixed z-10 bottom-0 bg-slate-700 blur-sm opacity-50 rounded-t-2xl h-[58px] w-full"></div>
 
-  <div class="fixed z-10 bottom-0 bg-slate-800 rounded-t-3xl h-16 w-full">
-    <div class="flex justify-between items-center px-6 h-full relative">
-      <HamburgerMenu class="nh-hamburger" @click="toggleMenu" />
+  <div class="fixed z-10 bottom-0 bg-white border opacity-95 rounded-t-2xl h-14 w-full">
+    <div class="flex justify-between items-center px-6 h-full">
+      <div class="flex justify-center items-center cursor-pointer h-10 w-10 rounded-2xl bg-slate-200">
+        <HamburgerMenu class="nh-hamburger" dark @click="toggleMenu" />
+      </div>
+      <div class="relative w-10 h-full">
+        <CreateNoteIcon class="absolute -top-7 -right-3" />
+      </div>
+
       <SearchIcon />
-      <div></div>
-      <CreateNoteIcon class="absolute -top-5 right-10" />
     </div>
   </div>
 </template>

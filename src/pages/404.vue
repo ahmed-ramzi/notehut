@@ -3,7 +3,7 @@
     <div class="centered">
       <div class="inline-flex flex-col items-center justify-center space-y-4">
         <h1>404</h1>
-        <BaseButton color="amber" @click="onClick">Return home page</BaseButton>
+        <BaseButton @click="onClick">Return home page</BaseButton>
       </div>
     </div>
   </div>

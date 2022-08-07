@@ -2,7 +2,7 @@
   <section class="flex justify-between items-center">
     <div class="flex items-center" :class="backBtn ? 'space-x-2' : null">
       <ActionBtn v-if="backBtn" icon="<" label="Back" class="mt-2" @click="onClickBack" />
-      <h1 class="font-semibold">{{ headerLabel }}</h1>
+      <h1 class="font-normal">{{ headerLabel }}</h1>
     </div>
     <div class="flex">
       <div>
@@ -42,15 +42,17 @@ const onClickBack = async (): Promise<void> => {
   if (isEditing.value) {
     changeEditingState(false)
     clearNoteDetailsState()
-    if (route.params.groupId) {
+    if (groupId) {
       getSharedNotesList(groupId)
     } else {
       getPrivateNotesList()
     }
   }
   if (props.backBtn === "back") {
+    console.log("go back")
     router.back()
   } else {
+    console.log("props")
     await router.push({ name: props.backBtn })
   }
 }

@@ -1,23 +1,33 @@
 <template>
-  <section class="rounded-3xl shadow-lg cursor-pointer hover:scale-105 duration-500 relative" :class="[colorTheme, shadow]">
-    <div class="absolute top-3 right-3 cursor-pointer z-10" @click="onDelete(note)">
+  <section class="rounded-3xl cursor-pointer hover:scale-105 duration-500 relative pb-2" :class="[colorTheme]">
+    <div class="absolute top-[10px] right-2 cursor-pointer z-10" @click="onDelete(note)">
       <DeleteIcon />
     </div>
 
-    <div class="m-4 h-32 py-2 space-y-2 cursor-pointer flex flex-col" @click="openNote(note)">
-      <div class="max-w-[90%] md:max-w-[85%]">
-        <label :class="text" class="indent-2 font-bold text-xl cursor-pointer">{{ note.title }}</label>
+    <div class="my-4 mx-2 space-y-2 cursor-pointer flex flex-col" @click="openNote(note)">
+      <div class="max-w-[80%] min-h- md:max-w-[85%] max-h-12">
+        <label :class="text" class="font-normal text-lg md:text-xl cursor-pointer">{{ note.title || "Untitled" }}</label>
       </div>
+
       <textarea
         v-model="note.contents"
         name="contents"
-        class="w-full h-full rounded-md outline-none text-white bg-transparent font-light resize-none cursor-pointer"
+        class="pl-1 w-full text-sm md:text-lg outline-none text-white bg-transparent font-extralight resize-none cursor-pointer"
         disabled
       ></textarea>
-      <small v-if="note.last_modified" class="absolute bottom-1 text-xs italic text-slate-100 right-3">
-        <b> Updated: </b>
-        {{ updated_time }}
-      </small>
+
+      <div v-if="note.last_modified" class="rounded border-t-2 border-white">
+        <small class="absolute bottom-1 right-3 md:right-5">
+          <span class="text-xs font-thin italic text-white">
+            Updated:
+            {{ updated_time }}
+          </span>
+          <!-- <span v-if="groupId" class="text-xs font-thin italic text-white">
+            by
+            {{ last_modified_by }}
+          </span> -->
+        </small>
+      </div>
     </div>
   </section>
 </template>
@@ -26,14 +36,14 @@
 import { useNoteDetailsActions } from "@/store/noteDetails"
 import { useNotesListActions } from "@/store/notesList"
 import { onMounted, PropType, ref, watch } from "vue"
-import { useRouter } from "vue-router"
-import { PrivateNote } from "../../types/states"
+import { useRoute, useRouter } from "vue-router"
+import { PrivateNote, SharedNote } from "../../types/states"
 import DeleteIcon from "../icons/DeleteIcon.vue"
 import useDate from "@/composables/useDate"
 const props = defineProps({
   note: {
     required: true,
-    type: Object as PropType<PrivateNote>,
+    type: Object as PropType<SharedNote | PrivateNote>,
   },
   color: {
     default: "sky",
@@ -42,6 +52,13 @@ const props = defineProps({
 })
 const currentTime = ref<any>(0)
 const updated_time = ref()
+
+// @ts-ignore
+// const last_modified_by = ref(props.note.last_modified_by)
+
+const route = useRoute()
+
+const groupId = route.params.groupId as string
 
 onMounted(() => {
   currentTime.value = new Date()
@@ -57,21 +74,32 @@ watch(
   },
 )
 const router = useRouter()
-const { removePrivateNoteFromDB, getPrivateNotesList } = useNotesListActions()
+const { removePrivateNoteFromDB, getPrivateNotesList, removeSharedNoteFromDB, getSharedNotesList } = useNotesListActions()
 const { setNoteDetails, changeEditingState } = useNoteDetailsActions()
 const isDeleting = ref<boolean>(false)
 
-const onDelete = (note: PrivateNote): void => {
+const onDelete = (note: SharedNote | PrivateNote): void => {
   isDeleting.value = true
-  removePrivateNoteFromDB(note)
-  getPrivateNotesList()
+  if (groupId) {
+    removeSharedNoteFromDB(note as SharedNote, groupId)
+    getSharedNotesList(groupId)
+  } else {
+    removePrivateNoteFromDB(note as PrivateNote)
+    getPrivateNotesList()
+  }
   isDeleting.value = false
 }
-const openNote = async (note: PrivateNote): Promise<void> => {
+const openNote = async (note: SharedNote | PrivateNote): Promise<void> => {
   if (!isDeleting.value) {
     setNoteDetails(note)
     changeEditingState(true)
-    await router.push({ name: "EditPanel" })
+    if (groupId) {
+      console.log(groupId)
+      await router.push({ name: "SharedEditingPanel", params: { groupId } })
+    } else {
+      console.log(groupId)
+      await router.push({ name: "EditPanel" })
+    }
   }
 }
 const colorTheme = ref<string>("")
