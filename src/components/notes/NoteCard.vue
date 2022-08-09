@@ -6,8 +6,8 @@
       </div>
     </Transition>
 
-    <div ref="htmlRef" class="my-4 mx-2 space-y-2 cursor-pointer noselect flex flex-col" @click="openNote(note)">
-      <div class="w-full min-h- md:max-w-[85%] max-h-12">
+    <div ref="htmlRef" class="py-4 px-2 space-y-2 cursor-pointer noselect flex flex-col" @click="openNote(note)">
+      <div class="max-xs:w-28 w-32 mid-sm:w-52 md:w-60 lg:w-74">
         <label :class="text" class="font-normal noselect text-lg md:text-xl cursor-pointer">{{ note.title || "Untitled" }}</label>
       </div>
 
@@ -16,11 +16,12 @@
         v-model="note.contents"
         name="contents"
         class="noHiglight pl-1 w-full text-sm md:text-lg outline-none text-white bg-transparent font-extralight resize-none cursor-pointer"
+        :class="textAreaHeight"
         readonly
         unselectable="on"
       ></textarea>
 
-      <div v-if="note.last_modified" class="rounded border-t-2 border-white">
+      <div v-show="note.last_modified" class="rounded border-t-2 border-white">
         <small class="absolute bottom-1 right-3 md:right-5 noselect">
           <span class="text-xs font-thin italic text-white">
             Updated:
@@ -59,9 +60,6 @@ const props = defineProps({
 
 const currentTime = ref<any>(0)
 const updated_time = ref()
-
-// @ts-ignore
-// const last_modified_by = ref(props.note.last_modified_by)
 
 const route = useRoute()
 
@@ -113,6 +111,12 @@ const onDelete = (note: SharedNote | PrivateNote): void => {
   }
   isDeleting.value = false
 }
+
+const lineBreaks = props.note.contents.split(/\r\n|\r|\n/).length
+
+// const textAreaHeight = lineBreaks > 10 || lineBreaks < 3 ? "h-12" : `h-[${lineBreaks * 10}px]`
+const textAreaHeight = lineBreaks < 6 ? `h-${(lineBreaks + 1) * 4}` : "h-32"
+
 const openNote = async (note: SharedNote | PrivateNote): Promise<void> => {
   if (!isDeleting.value && !longPressed.value) {
     setNoteDetails(note)
@@ -128,22 +132,18 @@ const openNote = async (note: SharedNote | PrivateNote): Promise<void> => {
 const colorTheme = ref<string>("")
 const text = ref<string>("")
 const shadow = ref<string>("")
-if (props.color === "amber") {
-  colorTheme.value = "bg-amber-500"
-  text.value = "text-white"
-  shadow.value = "shadow-amber-500"
-} else if (props.color === "emerald") {
+if (props.color === "emerald") {
   colorTheme.value = "bg-emerald-500"
   text.value = "text-white"
   shadow.value = "shadow-emerald-500"
-} else if (props.color === "teal") {
-  colorTheme.value = "bg-teal-500"
-  text.value = "text-white"
-  shadow.value = "shadow-teal-500"
-} else if (props.color === "cyan") {
-  colorTheme.value = "bg-cyan-500"
-  text.value = "text-white"
-  shadow.value = "shadow-cyan-500"
+  // } else if (props.color === "teal") {
+  //   colorTheme.value = "bg-teal-500"
+  //   text.value = "text-white"
+  //   shadow.value = "shadow-teal-500"
+  // } else if (props.color === "cyan") {
+  //   colorTheme.value = "bg-cyan-500"
+  //   text.value = "text-white"
+  //   shadow.value = "shadow-cyan-500"
 } else if (props.color === "pink") {
   colorTheme.value = "bg-pink-700"
   text.value = "text-white"
@@ -156,32 +156,22 @@ if (props.color === "amber") {
   colorTheme.value = "bg-slate-500"
   text.value = "text-white"
   shadow.value = "shadow-slate-500"
+} else {
+  colorTheme.value = "bg-amber-500"
+  text.value = "text-white"
+  shadow.value = "shadow-amber-500"
 }
 </script>
 
 <style scoped>
 label,
 textarea {
-  outline: none !important;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-.noHiglight {
-  cursor: default;
-  -webkit-user-select: none;
-  -webkit-touch-callout: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  -o-user-select: none;
-}
-
-.noHiglight:focus {
-  outline: none;
-}
 label {
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
 }
 
 .fade-enter-active,

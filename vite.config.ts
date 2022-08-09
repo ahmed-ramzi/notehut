@@ -5,6 +5,10 @@ import * as path from "path"
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue()],
+  logLevel: "info",
+  optimizeDeps: {
+    include: ["@yeger/vue-masonry-wall"],
+  },
   resolve: {
     alias: [{ find: "@", replacement: path.resolve(__dirname, "src") }],
   },

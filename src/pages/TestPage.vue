@@ -1,17 +1,74 @@
 <template>
-  <div class="centered">
-    <BaseButton class="h-10" @click="toggleMenu">CLick Me</BaseButton>
-  </div>
-  <Modal title="Header" :close-action="isActive" @close="toggleMenu"> </Modal>
+  <MasonryWall :items="data" :column-width="superSmall ? 150 : smallScreen ? 200 : 250" :gap="4" class="p-2">
+    <template #default="{ item, index }">
+      <div class="bg-yellow bg-yellow-400 rounded-xl" :class="item.height">{{ index }}</div>
+    </template>
+  </MasonryWall>
 </template>
 
 <script lang="ts" setup>
-import BaseButton from "@/components/base/BaseButton.vue"
-import Modal from "@/components/modals/Modal.vue"
-import { ref } from "vue"
+import MasonaryLayout from "@/layouts/MasonaryLayout.vue"
+import { breakpointsTailwind, useBreakpoints } from "@vueuse/core"
 
-const isActive = ref(false)
-const toggleMenu = () => {
-  isActive.value = !isActive.value
-}
+const tailwindBreakpoints = useBreakpoints(breakpointsTailwind)
+
+const breakpoints = useBreakpoints({
+  xs: 404,
+  sm: 608,
+})
+
+const superSmall = breakpoints.smaller("xs")
+const smallScreen = breakpoints.between("xs", "sm")
+const mediumScreen = tailwindBreakpoints.between("sm", "md")
+
+const data = [
+  {
+    height: "h-52",
+  },
+  {
+    height: "h-44",
+  },
+  {
+    height: "h-48",
+  },
+  {
+    height: "h-60",
+  },
+  {
+    height: "h-44",
+  },
+  {
+    height: "h-52",
+  },
+  {
+    height: "h-44",
+  },
+  {
+    height: "h-60",
+  },
+  {
+    height: "h-52",
+  },
+  {
+    height: "h-44",
+  },
+  {
+    height: "h-48",
+  },
+  {
+    height: "h-60",
+  },
+  {
+    height: "h-44",
+  },
+  {
+    height: "h-52",
+  },
+  {
+    height: "h-44",
+  },
+  {
+    height: "h-60",
+  },
+]
 </script>

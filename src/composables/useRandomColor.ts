@@ -1,5 +1,5 @@
 export const randomColor = (): string => {
-  const options = ["amber", "emerald", "teal", "cyan", "pink", "sky", "slate"]
+  const options = ["amber", "emerald", "pink", "sky", "slate"]
   return options[Math.floor(Math.random() * options.length)]
 }
 
