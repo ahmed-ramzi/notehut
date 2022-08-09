@@ -8,8 +8,12 @@
     <div v-if="isLoading" class="centered">
       <Spinner />
     </div>
-    <div v-else-if="privateNotesCount" class="pb-2 notes-container">
-      <BaseNote v-for="note in filteredNotes?.slice().reverse()" :key="note.id" :note="note" :color="note.color" />
+    <div v-else-if="privateNotesCount" class="pb-2">
+      <MasonryWall :items="filteredNotes" :column-width="superSmall ? 150 : smallScreen ? 200 : 250" :gap="4">
+        <template #default="{ item, index }">
+          <NoteCard :note="item" :color="item.color" />
+        </template>
+      </MasonryWall>
     </div>
     <div v-else class="centered">
       <div class="inline-flex flex-col justify-center items-center w-full">
@@ -29,13 +33,22 @@
 </template>
 
 <script lang="ts" setup>
-import BaseNote from "@/components/base/BaseNote.vue"
 import { useNotesListState, useNotesListGetters } from "@/store/notesList"
 import Spinner from "@/components/base/Spinner.vue"
 import { useAppState } from "@/store/app"
 import CreateNoteIcon from "@/components/icons/CreateNoteIcon.vue"
 import MenuLayout from "@/layouts/MenuLayout.vue"
 import { computed, ref } from "vue"
+import { useBreakpoints } from "@vueuse/core"
+import NoteCard from "@/components/notes/NoteCard.vue"
+
+const breakpoints = useBreakpoints({
+  xs: 436,
+  sm: 608,
+})
+
+const superSmall = breakpoints.smaller("xs")
+const smallScreen = breakpoints.between("xs", "sm")
 
 const { privateNotesCount } = useNotesListGetters()
 const { notes } = useNotesListState()
@@ -51,23 +64,3 @@ const getSearch = (value: string) => {
   search.value = value
 }
 </script>
-
-<style scoped>
-.notes-container {
-  @apply grid gap-3 md:gap-4 items-start;
-}
-
-/* @media (max-width: 459px) {
-  .notes-container {
-    @apply grid-cols-1;
-  }
-  .layout-btn {
-    @apply hidden;
-  }
-}
-@media (min-width: 460px) { */
-.notes-container {
-  @apply grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5;
-}
-/* } */
-</style>
