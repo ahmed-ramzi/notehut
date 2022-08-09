@@ -5,6 +5,7 @@ dist-ssr
 *.localgit 
 *.local
 apps/macOS/m1
+.vscode
 
 
 #Tauri

@@ -900,6 +900,11 @@
   dependencies:
     vue-demi "*"
 
+"@yeger/vue-masonry-wall@3.0.44":
+  version "3.0.44"
+  resolved "https://registry.yarnpkg.com/@yeger/vue-masonry-wall/-/vue-masonry-wall-3.0.44.tgz#75da8167e99653eedd53c49cf6d1e9330513299d"
+  integrity sha512-j2+dsF0OseMvE7anfA4P6OyOJBlILvNtxTIv0me0OIrYG9zjetvRxhUKkc7creIMAPD2LW2fmZeqluDmhSITYQ==
+
 abort-controller@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/abort-controller/-/abort-controller-3.0.0.tgz#eaf54d53b62bae4138e809ca225c8439a6efb392"
