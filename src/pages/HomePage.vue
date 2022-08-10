@@ -1,5 +1,5 @@
 <template>
-  <MenuLayout header-label="notehut" footer>
+  <MenuLayout header-label="notehut" header-bold footer>
     <template #Header>
       <div class="flex space-x-2">
         <!-- <LayoutIcon class="layout-btn" /> -->
@@ -43,7 +43,7 @@ const { isLoading } = useAppState()
 
 <style scoped>
 .notes-container {
-  @apply grid gap-2 md:gap-4 items-start;
+  @apply grid gap-4 items-start;
 }
 
 /* @media (max-width: 459px) {

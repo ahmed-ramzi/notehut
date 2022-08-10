@@ -50,9 +50,8 @@ const register = () => {
     auth = getAuth()
 
     createUserWithEmailAndPassword(auth, userEmail.value, password.value)
-      .then((data) => {
+      .then(async (data) => {
         const newUserId = data.user.uid
-        console.log(data.user.metadata)
 
         const newUser = {
           id: newUserId,
@@ -69,7 +68,7 @@ const register = () => {
         getUser()
         console.log("Successfully Registered")
         setLoggedIn(true)
-        router.push({ name: "HomePage" })
+        await router.push({ name: "HomePage" })
       })
       .catch((error) => {
         loading.value = false

@@ -30,7 +30,7 @@ import Spinner from "@/components/base/Spinner.vue"
 import { useAppState } from "@/store/app"
 import CreateNoteIcon from "@/components/icons/CreateNoteIcon.vue"
 import MenuLayout from "@/layouts/MenuLayout.vue"
-import { onMounted } from "vue"
+import { onMounted, watch } from "vue"
 import { useRoute } from "vue-router"
 
 const { sharedNotesCount } = useNotesListGetters()
@@ -47,6 +47,13 @@ onMounted(() => {
     getSharedNotesList(groupId)
   }
 })
+
+watch(
+  () => route.params.groupId,
+  () => {
+    getSharedNotesList(route.params.groupId as string)
+  },
+)
 </script>
 
 <style scoped>

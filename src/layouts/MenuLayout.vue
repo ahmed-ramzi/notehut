@@ -2,7 +2,7 @@
   <div class="h-screen overflow-scroll relative">
     <!-- The Header -->
     <div class="fixed h-[67px] bg-white blur-sm w-full z-20"></div>
-    <HeaderSection :back-btn="backBtn" :header-label="headerLabel" class="fixed px-4 py-2 w-full z-20 bg-white nh-header">
+    <HeaderSection :back-btn="backBtn" :header-label="headerLabel" :header-bold="headerBold" class="fixed px-4 py-2 w-full z-20 bg-white nh-header">
       <slot name="Header" />
       <Avatar :name="user?.name" width="w-12" height="h-12" />
     </HeaderSection>
@@ -31,6 +31,10 @@ defineProps({
   headerLabel: {
     type: String,
     default: "",
+  },
+  headerBold: {
+    type: Boolean,
+    default: false,
   },
   backBtn: {
     type: String,
