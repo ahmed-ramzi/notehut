@@ -1,7 +1,7 @@
 <template>
-  <div class="rounded-2xl shadow-lg flex justify-center items-center" :class="[gradientColorClass(avatarColor), width, height]">
+  <div v-if="name" class="rounded-2xl shadow-lg flex justify-center items-center" :class="[gradientColorClass(avatarColor), width, height]">
     <h2 class="text-white">
-      {{ name.charAt(0).toUpperCase() }}
+      {{ name ? name.charAt(0).toUpperCase() : null }}
     </h2>
   </div>
 </template>
