@@ -1,9 +1,9 @@
 <template>
-  <teleport to="#modal">
+  <teleport to="#modal-container">
     <Transition name="modal">
-      <div v-if="closeAction" class="absolute top-0 left-0 bg-slate-300/40 w-full h-screen overscroll-none py-1 flex backdrop-blur-sm" :class="[zIndex]">
+      <div v-if="closeAction" id="modal" class="absolute top-0 left-0 bg-slate-300/40 w-full h-screen overscroll-none py-1 flex backdrop-blur-sm" :class="[zIndex]">
         <main class="centered">
-          <div class="p-8 rounded-3xl shadow-2xl space-y-8 bg-slate-100">
+          <div ref="popup" class="p-8 rounded-3xl shadow-2xl space-y-8 bg-slate-100">
             <div class="flex justify-between px-2 items-center">
               <div class="">
                 <h3 class="font-bold uppercase">{{ title }}</h3>
@@ -26,6 +26,9 @@
 </template>
 
 <script lang="ts" setup>
+import { onClickOutside } from "@vueuse/core"
+import { ref } from "vue"
+
 defineProps({
   zIndex: {
     type: String,
@@ -45,7 +48,12 @@ defineProps({
   },
 })
 
-defineEmits(["close"])
+const emit = defineEmits(["close"])
+
+const popup = ref(null)
+onClickOutside(popup, () => {
+  emit("close")
+})
 </script>
 
 <style scoped>

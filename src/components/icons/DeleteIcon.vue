@@ -15,7 +15,7 @@
 
 <style scoped>
 .svg-icon {
-  @apply w-8 h-8 p-1 hover:border rounded-xl active:opacity-60 border-white;
+  @apply w-8 h-8 p-1 ring rounded-xl active:opacity-60 ring-white;
 }
 
 .svg-icon path,

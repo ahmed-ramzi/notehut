@@ -4,7 +4,7 @@
       <div
         v-for="group in groups"
         :key="group.id"
-        class="rounded-2xl h-24 bg-gradient-to-r p-4 from-slate-100 via-slate-300 to-slate-500 shadow-md hover:motion-safe:shadow-xl cursor-pointer duration-300 flex justify-between items-center hover:motion-safe:border-2 border-slate-900"
+        class="rounded-2xl h-24 bg-gradient-to-r p-4 from-slate-100 via-slate-300 to-slate-500 shadow-md hover:motion-safe:shadow-xl cursor-pointer duration-300 flex justify-between items-center hover:motion-safe:ring-2 ring-slate-900"
         @click="onClick(group.id)"
       >
         <div class="flex flex-col">

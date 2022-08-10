@@ -2,7 +2,7 @@
   <section class="flex justify-between items-center">
     <div class="flex items-center" :class="backBtn ? 'space-x-2' : null">
       <ActionBtn v-if="backBtn" icon="<" label="Back" class="mt-2" @click="onClickBack" />
-      <h1 class="font-normal">{{ headerLabel }}</h1>
+      <h1 :class="headerBold ? 'font-semibold' : 'font-normal'">{{ headerLabel }}</h1>
     </div>
     <div class="flex">
       <div>
@@ -22,6 +22,10 @@ const props = defineProps({
   headerLabel: {
     type: String,
     default: "",
+  },
+  headerBold: {
+    type: Boolean,
+    default: false,
   },
   backBtn: {
     type: String,

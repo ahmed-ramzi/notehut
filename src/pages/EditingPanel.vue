@@ -41,8 +41,6 @@ const { updateNoteTitle, updateNoteContent, updateSharedNoteContent, updateShare
 const noteLabel = ref(noteFromStore.value?.title ? noteFromStore.value?.title : "")
 const noteContent = ref(noteFromStore.value?.contents ? noteFromStore.value?.contents : "")
 
-console.log("Editing")
-
 // @ts-ignore
 const last_modified_by = ref(noteFromStore.value?.last_modified_by)
 

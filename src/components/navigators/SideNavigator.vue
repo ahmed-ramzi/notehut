@@ -19,7 +19,7 @@
             </div>
             <!-- Personal Stuff -->
             <div class="flex flex-col">
-              <button @click="toggleMenu">
+              <button @click="router.push({ name: 'HomePage' })">
                 <div>
                   <NoteIcon />
                   <h4>Notes</h4>
@@ -54,7 +54,7 @@
               </div>
             </button>
 
-            <button class="px-2 space-x-4" @click="toggleMenu">
+            <button class="px-2 space-x-4">
               <div>
                 <div>
                   <HamburgerMenu dark />
@@ -84,7 +84,7 @@ import MembersNavigator from "./MembersNavigator.vue"
 import Avatar from "../Avatar.vue"
 import { useNavActions, useNavState } from "@/store/navigators"
 import { onClickOutside } from "@vueuse/core"
-import { ref } from "vue"
+import { onUnmounted, ref } from "vue"
 
 let auth
 
@@ -98,14 +98,24 @@ const router = useRouter()
 const { isMenuActive } = useNavState()
 const { toggleMenu } = useNavActions()
 
-onClickOutside(sideBar, () => toggleMenu())
+onClickOutside(sideBar, () => {
+  if (!document.getElementById("modal")) {
+    toggleMenu()
+  }
+})
+
+onUnmounted(() => {
+  if (isMenuActive.value) {
+    toggleMenu()
+  }
+})
 
 const logout = () => {
   try {
     auth = getAuth()
-    signOut(auth).then(() => {
+    signOut(auth).then(async () => {
       resetApp()
-      router.push({ name: "login" })
+      await router.push({ name: "login" })
     })
   } catch (e) {
     console.log(e)
@@ -120,7 +130,7 @@ button {
 }
 
 button:hover {
-  @apply bg-slate-300 shadow-md;
+  @apply outline-dotted outline-slate-700 shadow-md;
 }
 button:active {
   @apply opacity-70;

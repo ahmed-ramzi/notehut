@@ -5,8 +5,8 @@
 
   <div class="fixed z-10 bottom-0 bg-white border opacity-95 rounded-t-2xl h-14 w-full">
     <div class="flex justify-between items-center px-6 h-full">
-      <div class="flex justify-center items-center cursor-pointer h-10 w-10 rounded-2xl bg-slate-200">
-        <HamburgerMenu class="nh-hamburger" dark @click="toggleMenu" />
+      <div class="flex justify-center items-center cursor-pointer h-10 w-10 rounded-2xl bg-slate-200" @click="toggleMenu">
+        <HamburgerMenu class="nh-hamburger" dark />
       </div>
       <div class="relative w-10 h-full">
         <CreateNoteIcon class="absolute -top-7 -right-3" />

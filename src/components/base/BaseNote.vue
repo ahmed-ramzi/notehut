@@ -1,11 +1,13 @@
 <template>
   <section class="rounded-3xl cursor-pointer hover:scale-105 duration-500 relative pb-2" :class="[colorTheme]">
-    <div class="absolute top-[10px] right-2 cursor-pointer z-10" @click="onDelete(note)">
-      <DeleteIcon />
-    </div>
+    <Transition name="fade">
+      <div v-if="longPressed" ref="deleteBtn" class="absolute -top-2 right-2 cursor-pointer z-10 bg-red-500 rounded-lg" @click="onDelete(note)">
+        <DeleteIcon />
+      </div>
+    </Transition>
 
-    <div class="my-4 mx-2 space-y-2 cursor-pointer flex flex-col" @click="openNote(note)">
-      <div class="max-w-[80%] min-h- md:max-w-[85%] max-h-12">
+    <div ref="htmlRef" class="my-4 mx-2 space-y-2 cursor-pointer flex flex-col" @click="openNote(note)">
+      <div class="w-full min-h- md:max-w-[85%] max-h-12">
         <label :class="text" class="font-normal text-lg md:text-xl cursor-pointer">{{ note.title || "Untitled" }}</label>
       </div>
 
@@ -40,6 +42,8 @@ import { useRoute, useRouter } from "vue-router"
 import { PrivateNote, SharedNote } from "../../types/states"
 import DeleteIcon from "../icons/DeleteIcon.vue"
 import useDate from "@/composables/useDate"
+import { onLongPress, onClickOutside } from "@vueuse/core"
+
 const props = defineProps({
   note: {
     required: true,
@@ -50,6 +54,7 @@ const props = defineProps({
     type: String,
   },
 })
+
 const currentTime = ref<any>(0)
 const updated_time = ref()
 
@@ -59,6 +64,23 @@ const updated_time = ref()
 const route = useRoute()
 
 const groupId = route.params.groupId as string
+
+const htmlRef = ref<HTMLElement | null>(null)
+const deleteBtn = ref<HTMLElement | null>(null)
+const longPressed = ref(false)
+
+const onLongPressCallback = () => {
+  longPressed.value = true
+}
+const resetLongPress = (): void => {
+  longPressed.value = false
+}
+
+onLongPress(htmlRef, onLongPressCallback)
+
+onClickOutside(deleteBtn, () => {
+  resetLongPress()
+})
 
 onMounted(() => {
   currentTime.value = new Date()
@@ -90,14 +112,12 @@ const onDelete = (note: SharedNote | PrivateNote): void => {
   isDeleting.value = false
 }
 const openNote = async (note: SharedNote | PrivateNote): Promise<void> => {
-  if (!isDeleting.value) {
+  if (!isDeleting.value && !longPressed.value) {
     setNoteDetails(note)
     changeEditingState(true)
     if (groupId) {
-      console.log(groupId)
       await router.push({ name: "SharedEditingPanel", params: { groupId } })
     } else {
-      console.log(groupId)
       await router.push({ name: "EditPanel" })
     }
   }
@@ -148,5 +168,15 @@ textarea {
 } */
 label {
   -webkit-line-clamp: 2;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.25s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: scale(1.1);
 }
 </style>
