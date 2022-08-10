@@ -8,18 +8,18 @@
 
     <div ref="htmlRef" class="my-4 mx-2 space-y-2 cursor-pointer flex flex-col" @click="openNote(note)">
       <div class="w-full min-h- md:max-w-[85%] max-h-12">
-        <label :class="text" class="font-normal text-lg md:text-xl cursor-pointer">{{ note.title || "Untitled" }}</label>
+        <label :class="text" class="font-normal noselect text-lg md:text-xl cursor-pointer">{{ note.title || "Untitled" }}</label>
       </div>
 
       <textarea
         v-model="note.contents"
         name="contents"
-        class="pl-1 w-full text-sm md:text-lg outline-none text-white bg-transparent font-extralight resize-none cursor-pointer"
+        class="pl-1 w-full noselect text-sm md:text-lg outline-none text-white bg-transparent font-extralight resize-none cursor-pointer"
         disabled
       ></textarea>
 
       <div v-if="note.last_modified" class="rounded border-t-2 border-white">
-        <small class="absolute bottom-1 right-3 md:right-5">
+        <small class="absolute bottom-1 right-3 md:right-5 noselect">
           <span class="text-xs font-thin italic text-white">
             Updated:
             {{ updated_time }}

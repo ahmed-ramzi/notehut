@@ -58,7 +58,7 @@ watch(
 
 <style scoped>
 .notes-container {
-  @apply grid gap-4 items-start;
+  @apply grid gap-3 md:gap-4 items-start;
 }
 /*
 @media (max-width: 459px) {
