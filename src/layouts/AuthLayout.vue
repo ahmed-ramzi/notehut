@@ -2,8 +2,7 @@
   <main>
     <div>
       <section class="flex justify-center mr-8 items-center space-x-2">
-        {{ isBeta }}
-        <img :src="imgSrc" alt="Notehut Logo" />
+        <img :src="'/src/assets/logo/beta.png'" alt="Notehut Logo" />
         <h1 class="font-semibold justify-start drop-shadow-2xl">notehut</h1>
       </section>
 
