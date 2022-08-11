@@ -33,6 +33,8 @@ const isBeta = computed((): boolean => {
   return document.location.host.includes("tajreb") || document.location.host.includes("localhost") ? true : false
 })
 
+console.log(isBeta.value)
+
 const imgSrc = computed(() => {
   return !isBeta.value ? "/src/assets/logo/beta.png" : "/src/assets/logo/prod.png"
 })
