@@ -57,7 +57,7 @@ main {
   @apply w-full  px-4;
 }
 img {
-  @apply h-10 w-10 drop-shadow-lg rounded-xl;
+  @apply h-16 w-16 drop-shadow-lg rounded-xl;
 }
 div {
   @apply p-8 rounded-3xl shadow-2xl space-y-12 bg-slate-100;
@@ -67,7 +67,7 @@ div {
     @apply max-w-[450px];
   }
   img {
-    @apply h-16 w-16  rounded-2xl;
+    @apply rounded-2xl;
   }
 }
 </style>
