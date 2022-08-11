@@ -2,7 +2,7 @@
   <div class="h-screen overflow-scroll relative">
     <!-- The Header -->
     <div class="fixed h-[90px] bg-white blur-sm w-full z-20"></div>
-    <HeaderSection :back-btn="backBtn" :header-label="headerLabel" :header-bold="headerBold" class="fixed px-4 w-full z-20 bg-white nh-header pt-6">
+    <HeaderSection :back-btn="backBtn" :header-label="headerLabel" :header-bold="headerBold" class="fixed px-4 w-full z-20 bg-white nh-header pt-7">
       <slot name="Header" />
       <Avatar :name="user?.name" width="w-12" height="h-12" />
     </HeaderSection>
