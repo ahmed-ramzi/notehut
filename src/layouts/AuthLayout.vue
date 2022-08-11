@@ -36,7 +36,7 @@ const isBeta = computed((): boolean => {
 console.log(isBeta.value)
 
 const imgSrc = computed(() => {
-  return !isBeta.value ? "/src/assets/logo/beta.png" : "/src/assets/logo/prod.png"
+  return isBeta.value ? "/src/assets/logo/beta.png" : "/src/assets/logo/prod.png"
 })
 
 defineProps({
