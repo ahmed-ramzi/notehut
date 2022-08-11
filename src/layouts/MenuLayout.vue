@@ -1,12 +1,12 @@
 <template>
   <div class="h-screen overflow-scroll relative">
     <!-- The Header -->
-    <div class="fixed h-[80px] bg-white blur-sm w-full z-20"></div>
-    <HeaderSection :back-btn="backBtn" :header-label="headerLabel" :header-bold="headerBold" class="fixed px-4 py-2 w-full z-20 bg-white nh-header pt-5">
+    <div class="fixed h-[90px] bg-white blur-sm w-full z-20"></div>
+    <HeaderSection :back-btn="backBtn" :header-label="headerLabel" :header-bold="headerBold" class="fixed px-4 w-full z-20 bg-white nh-header pt-6">
       <slot name="Header" />
       <Avatar :name="user?.name" width="w-12" height="h-12" />
     </HeaderSection>
-    <div class="h-[80px] w-full bg-transparent z-20"></div>
+    <div class="h-[90px] w-full bg-transparent z-20"></div>
     <!-- *** -->
 
     <!-- Content -->

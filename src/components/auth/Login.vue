@@ -1,5 +1,6 @@
 <template>
   <AuthLayout type="login">
+    {{ url }}
     <!-- Form -->
     <Form :validation-schema="schema" class="w-full flex flex-col items-center nh-form" @submit="login">
       <BaseInput v-model="userEmail" label="Email" placeholder="example@mail.com" name="Email" class="nh-email" />
@@ -30,6 +31,8 @@ const password = ref<string>("")
 const errMsg = ref<string>("")
 
 const loading = ref<boolean>(false)
+
+const url = document.location.host
 
 const router = useRouter()
 const { loadApp } = useAppActions()
