@@ -6,16 +6,18 @@
       </div>
     </Transition>
 
-    <div ref="htmlRef" class="my-4 mx-2 space-y-2 cursor-pointer flex flex-col" @click="openNote(note)">
+    <div ref="htmlRef" class="my-4 mx-2 space-y-2 cursor-pointer noselect flex flex-col" @click="openNote(note)">
       <div class="w-full min-h- md:max-w-[85%] max-h-12">
         <label :class="text" class="font-normal noselect text-lg md:text-xl cursor-pointer">{{ note.title || "Untitled" }}</label>
       </div>
 
       <textarea
+        id="txtInput"
         v-model="note.contents"
         name="contents"
-        class="pl-1 w-full noselect text-sm md:text-lg outline-none text-white bg-transparent font-extralight resize-none cursor-pointer"
-        disabled
+        class="noHiglight pl-1 w-full text-sm md:text-lg outline-none text-white bg-transparent font-extralight resize-none cursor-pointer"
+        readonly
+        unselectable="on"
       ></textarea>
 
       <div v-if="note.last_modified" class="rounded border-t-2 border-white">
@@ -122,6 +124,7 @@ const openNote = async (note: SharedNote | PrivateNote): Promise<void> => {
     }
   }
 }
+
 const colorTheme = ref<string>("")
 const text = ref<string>("")
 const shadow = ref<string>("")
@@ -159,13 +162,24 @@ if (props.color === "amber") {
 <style scoped>
 label,
 textarea {
+  outline: none !important;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-/* textarea {
-  -webkit-line-clamp: 4;
-} */
+.noHiglight {
+  cursor: default;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+}
+
+.noHiglight:focus {
+  outline: none;
+}
 label {
   -webkit-line-clamp: 2;
 }
