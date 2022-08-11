@@ -2,7 +2,8 @@
   <main>
     <div>
       <section class="flex justify-center mr-8 items-center space-x-2">
-        <img :src="'/src/assets/logo/beta.png'" alt="Notehut Logo" />
+        <img v-if="isBeta" src="../assets/logo/beta.png" alt="Notehut Logo" />
+        <img v-else src="../assets/logo/prod.png" alt="Notehut Logo" />
         <h1 class="font-semibold justify-start drop-shadow-2xl">notehut</h1>
       </section>
 
@@ -34,9 +35,9 @@ const isBeta = computed((): boolean => {
 
 console.log(isBeta.value)
 
-const imgSrc = computed(() => {
-  return isBeta.value ? "/src/assets/logo/beta.png" : "/src/assets/logo/prod.png"
-})
+// const imgSrc = computed(() => {
+//   return isBeta.value ? "/src/assets/logo/beta.png" : "/src/assets/logo/prod.png"
+// })
 
 defineProps({
   type: {
