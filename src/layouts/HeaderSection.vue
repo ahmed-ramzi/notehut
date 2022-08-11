@@ -61,3 +61,16 @@ const onClickBack = async (): Promise<void> => {
   }
 }
 </script>
+
+<style scoped>
+h1 {
+  outline: none !important;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+h1 {
+  -webkit-line-clamp: 1;
+}
+</style>
