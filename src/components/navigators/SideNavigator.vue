@@ -1,7 +1,7 @@
 <template>
   <teleport to="body">
     <div v-if="isMenuActive" class="absolute top-0 left-0 bg-slate-300/40 w-full h-screen overscroll-none flex backdrop-blur-sm z-30"></div>
-    <div class="absolute top-0 h-screen z-30 left-0 p-3">
+    <div class="absolute top-0 h-screen z-30 left-0 px-3 pb-3 pt-10">
       <Transition name="slide">
         <nav
           v-if="isMenuActive"
@@ -54,7 +54,7 @@
               </div>
             </button>
 
-            <button class="px-2 space-x-4">
+            <button class="px-2 space-x-4" @click="toggleMenu">
               <div>
                 <div>
                   <HamburgerMenu dark />
