@@ -3,7 +3,7 @@
   <div class="rounded-t-2xl h-14 w-full"></div>
   <div class="fixed z-10 bottom-0 bg-slate-700 blur-sm opacity-50 rounded-t-2xl h-[58px] w-full"></div>
 
-  <div class="fixed z-10 bottom-0 bg-white border opacity-95 rounded-t-2xl h-14 w-full">
+  <div class="fixed z-10 bottom-0 bg-white opacity-95 rounded-t-2xl h-14 w-full">
     <div class="flex justify-between items-center px-6 h-full">
       <div class="flex justify-center items-center cursor-pointer h-10 w-10 rounded-2xl bg-slate-200" @click="toggleMenu">
         <HamburgerMenu class="nh-hamburger" dark />
