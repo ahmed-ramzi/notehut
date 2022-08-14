@@ -1,5 +1,5 @@
 <template>
-  <section class="flex justify-between items-center">
+  <section class="flex justify-between items-center pt-12 md:pt-0">
     <div class="flex items-center" :class="backBtn ? 'space-x-2' : null">
       <ActionBtn v-if="backBtn" icon="<" label="Back" class="mt-2" @click="onClickBack" />
       <h1 :class="headerBold ? 'font-semibold' : 'font-normal'">{{ headerLabel }}</h1>
