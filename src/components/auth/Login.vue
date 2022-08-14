@@ -2,7 +2,7 @@
   <AuthLayout type="login">
     <!-- Form -->
     <Form :validation-schema="schema" class="w-full flex flex-col items-center nh-form" @submit="login">
-      <BaseInput v-model="userEmail" label="Email" placeholder="example@mail.com" name="Email" class="nh-email" />
+      <BaseInput v-model="userEmail" label="Email" placeholder="example@mail.com" name="Email" type="email" class="nh-email" />
       <BaseInput v-model="password" label="Password" placeholder="Your Password" name="Password" type="password" class="nh-password" />
       <p v-if="errMsg" class="text-red-500 font-medium nh-error-msg">{{ errMsg }}</p>
       <BaseButton width="w-full md:w-52" :loading="loading" class="mt-4 nh-submit">Sign In</BaseButton>
