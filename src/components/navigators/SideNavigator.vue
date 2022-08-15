@@ -2,7 +2,7 @@
   <teleport to="body">
     <div v-if="isMenuActive" class="absolute top-0 left-0 bg-slate-300/40 w-full h-screen overscroll-none flex backdrop-blur-sm z-30"></div>
     <div class="absolute top-0 h-screen z-30 left-0 px-3 pb-3 pt-10">
-      <Transition name="slide">
+      <Transition name="slideRight">
         <nav
           v-if="isMenuActive"
           ref="sideBar"
@@ -158,16 +158,5 @@ button > p:hover {
   nav {
     @apply min-w-[280px] max-w-[350px];
   }
-}
-</style>
-
-<style scoped>
-.slide-leave-active,
-.slide-enter-active {
-  transition: all 0.25s ease;
-}
-.slide-enter-from,
-.slide-leave-to {
-  transform: translate(-100%, 0);
 }
 </style>

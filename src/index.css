@@ -47,6 +47,15 @@ span {
                                   supported by Chrome, Edge, Opera and Firefox */
 }
 
+.slideRight-leave-active,
+.slideRight-enter-active {
+  transition: all 0.25s ease;
+}
+.slideRight-enter-from,
+.slideRight-leave-to {
+  transform: translate(-100%, 0);
+}
+
 * {
   -webkit-tap-highlight-color: transparent;
 }

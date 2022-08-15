@@ -1,13 +1,18 @@
 <template>
-  <section class="flex justify-between items-center pt-12 md:pt-0">
-    <div class="flex items-center" :class="backBtn ? 'space-x-2' : null">
-      <ActionBtn v-if="backBtn" icon="<" label="Back" class="mt-2" @click="onClickBack" />
-      <h1 :class="headerBold ? 'font-semibold' : 'font-normal'">{{ headerLabel }}</h1>
-    </div>
-    <div class="flex">
-      <div>
-        <slot />
+  <section class="flex flex-col gap-4">
+    <div class="flex justify-between items-center pt-12 md:pt-0">
+      <div class="flex items-center" :class="backBtn ? 'space-x-2' : null">
+        <ActionBtn v-if="backBtn" icon="<" label="Back" class="mt-2" @click="onClickBack" />
+        <h1 :class="headerBold ? 'font-semibold' : 'font-normal'">{{ headerLabel }}</h1>
       </div>
+      <div class="flex">
+        <div>
+          <slot />
+        </div>
+      </div>
+    </div>
+    <div>
+      <slot name="SearchBar" />
     </div>
   </section>
 </template>
