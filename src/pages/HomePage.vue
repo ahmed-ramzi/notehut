@@ -1,5 +1,5 @@
 <template>
-  <MenuLayout header-label="notehut" header-bold footer>
+  <MenuLayout header-label="notehut" header-bold footer @close="getSearch">
     <template #Header>
       <div class="flex space-x-2">
         <!-- <LayoutIcon class="layout-btn" /> -->
@@ -9,7 +9,7 @@
       <Spinner />
     </div>
     <div v-else-if="privateNotesCount" class="pb-2 notes-container">
-      <BaseNote v-for="note in notes?.slice().reverse()" :key="note.id" :note="note" :color="note.color" />
+      <BaseNote v-for="note in filteredNotes?.slice().reverse()" :key="note.id" :note="note" :color="note.color" />
     </div>
     <div v-else class="centered">
       <div class="inline-flex flex-col justify-center items-center w-full">
@@ -35,10 +35,21 @@ import Spinner from "@/components/base/Spinner.vue"
 import { useAppState } from "@/store/app"
 import CreateNoteIcon from "@/components/icons/CreateNoteIcon.vue"
 import MenuLayout from "@/layouts/MenuLayout.vue"
+import { computed, ref } from "vue"
 
 const { privateNotesCount } = useNotesListGetters()
 const { notes } = useNotesListState()
 const { isLoading } = useAppState()
+
+const search = ref("")
+
+const filteredNotes = computed(() => {
+  return notes.value?.filter((item) => item.title.toLowerCase().includes(search.value.toLowerCase()) || item.contents.toLowerCase().includes(search.value.toLowerCase()))
+})
+
+const getSearch = (value: string) => {
+  search.value = value
+}
 </script>
 
 <style scoped>

@@ -1,10 +1,10 @@
 <template>
-  <MenuLayout back-btn="GroupsPage" header-label="shared notes" footer>
+  <MenuLayout back-btn="GroupsPage" header-label="shared notes" footer @close="getSearch">
     <div v-if="isLoading" class="centered">
       <Spinner />
     </div>
     <div v-else-if="sharedNotesCount" class="pb-2 notes-container">
-      <BaseNote v-for="note in shared_notes?.slice().reverse()" :key="note.id" :note="note" :color="note.color" />
+      <BaseNote v-for="note in filteredNotes?.slice().reverse()" :key="note.id" :note="note" :color="note.color" />
     </div>
     <div v-else class="centered">
       <div class="inline-flex flex-col justify-center items-center w-full">
@@ -30,7 +30,7 @@ import Spinner from "@/components/base/Spinner.vue"
 import { useAppState } from "@/store/app"
 import CreateNoteIcon from "@/components/icons/CreateNoteIcon.vue"
 import MenuLayout from "@/layouts/MenuLayout.vue"
-import { onMounted, watch } from "vue"
+import { computed, onMounted, ref, watch } from "vue"
 import { useRoute } from "vue-router"
 
 const { sharedNotesCount } = useNotesListGetters()
@@ -41,6 +41,16 @@ const { isLoading } = useAppState()
 const route = useRoute()
 
 const groupId = route.params.groupId as string
+
+const search = ref("")
+
+const filteredNotes = computed(() => {
+  return shared_notes.value?.filter((item) => item.title.toLowerCase().includes(search.value.toLowerCase()) || item.contents.toLowerCase().includes(search.value.toLowerCase()))
+})
+
+const getSearch = (value: string) => {
+  search.value = value
+}
 
 onMounted(() => {
   if (!sharedNotesCount.value) {
