@@ -19,6 +19,7 @@ type NotesListGetters = {
 }
 
 type NotesListActions = {
+  filteredNotes(search: string): PrivateNote[]
   getPrivateNotesList(): void
   removePrivateNoteFromDB(note: PrivateNote): void
   uploadPrivateNoteToDB(note: PrivateNote): void
@@ -45,6 +46,9 @@ const useNotesListStore = defineStore<string, NotesListState, NotesListGetters, 
   },
 
   actions: {
+    filteredNotes(search: string): PrivateNote[] {
+      return this.notes?.filter((note: PrivateNote) => note.title.toLowerCase().includes(search.toLowerCase())) as PrivateNote[]
+    },
     // Private
     async getPrivateNotesList(): Promise<void> {
       const { isLoading } = useAppState()
