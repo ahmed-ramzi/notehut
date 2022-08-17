@@ -7,10 +7,7 @@
 </template>
 
 <script lang="ts" setup>
-import MasonaryLayout from "@/layouts/MasonaryLayout.vue"
-import { breakpointsTailwind, useBreakpoints } from "@vueuse/core"
-
-const tailwindBreakpoints = useBreakpoints(breakpointsTailwind)
+import { useBreakpoints } from "@vueuse/core"
 
 const breakpoints = useBreakpoints({
   xs: 404,
@@ -19,7 +16,6 @@ const breakpoints = useBreakpoints({
 
 const superSmall = breakpoints.smaller("xs")
 const smallScreen = breakpoints.between("xs", "sm")
-const mediumScreen = tailwindBreakpoints.between("sm", "md")
 
 const data = [
   {
