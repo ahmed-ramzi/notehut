@@ -56,6 +56,10 @@ const props = defineProps({
     default: "sky",
     type: String,
   },
+  noteIndex: {
+    type: Number,
+    required: true,
+  },
 })
 
 const currentTime = ref<any>(0)
