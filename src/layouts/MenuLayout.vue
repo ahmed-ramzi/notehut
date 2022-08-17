@@ -7,7 +7,7 @@
       :header-label="headerLabel"
       :header-bold="headerBold"
       class="fixed rounded-b-3xl px-4 w-full z-20 duration-500 nh-header md:pt-2 bg-white opacity-95"
-      :class="!isPositionTop ? 'shadow-xl' : null"
+      :class="!isPositionTop ? 'shadow-lg shadow-slate-500' : null"
     >
       <slot name="Header" />
       <Avatar :name="user?.name" width="w-12" height="h-12" />
