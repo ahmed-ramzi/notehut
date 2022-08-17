@@ -1,14 +1,12 @@
 <template>
   <div class="h-screen overflow-scroll relative">
     <!-- The Header -->
-    <div class="fixed h-[110px] md:h-[67px] bg-white blur-sm w-full z-20"></div>
-
+    <!-- <div class="fixed h-[110px] md:h-[67px] bg-white opacity-95 w-full z-20"></div> -->
     <HeaderSection
       :back-btn="backBtn"
       :header-label="headerLabel"
       :header-bold="headerBold"
-      class="fixed px-4 w-full z-20 nh-header md:pt-2"
-      :class="isSearchActive ? 'bg-white' : 'bg-transparent'"
+      class="fixed drop-shadow-lg rounded-b-3xl px-4 w-full z-20 nh-header md:pt-2 bg-white opacity-95"
     >
       <slot name="Header" />
       <Avatar :name="user?.name" width="w-12" height="h-12" />
