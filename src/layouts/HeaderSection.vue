@@ -73,9 +73,8 @@ h1 {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   overflow: hidden;
-}
-
-h1 {
   -webkit-line-clamp: 1;
+
+  line-height: 1.2;
 }
 </style>
