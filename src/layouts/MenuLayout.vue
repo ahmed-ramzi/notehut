@@ -1,12 +1,13 @@
 <template>
-  <div class="h-screen overflow-scroll relative">
+  <div class="h-screen overflow-scroll relative" ref="el">
     <!-- The Header -->
     <!-- <div class="fixed h-[110px] md:h-[67px] bg-white opacity-95 w-full z-20"></div> -->
     <HeaderSection
       :back-btn="backBtn"
       :header-label="headerLabel"
       :header-bold="headerBold"
-      class="fixed drop-shadow-lg rounded-b-3xl px-4 w-full z-20 nh-header md:pt-2 bg-white opacity-95"
+      class="fixed rounded-b-3xl px-4 w-full z-20 duration-500 nh-header md:pt-2 bg-white opacity-95"
+      :class="!isPositionTop ? 'shadow-xl' : null"
     >
       <slot name="Header" />
       <Avatar :name="user?.name" width="w-12" height="h-12" />
@@ -38,7 +39,8 @@ import SideNavigator from "@/components/navigators/SideNavigator.vue"
 import Avatar from "@/components/Avatar.vue"
 import { useUserState } from "@/store/user"
 import BaseInput from "@/components/base/BaseInput.vue"
-import { ref, watch } from "vue"
+import { ref, toRefs, watch } from "vue"
+import { useScroll } from "@vueuse/core"
 
 const { user } = useUserState()
 
@@ -71,6 +73,10 @@ const isSearchActive = ref(false)
 const toggleSearch = () => {
   isSearchActive.value = !isSearchActive.value
 }
+
+const el = ref<HTMLElement | null>(null)
+const { arrivedState } = useScroll(el)
+const { top: isPositionTop } = toRefs(arrivedState)
 
 watch(
   () => search.value,
