@@ -9,7 +9,7 @@
       <Spinner />
     </div>
     <div v-else-if="privateNotesCount" class="pt-1 pb-2">
-      <MasonryWall :items="filteredNotes" :column-width="superSmall ? 150 : smallScreen ? 200 : 250" :gap="4">
+      <MasonryWall :items="filteredNotes?.reverse()" :column-width="superSmall ? 150 : smallScreen ? 200 : 250" :gap="4">
         <template #default="{ item, index }">
           <NoteCard :note="item" :color="item.color" :note-index="index" />
         </template>

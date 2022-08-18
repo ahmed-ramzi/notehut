@@ -18,6 +18,12 @@
     "cypress:prod-run": "CYPRESS_BASE_URL=https://notehut.app ./node_modules/.bin/cypress run"
   },
   "dependencies": {
+    "@tiptap/extension-bubble-menu": "^2.0.0-beta.61",
+    "@tiptap/extension-placeholder": "^2.0.0-beta.53",
+    "@tiptap/extension-task-item": "^2.0.0-beta.37",
+    "@tiptap/extension-task-list": "^2.0.0-beta.29",
+    "@tiptap/starter-kit": "^2.0.0-beta.191",
+    "@tiptap/vue-3": "^2.0.0-beta.96",
     "@types/uuid": "^8.3.4",
     "@vueuse/core": "^9.0.2",
     "firebase": "^9.6.11",

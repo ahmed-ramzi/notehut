@@ -11,12 +11,14 @@
     />
     <div></div>
 
-    <textarea
+    <!-- <textarea
       v-model="noteContent"
       name="contents"
       class="w-full h-full rounded-md outline-none text-slate-500 bg-transparent font-light resize-none"
       :placeholder="noteContent || 'Jot something here...'"
-    ></textarea>
+    ></textarea> -->
+    <ContentEditor v-model="noteContent" />
+
     <div v-if="last_modified_by" class="text-right">
       <span class="text-xs font-thin italic text-slate-500">
         Updated by
@@ -31,6 +33,7 @@ import { onUnmounted, ref, watch } from "vue"
 import { useRoute } from "vue-router"
 import HeaderSection from "../layouts/HeaderSection.vue"
 import { useNoteDetailsState, useNoteDetailsActions, clearNoteDetailsState } from "../store/noteDetails"
+import ContentEditor from "@/components/ContentEditor.vue"
 
 const route = useRoute()
 const groupId = route.params.groupId as string

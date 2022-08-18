@@ -19,9 +19,19 @@ h4 {
 
 p,
 span {
-  @apply font-light text-sm text-slate-700;
+  @apply font-extralight text-lg text-slate-700;
 }
 
+li {
+  @apply flex items-center;
+}
+li > label {
+  @apply px-4;
+}
+
+strong {
+  @apply font-bold;
+}
 .centered {
   position: fixed;
   top: 50%;
