@@ -57,7 +57,7 @@ const { isLoading } = useAppState()
 const search = ref("")
 
 const filteredNotes = computed(() => {
-  return notes.value?.filter((item) => item.title.toLowerCase().includes(search.value.toLowerCase()) || item.contents.toLowerCase().includes(search.value.toLowerCase()))
+  return notes.value?.filter((item) => item.title.toLowerCase().includes(search.value.toLowerCase()) || item.contents.toLowerCase().includes(search.value.toLowerCase())).reverse()
 })
 
 const getSearch = (value: string) => {

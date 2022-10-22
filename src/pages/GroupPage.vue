@@ -58,7 +58,9 @@ const groupId = route.params.groupId as string
 const search = ref("")
 
 const filteredNotes = computed(() => {
-  return shared_notes.value?.filter((item) => item.title.toLowerCase().includes(search.value.toLowerCase()) || item.contents.toLowerCase().includes(search.value.toLowerCase()))
+  return shared_notes.value
+    ?.filter((item) => item.title.toLowerCase().includes(search.value.toLowerCase()) || item.contents.toLowerCase().includes(search.value.toLowerCase()))
+    .reverse()
 })
 
 const getSearch = (value: string) => {
