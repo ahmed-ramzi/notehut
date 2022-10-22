@@ -1,5 +1,5 @@
 <template>
-  <section class="rounded-3xl cursor-pointer hover:scale-105 duration-500 relative pb-2" :class="[colorTheme]">
+  <section class="rounded-3xl cursor-pointer duration-500 active:opacity-80 relative pb-2" :class="[colorTheme]">
     <Transition name="fade">
       <div v-if="longPressed" ref="deleteBtn" class="absolute -top-2 right-2 cursor-pointer z-10 bg-red-500 rounded-lg" @click="onDelete(note)">
         <DeleteIcon />
