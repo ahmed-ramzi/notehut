@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen overflow-scroll relative" ref="el">
+  <div ref="el" class="h-screen overflow-scroll relative">
     <!-- The Header -->
     <!-- <div class="fixed h-[110px] md:h-[67px] bg-white opacity-95 w-full z-20"></div> -->
     <HeaderSection
@@ -20,7 +20,7 @@
       </template>
     </HeaderSection>
 
-    <div class="md:h-[67px] w-full bg-transparent z-20" :class="isSearchActive ? 'h-[170px]' : 'h-[110px]'"></div>
+    <div class="w-full bg-transparent z-20" :class="isSearchActive ? 'h-[140px]' : 'h-[60px]'"></div>
     <!-- *** -->
 
     <!-- Content -->
