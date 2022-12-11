@@ -25,7 +25,7 @@
 
     <!-- Content -->
     <div class="flex flex-col space-y-4 p-4">
-      <slot name="content" :isScrolling="isScrolling" />
+      <slot name="content" :is-scrolling="isScrolling" />
     </div>
     <FooterNavigator v-if="footer" @on-click-search="toggleSearch" />
     <SideNavigator v-if="footer" />

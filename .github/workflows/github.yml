@@ -17,9 +17,6 @@ jobs:
       - name: Yarn Cleaning
         run: yarn autoclean --force
 
-      - name: Running RM RF
-        run: sudo rm -rf /home/runner/work/notehut/notehut/node_modules/
-
       - name: Installing Dependencies
         run: yarn install
 
@@ -38,11 +35,11 @@ jobs:
       - name: Yarn Cleaning
         run: yarn autoclean --force
 
-      - name: Running Chmod
-        run: sudo chmod 0777 /home/runner/work/notehut/notehut/
+      - name: Running RM RF
+        run: sudo rm -rf /home/runner/work/notehut/notehut/node_modules/
 
       - name: Installing Dependencies
-        run: yarn install
+        run: yarn
 
       - name: Checking Typescript
         run: yarn ts-check
@@ -59,8 +56,8 @@ jobs:
       - name: Yarn Cleaning
         run: yarn autoclean --force
 
-      - name: Sudo Installing Dependencies
-        run: sudo yarn
+      - name: Installing Dependencies
+        run: yarn
 
       - name: Building
         run: yarn build
