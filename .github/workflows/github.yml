@@ -14,8 +14,8 @@ jobs:
       - name: Initializing Yarn
         uses: Borales/actions-yarn@v3
 
-      - name: Yarn Cleaning
-        run: yarn autoclean --force
+      - name: Removing Node Modules
+        run: sudo rm -rf /home/runner/work/notehut/notehut/node_modules/
 
       - name: Installing Dependencies
         run: yarn install
@@ -32,10 +32,7 @@ jobs:
       - name: Initializing Yarn
         uses: Borales/actions-yarn@v3
 
-      - name: Yarn Cleaning
-        run: yarn autoclean --force
-
-      - name: Running RM RF
+      - name: Removing Node Modules
         run: sudo rm -rf /home/runner/work/notehut/notehut/node_modules/
 
       - name: Installing Dependencies
@@ -53,8 +50,8 @@ jobs:
       - name: Initializing Yarn
         uses: Borales/actions-yarn@v3
 
-      - name: Yarn Cleaning
-        run: yarn autoclean --force
+      - name: Removing Node Modules
+        run: sudo rm -rf /home/runner/work/notehut/notehut/node_modules/
 
       - name: Installing Dependencies
         run: yarn
