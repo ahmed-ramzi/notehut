@@ -17,12 +17,12 @@
         <textarea
           id="txtInput"
           name="contents"
+          v-model="note.contents"
           :class="textAreaHeight"
           class="pl-1 w-full text-sm md:text-lg outline-none text-white bg-transparent font-extralight resize-none cursor-pointer"
           readonly
           unselectable="on"
-          >{{ note.contents }}</textarea
-        >
+        ></textarea>
       </div>
 
       <div v-show="note.last_modified" class="rounded border-t-2 border-white">
