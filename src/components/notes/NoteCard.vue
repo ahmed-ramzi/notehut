@@ -11,15 +11,19 @@
         <label :class="text" class="font-normal noselect text-lg md:text-xl cursor-pointer">{{ note.title || "Untitled" }}</label>
       </div>
 
-      <textarea
-        id="txtInput"
-        v-model="note.contents"
-        name="contents"
-        class="noHiglight pl-1 w-full text-sm md:text-lg outline-none text-white bg-transparent font-extralight resize-none cursor-pointer"
-        :class="textAreaHeight"
-        readonly
-        unselectable="on"
-      ></textarea>
+      <div class="relative">
+        <!--  To hide the selection of the textarea -->
+        <div :class="textAreaHeight" class="absolute top-0 left-0 h-full bg-black w-full opacity-0 z-10"></div>
+        <textarea
+          id="txtInput"
+          name="contents"
+          :class="textAreaHeight"
+          class="pl-1 w-full text-sm md:text-lg outline-none text-white bg-transparent font-extralight resize-none cursor-pointer"
+          readonly
+          unselectable="on"
+          >{{ note.contents }}</textarea
+        >
+      </div>
 
       <div v-show="note.last_modified" class="rounded border-t-2 border-white">
         <small class="absolute bottom-1 right-3 md:right-5 noselect">
@@ -123,6 +127,7 @@ const onDelete = (note: SharedNote | PrivateNote): void => {
 const lineBreaks = props.note.contents.split(/\r\n|\r|\n/).length
 
 // const textAreaHeight = lineBreaks > 10 || lineBreaks < 3 ? "h-12" : `h-[${lineBreaks * 10}px]`
+// const textAreaHeight = lineBreaks < 6 ? `h-${(lineBreaks + 1) * 4}` : "h-32"
 const textAreaHeight = lineBreaks < 6 ? `h-${(lineBreaks + 1) * 4}` : "h-32"
 
 const openNote = async (note: SharedNote | PrivateNote): Promise<void> => {
@@ -177,6 +182,12 @@ textarea {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   overflow: hidden;
+
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 label {
   -webkit-line-clamp: 1;
