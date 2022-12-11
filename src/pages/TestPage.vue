@@ -9,7 +9,7 @@
 <script lang="ts" setup>
 import { useBreakpoints, useWindowScroll } from "@vueuse/core"
 
-const { x, y } = useWindowScroll()
+const { y } = useWindowScroll()
 
 const breakpoints = useBreakpoints({
   xs: 404,
