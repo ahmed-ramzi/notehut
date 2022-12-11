@@ -1,13 +1,15 @@
 <template>
   <MasonryWall :items="data" :column-width="superSmall ? 150 : smallScreen ? 200 : 250" :gap="4" class="p-2">
     <template #default="{ item, index }">
-      <div class="bg-yellow bg-yellow-400 rounded-xl" :class="item.height">{{ index }}</div>
+      <div class="bg-yellow bg-yellow-400 rounded-xl" :class="item.height">{{ index }} {{ y }}</div>
     </template>
   </MasonryWall>
 </template>
 
 <script lang="ts" setup>
-import { useBreakpoints } from "@vueuse/core"
+import { useBreakpoints, useWindowScroll } from "@vueuse/core"
+
+const { x, y } = useWindowScroll()
 
 const breakpoints = useBreakpoints({
   xs: 404,

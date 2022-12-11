@@ -60,6 +60,10 @@ const props = defineProps({
     type: Number,
     required: true,
   },
+  isScrolling: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const currentTime = ref<any>(0)
@@ -74,7 +78,7 @@ const deleteBtn = ref<HTMLElement | null>(null)
 const longPressed = ref(false)
 
 const onLongPressCallback = () => {
-  longPressed.value = true
+  if (!props.isScrolling) longPressed.value = true
 }
 const resetLongPress = (): void => {
   longPressed.value = false

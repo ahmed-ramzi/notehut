@@ -1,29 +1,31 @@
 <template>
   <MenuLayout back-btn="GroupsPage" header-label="shared notes" footer @close="getSearch">
-    <div v-if="isLoading" class="centered">
-      <Spinner />
-    </div>
-    <div v-else-if="sharedNotesCount" class="pb-2">
-      <MasonryWall :items="filteredNotes" :column-width="superSmall ? 150 : smallScreen ? 200 : 250" :gap="4">
-        <template #default="{ item, index }">
-          <NoteCard :note="item" :color="item.color" :note-index="index" />
-        </template>
-      </MasonryWall>
-    </div>
-    <div v-else class="centered">
-      <div class="inline-flex flex-col justify-center items-center w-full">
-        <p>You have no notes</p>
-        <div class="inline-flex flex-col">
-          <p class="inline-flex items-center">
-            <span class="whitespace-nowrap"> Create a new note by clicking on the </span>
-            <span class="px-2">
-              <CreateNoteIcon ignore-hidding-btn />
-            </span>
-            <span> button </span>
-          </p>
+    <template #content="{ isScrolling }">
+      <div v-if="isLoading" class="centered">
+        <Spinner />
+      </div>
+      <div v-else-if="sharedNotesCount" class="pb-2">
+        <MasonryWall :items="filteredNotes" :column-width="superSmall ? 150 : smallScreen ? 200 : 250" :gap="4">
+          <template #default="{ item, index }">
+            <NoteCard :note="item" :color="item.color" :note-index="index" :is-scrolling="isScrolling" />
+          </template>
+        </MasonryWall>
+      </div>
+      <div v-else class="centered">
+        <div class="inline-flex flex-col justify-center items-center w-full">
+          <p>You have no notes</p>
+          <div class="inline-flex flex-col">
+            <p class="inline-flex items-center">
+              <span class="whitespace-nowrap"> Create a new note by clicking on the </span>
+              <span class="px-2">
+                <CreateNoteIcon ignore-hidding-btn />
+              </span>
+              <span> button </span>
+            </p>
+          </div>
         </div>
       </div>
-    </div>
+    </template>
   </MenuLayout>
 </template>
 

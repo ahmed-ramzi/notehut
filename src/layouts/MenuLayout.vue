@@ -25,7 +25,7 @@
 
     <!-- Content -->
     <div class="flex flex-col space-y-4 p-4">
-      <slot />
+      <slot name="content" :isScrolling="isScrolling" />
     </div>
     <FooterNavigator v-if="footer" @on-click-search="toggleSearch" />
     <SideNavigator v-if="footer" />
@@ -75,7 +75,7 @@ const toggleSearch = () => {
 }
 
 const el = ref<HTMLElement | null>(null)
-const { arrivedState } = useScroll(el)
+const { arrivedState, isScrolling } = useScroll(el)
 const { top: isPositionTop } = toRefs(arrivedState)
 
 watch(
