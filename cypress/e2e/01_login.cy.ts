@@ -9,6 +9,7 @@ describe("Login Test", () => {
   before(() => {
     cy.clearIndexedDB()
   })
+
   it("Login with Wrong Credentials", (): void => {
     cy.visit("")
     cy.checkUrl("login")
