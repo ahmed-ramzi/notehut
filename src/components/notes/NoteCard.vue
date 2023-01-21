@@ -16,8 +16,8 @@
         <div :class="textAreaHeight" class="absolute top-0 left-0 h-full bg-black w-full opacity-0 z-10"></div>
         <textarea
           id="txtInput"
-          name="contents"
           v-model="note.contents"
+          name="contents"
           :class="textAreaHeight"
           class="pl-1 w-full text-sm md:text-lg outline-none text-white bg-transparent font-extralight resize-none cursor-pointer"
           readonly

@@ -14,7 +14,7 @@ interface AppActions {
 const useAppStore = defineStore<string, AppState, Record<any, never>, AppActions>("app", {
   state: () => {
     return {
-      isLoading: false,
+      isLoading: true,
     }
   },
 
