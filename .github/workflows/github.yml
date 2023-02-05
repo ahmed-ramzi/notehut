@@ -8,7 +8,7 @@ on:
 
 jobs:
   lint-and-ts-check:
-    name: Linting + Typescript Checking
+    name: Linting + Typescript Check
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Pipeline
