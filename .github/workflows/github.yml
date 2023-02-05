@@ -44,7 +44,7 @@ jobs:
         run: sudo rm -rf /home/runner/work/notehut/notehut/node_modules/
 
       - name: Installing Dependencies
-        run: yarn
+        run: yarn install
 
       - name: Building
         run: yarn build
