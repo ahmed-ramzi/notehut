@@ -3,12 +3,12 @@ name: Github CI
 on:
   push:
     branches: ["beta"]
-    pull_request:
-      - master
+  pull_request:
+    branches: ["master"]
 
 jobs:
-  lint-and-ts:
-    name: Lint and Typscript Check
+  lint-and-ts-check:
+    name: Linting + Typescript Checking
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Pipeline
@@ -32,7 +32,7 @@ jobs:
   build:
     name: Building App
     runs-on: ubuntu-latest
-    needs: [lint-&-ts]
+    needs: lint-and-ts-check
     steps:
       - name: Checkout Pipeline
         uses: actions/checkout@v3
