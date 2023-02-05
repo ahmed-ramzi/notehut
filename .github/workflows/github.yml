@@ -3,8 +3,8 @@ name: Github CI
 on:
   push:
     branches: ["beta"]
-  pull_request:
-    branches: ["master"]
+  # pull_request:
+  #   branches: ["master"]
 
 jobs:
   lint-and-ts-check:
@@ -44,7 +44,7 @@ jobs:
         run: sudo rm -rf /home/runner/work/notehut/notehut/node_modules/
 
       - name: Installing Dependencies
-        run: yarn
+        run: yarn install
 
       - name: Building
         run: yarn build
