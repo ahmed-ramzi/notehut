@@ -3,9 +3,11 @@ name: Github CI
 on:
   push:
     branches: ["beta"]
+  pull_request: ["master"]
 
 jobs:
-  lint:
+  lint-and-ts:
+    name: Lint and Typscript Check
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Pipeline
@@ -23,27 +25,13 @@ jobs:
       - name: Linting
         run: yarn lint
 
-  typescript-check:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Pipeline
-        uses: actions/checkout@v3
-
-      - name: Initializing Yarn
-        uses: Borales/actions-yarn@v3
-
-      - name: Removing Node Modules
-        run: sudo rm -rf /home/runner/work/notehut/notehut/node_modules/
-
-      - name: Installing Dependencies
-        run: yarn
-
       - name: Checking Typescript
         run: yarn ts-check
 
   build:
+    name: Building App
     runs-on: ubuntu-latest
-    needs: [lint, typescript-check]
+    needs: [lint-&-ts]
     steps:
       - name: Checkout Pipeline
         uses: actions/checkout@v3
