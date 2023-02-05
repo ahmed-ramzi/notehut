@@ -3,7 +3,8 @@ name: Github CI
 on:
   push:
     branches: ["beta"]
-  pull_request: ["master"]
+    pull_request:
+      - master
 
 jobs:
   lint-and-ts:
