@@ -1,46 +1,26 @@
-### notehut
+# notehut
 
-This is a playground for our Interent Technologies subject. This enviroment is made of Vite + Vue 3
+## Usage
 
-### Setting Up Node.JS and NPM
+NOTE: THIS IS NOT FOR EXTERNAL USE
 
-Make sure you have Node Js installed in your device. Run the following command to check your node version
+This project is a customized digital note-taking solution designed specifically for my personal use. With this app, I can easily jot down ideas, to-do lists, and reminders, and store them securely in one place.
 
-```
-node -v
-```
+The app is designed to be user-friendly, with a clean and intuitive interface that makes it easy to create and organize notes. Future builds of this app will help me easily categorize my notes using tags and labels, making it simple to find and retrieve information when I need it.
 
-If you see version V1x.xx.xx, then you are good to go. Otherwise, install node from here
+Notehut is accessible on all of my devices, ensuring that I always have access to my notes wherever I am. The app is also highly customizable, allowing me to adjust the interface and settings to suit my preferences and needs.
 
-```
-https://nodejs.org/en/
-```
+Overall, Notehut is a simple and effective solution for my personal note-taking needs. It helps me stay organized and on top of my tasks, and is an essential tool for managing my day-to-day life.
 
-Make sure you have Node and NPM are installed correctly by running the following commands in terminal
+## Built With
 
-```
-node -v
-```
-
-and
-
-```
-npm -v
-```
+- [Vite](https://vitejs.dev/) - Next Generation Frontend Tooling
+- [Vue.js](https://vuejs.org/) - The Progressive JavaScript Framework (With Typescript)
 
 ### Configure the enviroment
 
 Once you have npm installed, you will need rename the file `.env.local.dist` to `.env.local`
-
-Then you have to pit the API key and domain in the .env file
-
-### Installing Yarn
-
-Now its time to install and upgrade Yarn:
-
-```
-npm install --global yarn
-```
+Then you have to put the API keys and domain in the .env file
 
 ### Installing Dependencies
 
