@@ -9,14 +9,16 @@ import "firebase/compat/firestore"
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const env = import.meta.env
 const firebaseConfig = {
-  apiKey: `${import.meta.env.VITE_API_KEY}`,
-  authDomain: `${import.meta.env.VITE_AUTH_DOMAIN}`,
-  projectId: "notehut-14bd0",
-  storageBucket: "notehut-14bd0.appspot.com",
-  messagingSenderId: "56061727737",
-  appId: "1:56061727737:web:53acf575ab6f7a5036e328",
-  measurementId: "G-Y3B6RD5SRC",
+  apiKey: env.VITE_API_KEY,
+  authDomain: env.VITE_AUTH_DOMAIN,
+  databaseURL: env.VITE_DATABASE_URL,
+  projectId: env.VITE_PROJECTID,
+  storageBucket: env.VITE_STORAGEBUCKET,
+  messagingSenderId: env.VITE_MESSAGINGSENDERID,
+  appId: env.VITE_APPID,
+  measurementId: env.VITE_MEASUREMENTID,
 }
 
 // Initialize Firebase
