@@ -15,14 +15,14 @@ export const routes = [
     },
   },
 
-  // {
-  //   path: "/test",
-  //   name: "TestPage",
-  //   component: () => import("../pages/TestPage.vue"),
-  //   meta: {
-  //     requiresAuth: true,
-  //   },
-  // },
+  {
+    path: "/test",
+    name: "TestPage",
+    component: () => import("../pages/TestPage.vue"),
+    meta: {
+      requiresAuth: true,
+    },
+  },
   {
     path: "/groups",
     name: "GroupsPage",
