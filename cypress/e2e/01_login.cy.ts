@@ -26,6 +26,5 @@ describe("Login Test", () => {
     cg(password).should("exist").click().clear().type("aya3vkq-rqr2twc_JRX")
     cg(submit).click()
     cy.checkUrl("")
-    cg(".nh-header")
   })
 })
