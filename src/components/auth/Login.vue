@@ -1,54 +1,59 @@
 <template>
   <AuthLayout type="login">
-    <!-- Form -->
-    <Form :validation-schema="schema" class="w-full flex flex-col items-center nh-form" @submit="login">
-      <BaseInput v-model="userEmail" label="Email" placeholder="example@mail.com" name="Email" type="email" class="nh-email" />
-      <BaseInput v-model="password" label="Password" placeholder="Your Password" name="Password" type="password" class="nh-password" />
+    <form class="w-full flex flex-col items-center nh-form" @submit.prevent="onSubmit">
+      <TextInput name="email" label="Email" placeholder="example@mail.com" class="nh-email" />
+      <TextInput name="password" label="Password" placeholder="Your Password" type="password" class="nh-password" />
       <p v-if="errMsg" class="text-red-500 font-medium nh-error-msg">{{ errMsg }}</p>
       <BaseButton width="w-full md:w-52" :loading="loading" class="mt-4 nh-submit">Sign In</BaseButton>
-    </Form>
+    </form>
   </AuthLayout>
 </template>
 
 <script lang="ts" setup>
 import { ref } from "vue"
 import AuthLayout from "../../layouts/AuthLayout.vue"
-import BaseInput from "../base/BaseInput.vue"
 import BaseButton from "../base/BaseButton.vue"
-import { Form } from "vee-validate"
-import * as yup from "yup"
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
 import { useAuthActions } from "../../store/auth"
 import { useRouter } from "vue-router"
 import { useUserActions } from "../../store/user"
 import { useAppActions } from "@/store/app"
+import { useForm } from "vee-validate"
+import TextInput from "../base/TextInput.vue"
+import { object, string } from "yup"
+
+type LoginForm = {
+  email: string
+  password: string
+}
 
 let auth
-
-const userEmail = ref<string>("")
-const password = ref<string>("")
 const errMsg = ref<string>("")
 
 const loading = ref<boolean>(false)
 
 const router = useRouter()
 const { loadApp } = useAppActions()
-
 const { getUser } = useUserActions()
-
 const { setLoggedIn } = useAuthActions()
 
-const schema = yup.object({
-  Email: yup.string().required().email(),
-  Password: yup.string().required(),
+const { handleSubmit } = useForm<LoginForm>({
+  validationSchema: object({
+    email: string().email().required(),
+    password: string().min(8).required(),
+  }),
+  initialValues: {
+    email: "",
+    password: "",
+  },
 })
 
-const login = () => {
+const onSubmit = handleSubmit(async (values: LoginForm) => {
   if (!loading.value) {
     loading.value = true
     auth = getAuth()
 
-    signInWithEmailAndPassword(auth, userEmail.value, password.value)
+    signInWithEmailAndPassword(auth, values.email, values.password)
       .then(async () => {
         console.log("Successfully signed in!")
         // console.log("auth", auth.currentUser)
@@ -83,5 +88,5 @@ const login = () => {
         }
       })
   }
-}
+})
 </script>
