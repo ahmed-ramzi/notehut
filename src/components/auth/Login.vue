@@ -1,10 +1,10 @@
 <template>
   <AuthLayout type="login">
-    <form class="w-full flex flex-col items-center nh-form" @submit.prevent="onSubmit">
-      <TextInput name="email" label="Email" placeholder="example@mail.com" class="nh-email" />
-      <TextInput name="password" label="Password" placeholder="Your Password" type="password" class="nh-password" />
-      <p v-if="errMsg" class="text-red-500 font-medium nh-error-msg">{{ errMsg }}</p>
-      <BaseButton width="w-full md:w-52" :loading="loading" class="mt-4 nh-submit">Sign In</BaseButton>
+    <form data-test="loginForm" class="w-full flex flex-col items-center" @submit.prevent="onSubmit">
+      <TextInput name="email" label="Email" placeholder="example@mail.com" data-test="formEmail" />
+      <TextInput name="password" label="Password" placeholder="Your Password" type="password" data-test="formPassword" />
+      <p v-if="errMsg" class="text-red-500 font-medium nh-error-msg" data-test="errorMsg">{{ errMsg }}</p>
+      <BaseButton width="w-full md:w-52" :loading="loading" class="mt-4" data-test="submitBtn">Sign In</BaseButton>
     </form>
   </AuthLayout>
 </template>

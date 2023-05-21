@@ -1,5 +1,5 @@
 <template>
-  <button class="border-2 h-10 px-3 rounded-2xl btn-create-note border-slate-500 text-slate-500 uppercase">
+  <button :data-test="`action${label}Btn`" class="border-2 h-10 px-3 rounded-2xl btn-create-note border-slate-500 text-slate-500 uppercase">
     <span>
       <span class="md:hidden text-xl">{{ icon }}</span>
       <span class="hidden md:block">{{ label || icon }}</span></span

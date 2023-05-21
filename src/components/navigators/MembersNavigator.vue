@@ -25,7 +25,7 @@
       </div>
       <small>({{ groupsCount }})</small>
     </button>
-    <button @click="isModalOpened = !isModalOpened">
+    <button data-test="createGroupBtn" @click="isModalOpened = !isModalOpened">
       <div>
         <CreateGroupIcon />
         <h4>Create a Group</h4>

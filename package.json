@@ -10,12 +10,12 @@
     "start": "http-server dist",
     "lint": "eslint  --ext .vue,.js,.ts,.tsx src",
     "lint-fix": "eslint --ext .vue,.js,.ts,.tsx --fix src",
-    "cypress:local-open": "CYPRESS_BASE_URL=http://localhost:3000 ./node_modules/.bin/cypress open",
-    "cypress:local-run": "CYPRESS_BASE_URL=http://localhost:3000 ./node_modules/.bin/cypress run",
-    "cypress:beta-open": "CYPRESS_BASE_URL=https://tajreb.notehut.app/ ./node_modules/.bin/cypress open",
-    "cypress:beta-run": "CYPRESS_BASE_URL=https://tajreb.notehut.app/ ./node_modules/.bin/cypress run",
-    "cypress:prod-open": "CYPRESS_BASE_URL=https://notehut.app ./node_modules/.bin/cypress open",
-    "cypress:prod-run": "CYPRESS_BASE_URL=https://notehut.app ./node_modules/.bin/cypress run"
+    "cypress:local-open": "cd cypress && CYPRESS_BASE_URL=http://localhost:3000 ./node_modules/.bin/cypress open",
+    "cypress:local-run": "cd cypress && CYPRESS_BASE_URL=http://localhost:3000 ./node_modules/.bin/cypress run",
+    "cypress:beta-open": "cd cypress && CYPRESS_BASE_URL=https://tajreb.notehut.app/ ./node_modules/.bin/cypress open",
+    "cypress:beta-run": "cd cypress && CYPRESS_BASE_URL=https://tajreb.notehut.app/ ./node_modules/.bin/cypress run",
+    "cypress:prod-open": "cd cypress && CYPRESS_BASE_URL=https://notehut.app ./node_modules/.bin/cypress open",
+    "cypress:prod-run": "cd cypress && CYPRESS_BASE_URL=https://notehut.app ./node_modules/.bin/cypress run"
   },
   "dependencies": {
     "@types/uuid": "^8.3.4",
@@ -34,7 +34,6 @@
     "@vitejs/plugin-vue": "^2.3.1",
     "@yeger/vue-masonry-wall": "3.0.44",
     "autoprefixer": "^10.4.4",
-    "cypress": "^10.3.1",
     "eslint": "^8.20.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.2.1",

@@ -36,24 +36,6 @@
 //   }
 // }
 
-// @ts-ignore
-let host = document.location.host
-
-/**
- * Lands on a page
- */
-
-Cypress.Commands.add("visitPath", (path: string): void => {
-  cy.visit(path || "")
-  cy.url().should("include", host + "/" + path || "")
-})
-
-/**
- * Checks if URL is same as Page
- */
-Cypress.Commands.add("checkUrl", (param: string): void => {
-  cy.url().should("include", host + "/" + param)
-})
 /**
  * Clearing Indexed DB
  */

@@ -4,8 +4,6 @@ declare namespace Cypress {
      * Custom command to ... add your description here
      */
 
-    visitPath(path: string): Chainable<Element>
-    checkUrl(param: string): Chainable<Element>
     clearIndexedDB(): Promise<void>
   }
 }

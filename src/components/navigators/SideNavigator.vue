@@ -1,7 +1,7 @@
 <template>
   <teleport to="body">
     <div v-if="isMenuActive" class="absolute top-0 left-0 bg-slate-300/40 w-full h-screen overscroll-none flex backdrop-blur-sm z-30"></div>
-    <div class="absolute top-0 h-screen z-30 left-0 px-3 py-3">
+    <div data-test="sideMenu" class="absolute top-0 h-screen z-30 left-0 px-3 py-3">
       <Transition name="slideRight">
         <nav
           v-if="isMenuActive"
@@ -19,14 +19,14 @@
             </div>
             <!-- Personal Stuff -->
             <div class="flex flex-col">
-              <button @click="router.push({ name: 'HomePage' })">
+              <button data-test="personalNotesBtn" @click="router.push({ name: 'HomePage' })">
                 <div>
                   <NoteIcon />
                   <h4>Notes</h4>
                 </div>
                 <small>({{ privateNotesCount }})</small>
               </button>
-              <button>
+              <button data-test="notificationsBtn">
                 <div>
                   <NotificationsIcon />
                   <h4>Notifications</h4>
@@ -39,7 +39,7 @@
           </div>
 
           <div class="flex flex-col">
-            <button>
+            <button data-test="settingsBtn">
               <div>
                 <SettingsIcon />
                 <h4>Settings</h4>
@@ -47,14 +47,14 @@
               <small>(soon)</small>
             </button>
 
-            <button class="nh-logout" @click="logout">
+            <button data-test="logoutBtn" @click="logout">
               <div>
                 <LogoutIcon />
                 <h4>Logout</h4>
               </div>
             </button>
 
-            <button class="px-2 space-x-4" @click="toggleMenu">
+            <button data-test="closeMenuBtn" class="px-2 space-x-4" @click="toggleMenu">
               <div>
                 <div>
                   <HamburgerMenu dark />

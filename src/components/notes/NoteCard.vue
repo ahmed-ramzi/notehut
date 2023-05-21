@@ -1,8 +1,8 @@
 <template>
-  <section class="rounded-3xl cursor-pointer duration-500 active:opacity-80 relative pb-2" :class="[colorTheme]">
+  <section data-test="noteCard" class="rounded-3xl cursor-pointer duration-500 active:opacity-80 relative pb-2" :class="[colorTheme]">
     <Transition name="fade">
       <div v-if="longPressed" ref="deleteBtn" class="absolute -top-2 right-2 cursor-pointer z-10 bg-red-500 rounded-lg" @click="onDelete(note)">
-        <DeleteIcon />
+        <DeleteIcon data-test="deleteNoteBtn" />
       </div>
     </Transition>
 
@@ -50,6 +50,7 @@ import { PrivateNote, SharedNote } from "../../types/states"
 import DeleteIcon from "../icons/DeleteIcon.vue"
 import useDate from "@/composables/useDate"
 import { onLongPress, onClickOutside } from "@vueuse/core"
+import console from "console"
 
 const props = defineProps({
   note: {
@@ -73,13 +74,18 @@ const props = defineProps({
 const currentTime = ref<any>(0)
 const updated_time = ref()
 
+const router = useRouter()
 const route = useRoute()
+
+const { removePrivateNoteFromDB, getPrivateNotesList, removeSharedNoteFromDB, getSharedNotesList } = useNotesListActions()
+const { setNoteDetails, changeEditingState } = useNoteDetailsActions()
+const isDeleting = ref<boolean>(false)
+const longPressed = ref(false)
 
 const groupId = route.params.groupId as string
 
 const htmlRef = ref<HTMLElement | null>(null)
 const deleteBtn = ref<HTMLElement | null>(null)
-const longPressed = ref(false)
 
 const onLongPressCallback = () => {
   if (!props.isScrolling) longPressed.value = true
@@ -87,30 +93,6 @@ const onLongPressCallback = () => {
 const resetLongPress = (): void => {
   longPressed.value = false
 }
-
-onLongPress(htmlRef, onLongPressCallback)
-
-onClickOutside(deleteBtn, () => {
-  resetLongPress()
-})
-
-onMounted(() => {
-  currentTime.value = new Date()
-
-  window.setInterval(() => {
-    currentTime.value = new Date()
-  }, 60000)
-})
-watch(
-  () => currentTime.value,
-  () => {
-    updated_time.value = useDate.displayDate(props.note.last_modified)
-  },
-)
-const router = useRouter()
-const { removePrivateNoteFromDB, getPrivateNotesList, removeSharedNoteFromDB, getSharedNotesList } = useNotesListActions()
-const { setNoteDetails, changeEditingState } = useNoteDetailsActions()
-const isDeleting = ref<boolean>(false)
 
 const onDelete = (note: SharedNote | PrivateNote): void => {
   isDeleting.value = true
@@ -174,6 +156,37 @@ if (props.color === "emerald") {
   text.value = "text-white"
   shadow.value = "shadow-amber-500"
 }
+
+onLongPress(htmlRef, onLongPressCallback)
+
+onClickOutside(deleteBtn, () => {
+  resetLongPress()
+})
+
+onMounted(() => {
+  currentTime.value = new Date()
+
+  window.setInterval(() => {
+    currentTime.value = new Date()
+  }, 60000)
+})
+
+watch(
+  () => currentTime.value,
+  () => {
+    updated_time.value = useDate.displayDate(props.note.last_modified)
+  },
+)
+
+watch(
+  () => props.isScrolling,
+  (val) => {
+    if (val) {
+      console.log(val)
+      resetLongPress()
+    }
+  },
+)
 </script>
 
 <style scoped>
