@@ -9,21 +9,33 @@ type UserState = {
   user: User | null
   all_users: User[]
 }
+type UserGetters = {
+  hasAvatar(state: UserState): boolean
+}
 interface UserActions {
   getUser(): Promise<void>
   setUser(data: any): void
   getAllUsers(): void
+  setAvatar(avatar: string): void
   setGroupToUser(groupId: string, userId: string): void
 }
 
 export const usersCollection = db.collection("users")
 
-const useUserStore = defineStore<string, UserState, Record<any, never>, UserActions>("user", {
+const useUserStore = defineStore<string, UserState, UserGetters, UserActions>("user", {
   state: () => {
     return {
       user: null,
       all_users: [],
     }
+  },
+  getters: {
+    hasAvatar(state: UserState): boolean {
+      if (state.user?.avatar) {
+        if (!Object.keys(state.user).includes("avatar")) return false
+      }
+      return state.user?.avatar ? true : false
+    },
   },
   actions: {
     async getUser(): Promise<void> {
@@ -51,6 +63,14 @@ const useUserStore = defineStore<string, UserState, Record<any, never>, UserActi
     setUser(data: any): void {
       this.user = data
     },
+    setAvatar(avatar: string): void {
+      if (this.user?.avatar) {
+        this.user.avatar = avatar
+      }
+      usersCollection.doc(this.user?.id).update({
+        avatar: avatar,
+      })
+    },
     setGroupToUser(groupId: string, userId: string): void {
       usersCollection.doc(userId).update({
         groups: arrayUnion(groupId),
@@ -61,6 +81,8 @@ const useUserStore = defineStore<string, UserState, Record<any, never>, UserActi
 })
 
 export const useUserState = () => storeToRefs(useUserStore())
+
+export const useUserGetters = () => storeToRefs(useUserStore())
 
 export const useUserActions = () => useUserStore()
 

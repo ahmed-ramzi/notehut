@@ -66,6 +66,14 @@ export const routes = [
     },
   },
   {
+    path: "/settings/avatars",
+    name: "AvatarsPage",
+    component: () => import("../pages/AvatarsPage.vue"),
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
     path: "/registerByRamzi",
     name: "signup",
     component: () => import("../components/auth/Registeration.vue"),

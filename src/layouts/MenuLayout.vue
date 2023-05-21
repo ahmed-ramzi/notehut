@@ -10,7 +10,7 @@
       :class="!isPositionTop ? 'shadow-lg shadow-slate-500' : null"
     >
       <slot name="Header" />
-      <Avatar :name="user?.name" width="w-12" height="h-12" />
+      <Avatar width="w-12" height="h-12" />
       <template #SearchBar>
         <Transition name="searchSlide" mode="out-in">
           <div v-if="isSearchActive">
@@ -37,12 +37,9 @@ import HeaderSection from "@/layouts/HeaderSection.vue"
 import FooterNavigator from "@/components/navigators/FooterNavigator.vue"
 import SideNavigator from "@/components/navigators/side/SideNavigator.vue"
 import Avatar from "@/components/Avatar.vue"
-import { useUserState } from "@/store/user"
 import BaseInput from "@/components/base/BaseInput.vue"
 import { ref, toRefs, watch } from "vue"
 import { useScroll } from "@vueuse/core"
-
-const { user } = useUserState()
 
 defineProps({
   headerLabel: {
