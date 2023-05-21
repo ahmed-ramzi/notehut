@@ -1,6 +1,6 @@
 <template>
-  <div v-if="name" class="rounded-2xl flex justify-center items-center flex-shrink-0" :class="[gradientColorClass(avatarColor), width, height]">
-    <h2 class="text-white">
+  <div v-if="name" :class="[gradientColorClass(avatarColor), width, height]">
+    <h2 class="text-white font-black">
       {{ name ? name.charAt(0).toUpperCase() : null }}
     </h2>
   </div>
@@ -26,3 +26,9 @@ defineProps({
   },
 })
 </script>
+
+<style scoped>
+div {
+  @apply rounded-full flex justify-center items-center flex-shrink-0 border-4 border-slate-100 ring-1 ring-slate-300 shadow-md cursor-default;
+}
+</style>
