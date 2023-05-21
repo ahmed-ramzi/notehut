@@ -35,7 +35,7 @@
 <script lang="ts" setup>
 import HeaderSection from "@/layouts/HeaderSection.vue"
 import FooterNavigator from "@/components/navigators/FooterNavigator.vue"
-import SideNavigator from "@/components/navigators/SideNavigator.vue"
+import SideNavigator from "@/components/navigators/side/SideNavigator.vue"
 import Avatar from "@/components/Avatar.vue"
 import { useUserState } from "@/store/user"
 import BaseInput from "@/components/base/BaseInput.vue"

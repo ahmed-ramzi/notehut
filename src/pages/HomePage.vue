@@ -58,7 +58,7 @@ import { useBreakpoints, useScroll } from "@vueuse/core"
 import NoteCard from "@/components/notes/NoteCard.vue"
 import { useUserState } from "@/store/user"
 import FooterNavigator from "@/components/navigators/FooterNavigator.vue"
-import SideNavigator from "@/components/navigators/SideNavigator.vue"
+import SideNavigator from "@/components/navigators/side/SideNavigator.vue"
 import BaseInput from "@/components/base/BaseInput.vue"
 
 const breakpoints = useBreakpoints({
