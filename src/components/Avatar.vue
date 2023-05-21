@@ -30,7 +30,7 @@ const { user } = useUserState()
 
 const avatarSrc = computed(() => {
   if (hasAvatar && user.value?.avatar) {
-    return "/src/assets/avatars/" + user.value?.avatar + ".png"
+    return "/avatars/" + user.value?.avatar + ".png"
   }
   return ""
 })
@@ -41,6 +41,6 @@ section {
   @apply rounded-full  flex-shrink-0 border-4 border-slate-100 ring-1 ring-slate-300  bg-white shadow-md cursor-default;
 }
 img {
-  @apply rounded-full;
+  @apply rounded-full flex-shrink-0;
 }
 </style>

@@ -25,13 +25,13 @@ const width = "w-[150px]"
 const { user } = useUserState()
 const { hasAvatar } = useUserGetters()
 const { setAvatar } = useUserActions()
-const avatarsDir = import.meta.glob("../assets/avatars/*.png")
+const avatarsDir = import.meta.glob("../../public/avatars/*.png")
 const selectedAvatar = ref(hasAvatar ? user.value?.avatar : "")
 
 const avatars = Object.keys(avatarsDir).map((item) => {
   return {
-    key: item.replace("../assets/avatars/", "").replace(".png", ""),
-    value: item.replace("../", "/src/"),
+    key: item.replace("../../public/avatars/", "").replace(".png", ""),
+    value: item.replace("../../public", ""),
   }
 })
 
