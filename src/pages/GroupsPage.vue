@@ -19,7 +19,7 @@
               <Avatar
                 v-for="(member, index) in group.members"
                 :key="member.id"
-                :name="member.name"
+                :name="member.id !== user?.id ? member.name : ''"
                 width="w-16"
                 class="absolute"
                 :class="index === 0 ? `right-0` : index === 1 ? 'right-10' : index === 2 ? `right-20` : 'hidden'"
@@ -39,10 +39,12 @@ import { useGroupsState } from "@/store/groups"
 import Avatar from "@/components/Avatar.vue"
 import { useRouter } from "vue-router"
 import MenuLayout from "@/layouts/MenuLayout.vue"
+import { useUserState } from "@/store/user"
 // import Preferences from "@/components/Preferences.vue"
 
 const router = useRouter()
 const { groups } = useGroupsState()
+const { user } = useUserState()
 
 const onClick = async (groupId: string): Promise<void> => {
   await router.push({ name: "GroupPage", params: { groupId } })

@@ -4,7 +4,7 @@
     <section class="fixed top-0 px-3 pt-3 pb-2 z-20 w-full duration-300 space-y-2 bg-white" :class="!isPositionTop ? 'shadow-lg shadow-slate-500 rounded-b-2xl' : null">
       <div class="flex items-center justify-between">
         <h1 data-test="headerTitle" class="font-semibold">notehut</h1>
-        <Avatar data-test="userAvatar" :name="user?.name" width="w-12" height="h-12" />
+        <Avatar data-test="userAvatar" width="w-12" height="h-12" />
       </div>
 
       <Transition name="searchSlide" mode="out-in">
@@ -60,7 +60,6 @@ import CreateNoteIcon from "@/components/icons/CreateNoteIcon.vue"
 import { computed, ref, toRefs } from "vue"
 import { useBreakpoints, useScroll } from "@vueuse/core"
 import NoteCard from "@/components/notes/NoteCard.vue"
-import { useUserState } from "@/store/user"
 import FooterNavigator from "@/components/navigators/FooterNavigator.vue"
 import SideNavigator from "@/components/navigators/side/SideNavigator.vue"
 import TextInput from "@/components/base/TextInput.vue"
@@ -73,8 +72,6 @@ const breakpoints = useBreakpoints({
   xs: 436,
   sm: 608,
 })
-
-const { user } = useUserState()
 
 const superSmall = breakpoints.smaller("xs")
 const smallScreen = breakpoints.between("xs", "sm")

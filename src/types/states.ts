@@ -39,6 +39,7 @@ export type User = {
   id: string
   name: string
   email: string
+  avatar?: string
   isAdmin?: boolean
   registerDate: Timestamp
   groups?: string[]
