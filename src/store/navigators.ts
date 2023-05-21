@@ -13,7 +13,7 @@ interface NavActions {
 const useNavStore = defineStore<string, NavState, Record<any, never>, NavActions>("navigator", {
   state: () => {
     return {
-      isMenuActive: true,
+      isMenuActive: false,
       currentSelection: "",
     }
   },
