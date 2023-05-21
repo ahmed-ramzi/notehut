@@ -21,6 +21,9 @@ p,
 span {
   @apply font-light text-sm text-slate-700;
 }
+small {
+  @apply font-light italic text-gray-500;
+}
 
 .centered {
   position: fixed;

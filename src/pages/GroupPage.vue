@@ -2,7 +2,7 @@
   <main>
     <section class="sticky top-0 px-3 pt-3 z-20 w-full duration-300 space-y-2" :class="!isPositionTop ? 'shadow-lg shadow-slate-500 rounded-b-2xl' : null">
       <div class="flex items-center">
-        <h1 class="font-semibold">shared notes</h1>
+        <h1 class="font-semibold">{{ groupDetail?.name }}</h1>
       </div>
       <Transition name="searchSlide" mode="out-in">
         <div v-if="isSearchActive">
@@ -57,8 +57,11 @@ import { useRoute } from "vue-router"
 import { useBreakpoints, useScroll } from "@vueuse/core"
 import NoteCard from "@/components/notes/NoteCard.vue"
 import FooterNavigator from "@/components/navigators/FooterNavigator.vue"
-import SideNavigator from "@/components/navigators/SideNavigator.vue"
+import SideNavigator from "@/components/navigators/side/SideNavigator.vue"
 import BaseInput from "@/components/base/BaseInput.vue"
+import { useGroupsState } from "@/store/groups"
+
+const search = ref("")
 
 const breakpoints = useBreakpoints({
   xs: 436,
@@ -67,6 +70,7 @@ const breakpoints = useBreakpoints({
 
 const superSmall = breakpoints.smaller("xs")
 const smallScreen = breakpoints.between("xs", "sm")
+const { groups } = useGroupsState()
 
 const { sharedNotesCount } = useNotesListGetters()
 const { shared_notes } = useNotesListState()
@@ -75,9 +79,11 @@ const { isLoading } = useAppState()
 
 const route = useRoute()
 
-const groupId = route.params.groupId as string
+const groupId = computed(() => route.params.groupId as string)
 
-const search = ref("")
+const groupDetail = computed(() => {
+  return groups.value?.find((g) => g.id === groupId.value)
+})
 
 const filteredNotes = computed(() => {
   return shared_notes.value
@@ -97,7 +103,7 @@ const { top: isPositionTop } = toRefs(arrivedState)
 
 onMounted(() => {
   if (!sharedNotesCount.value) {
-    getSharedNotesList(groupId)
+    getSharedNotesList(groupId.value)
   }
 })
 

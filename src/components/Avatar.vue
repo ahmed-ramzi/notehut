@@ -1,5 +1,5 @@
 <template>
-  <div v-if="name" class="rounded-2xl shadow-lg flex justify-center items-center" :class="[gradientColorClass(avatarColor), width, height]">
+  <div v-if="name" class="rounded-2xl flex justify-center items-center flex-shrink-0" :class="[gradientColorClass(avatarColor), width, height]">
     <h2 class="text-white">
       {{ name ? name.charAt(0).toUpperCase() : null }}
     </h2>
@@ -14,7 +14,7 @@ const avatarColor = randomColor()
 defineProps({
   width: {
     type: String,
-    default: "w-[84px]",
+    default: "w-[60px]",
   },
   height: {
     type: String,

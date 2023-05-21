@@ -5,5 +5,11 @@ import router from "./router/router"
 import { createPinia } from "pinia"
 import "./firestore"
 import MasonryWall from "@yeger/vue-masonry-wall"
+import globalComponents from "./plugins/globalComponents"
 
-createApp(App).use(createPinia()).use(router).use(MasonryWall).mount("#app")
+const app = createApp(App)
+
+app.use(createPinia()).use(router).use(MasonryWall)
+app.use(globalComponents)
+
+app.mount("#app")
