@@ -2,8 +2,8 @@
   <main>
     <section class="sticky top-0 px-3 pt-3 z-20 w-full duration-300 space-y-2" :class="!isPositionTop ? 'shadow-lg shadow-slate-500 rounded-b-2xl' : null">
       <div class="flex items-center justify-between">
-        <h1 class="font-semibold">notehut</h1>
-        <Avatar :name="user?.name" width="w-12" height="h-12" />
+        <h1 data-test="headerTitle" class="font-semibold">notehut</h1>
+        <Avatar data-test="userAvatar" :name="user?.name" width="w-12" height="h-12" />
       </div>
 
       <Transition name="searchSlide" mode="out-in">
@@ -18,19 +18,19 @@
         <Spinner />
       </div>
       <div v-else-if="privateNotesCount" class="pt-1 pb-2">
-        <MasonryWall :items="filteredNotes" :column-width="superSmall ? 150 : smallScreen ? 200 : 250" :gap="4">
+        <MasonryWall data-test="notesWall" :items="filteredNotes" :column-width="superSmall ? 150 : smallScreen ? 200 : 250" :gap="4">
           <template #default="{ item, index }">
             <NoteCard :note="item" :color="item.color" :note-index="index" />
           </template>
         </MasonryWall>
       </div>
-      <div v-else class="centered">
+      <div v-else data-test="noNotesView" class="centered">
         <div class="inline-flex flex-col justify-center items-center w-full">
           <p>You have no notes</p>
           <div class="inline-flex flex-col">
             <p class="inline-flex items-center">
               <span class="whitespace-nowrap"> Create a new note by clicking on the </span>
-              <span class="px-2">
+              <span data-test="createNoteBtn" class="px-2">
                 <CreateNoteIcon ignore-hidding-btn />
               </span>
               <span> button </span>

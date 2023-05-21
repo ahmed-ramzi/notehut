@@ -3,6 +3,7 @@
     <section class="flex items-center gap-4 w-full">
       <ActionBtn icon="<" label="Back" @click="onClickBack" />
       <input
+        data-test="titleArea"
         ref="noteTitle"
         v-model="noteLabel"
         type="text"
@@ -14,6 +15,7 @@
 
     <section class="h-full mt-2">
       <textarea
+        data-test="textArea"
         v-model="noteContent"
         name="contents"
         class="w-full h-full rounded-md outline-none text-slate-500 bg-transparent font-light resize-none"

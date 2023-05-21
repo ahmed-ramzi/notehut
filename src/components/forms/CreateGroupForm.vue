@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="onSubmit">
+  <form data-test="createGroupForm" @submit.prevent="onSubmit">
     <div>
       <h3>Group Information</h3>
       <TextInput name="group_name" label="Group Name" placeholder="eg. The Marvels" />
