@@ -1,16 +1,15 @@
 <template>
-  <div v-if="name" :class="[gradientColorClass(avatarColor), width, height]">
-    <h2 class="text-white font-black">
-      {{ name ? name.charAt(0).toUpperCase() : null }}
-    </h2>
-  </div>
+  <section :class="[width, height]">
+    <img v-if="hasAvatar && avatarSrc && !name" :src="avatarSrc" />
+    <BaseAvatar v-else :name="name" />
+  </section>
 </template>
 
 <script lang="ts" setup>
-import { gradientColorClass, randomColor } from "@/composables/useRandomColor"
-import { PropType } from "vue"
+import { useUserGetters, useUserState } from "@/store/user"
+import BaseAvatar from "./base/BaseAvatar.vue"
+import { computed } from "vue"
 
-const avatarColor = randomColor()
 defineProps({
   width: {
     type: String,
@@ -21,14 +20,27 @@ defineProps({
     default: "h-[60px] ",
   },
   name: {
-    type: String as PropType<string | any>,
-    required: true,
+    type: String,
+    default: "",
   },
+})
+
+const { hasAvatar } = useUserGetters()
+const { user } = useUserState()
+
+const avatarSrc = computed(() => {
+  if (hasAvatar && user.value?.avatar) {
+    return "/src/assets/avatars/" + user.value?.avatar + ".png"
+  }
+  return ""
 })
 </script>
 
 <style scoped>
-div {
-  @apply rounded-full flex justify-center items-center flex-shrink-0 border-4 border-slate-100 ring-1 ring-slate-300 shadow-md cursor-default;
+section {
+  @apply rounded-full  flex-shrink-0 border-4 border-slate-100 ring-1 ring-slate-300  bg-white shadow-md cursor-default;
+}
+img {
+  @apply rounded-full;
 }
 </style>

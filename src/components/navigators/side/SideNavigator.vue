@@ -52,6 +52,11 @@
                   <Pill type="ignore">Soon</Pill>
                 </NavOption>
 
+                <NavOption icon="avatar" data-test="avatarBtn" @click="router.push({ name: 'AvatarsPage' })">
+                  <label class="option">Avatars </label>
+                  <Pill type="info">New</Pill>
+                </NavOption>
+
                 <NavOption icon="theme" data-test="themeBtn">
                   <label class="option">Themes </label>
                   <Pill type="ignore">Soon</Pill>
