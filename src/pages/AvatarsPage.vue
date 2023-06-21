@@ -1,5 +1,5 @@
 <template>
-  <DefaultLayout name="Avatars" disable-footer>
+  <DefaultLayout back-btn="back" name="avatars" disable-footer>
     <section class="space-y-4">
       <h3>Select an avatar</h3>
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 place-items-center gap-4 duration-300">

@@ -4,11 +4,11 @@
 
 <script lang="ts" setup>
 import { computed, defineAsyncComponent } from "vue"
-type Icon = "settings"
+type IconName = "settings" | "chevron-circle-left" | "chevron-left" | "pencil" | "bin" | "dots" | "search" | "hamburger"
 
 const props = withDefaults(
   defineProps<{
-    name: Icon
+    name: IconName
     fillSvg?: string
   }>(),
   {
@@ -17,6 +17,6 @@ const props = withDefaults(
 )
 
 const iconComponent = computed(() => {
-  return defineAsyncComponent(() => import(`../icons-new/${props.name}.vue`))
+  return defineAsyncComponent(() => import(`../icons/${props.name}.vue`))
 })
 </script>

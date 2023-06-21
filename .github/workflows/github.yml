@@ -7,8 +7,8 @@ on:
     branches: ["beta", "master"]
 
 jobs:
-  lint-and-ts-check:
-    name: Linting + Typescript Check
+  test-and-build:
+    name: Linting + Typescript Check & Building
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Pipeline
@@ -28,23 +28,6 @@ jobs:
 
       - name: Checking Typescript
         run: yarn ts-check
-
-  build:
-    name: Building App
-    runs-on: ubuntu-latest
-    needs: lint-and-ts-check
-    steps:
-      - name: Checkout Pipeline
-        uses: actions/checkout@v3
-
-      - name: Initializing Yarn
-        uses: Borales/actions-yarn@v3
-
-      - name: Removing Node Modules
-        run: sudo rm -rf /home/runner/work/notehut/notehut/node_modules/
-
-      - name: Installing Dependencies
-        run: yarn install
 
       - name: Building
         run: yarn build

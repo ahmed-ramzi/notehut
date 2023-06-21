@@ -4,28 +4,31 @@ import { getAuth, onAuthStateChanged } from "firebase/auth"
 import { createRouter, createWebHistory } from "vue-router"
 import { useAuthActions } from "@/store/auth"
 import { useNotesListActions } from "@/store/notesList"
+import envConfig from "@/envConfig"
+import { Routes } from "./routes"
+
+const testPath = {
+  path: "/test",
+  name: Routes.TEST_PAGE,
+  component: () => import("../pages/TestPage.vue"),
+  meta: {
+    requiresAuth: true,
+  },
+}
 
 export const routes = [
   {
     path: "/",
-    name: "HomePage",
+    name: Routes.HOME_PAGE,
     component: () => import("../pages/HomePage.vue"),
     meta: {
       requiresAuth: true,
     },
   },
 
-  // {
-  //   path: "/test",
-  //   name: "TestPage",
-  //   component: () => import("../pages/TestPage.vue"),
-  //   meta: {
-  //     requiresAuth: true,
-  //   },
-  // },
   {
     path: "/groups",
-    name: "GroupsPage",
+    name: Routes.GROUPS_PAGE,
     component: () => import("../pages/GroupsPage.vue"),
     meta: {
       requiresAuth: true,
@@ -38,7 +41,7 @@ export const routes = [
   },
   {
     path: "/group/:groupId?",
-    name: "GroupPage",
+    name: Routes.GROUP_PAGE,
     component: () => import("../pages/GroupPage.vue"),
     meta: {
       requiresAuth: true,
@@ -51,7 +54,7 @@ export const routes = [
   },
   {
     path: "/note",
-    name: "EditPanel",
+    name: Routes.EDIT_PANEL,
     component: () => import("../pages/EditingPanel.vue"),
     meta: {
       requiresAuth: true,
@@ -59,7 +62,7 @@ export const routes = [
   },
   {
     path: "/shared-note",
-    name: "SharedEditingPanel",
+    name: Routes.SHARED_EDITING_PANEL,
     component: () => import("../pages/EditingPanel.vue"),
     meta: {
       requiresAuth: true,
@@ -67,7 +70,7 @@ export const routes = [
   },
   {
     path: "/settings/avatars",
-    name: "AvatarsPage",
+    name: Routes.AVATARS_PAGE,
     component: () => import("../pages/AvatarsPage.vue"),
     meta: {
       requiresAuth: true,
@@ -75,25 +78,30 @@ export const routes = [
   },
   {
     path: "/registerByRamzi",
-    name: "signup",
+    name: Routes.SIGN_UP,
     component: () => import("../components/auth/Registeration.vue"),
   },
   {
     path: "/login",
-    name: "login",
+    name: Routes.LOGIN,
     component: () => import("../components/auth/Login.vue"),
   },
   {
     path: "/:catchAll(.*)",
-    name: "NotFound",
+    name: Routes.NOT_FOUND,
     component: () => import("../pages/404.vue"),
   },
 ]
+
+if (envConfig.isProd) {
+  routes.push(testPath)
+}
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
 })
+
 const getCurrentUser = () => {
   return new Promise((resolve, reject) => {
     const removeListener = onAuthStateChanged(
