@@ -14,7 +14,7 @@
           :disabled="disabled"
           @input="(e) => update(e)"
         />
-        <div class="h-6 w-full">
+        <div v-if="!noValidate" class="h-6 w-full">
           <p class="px-2 text-left text-white">
             {{ capitalizeFirstLetter(errorMessage as string).replaceAll("_", " ") }}
           </p>
@@ -43,6 +43,7 @@ const props = withDefaults(
     max?: string
     required?: boolean
     focus?: boolean
+    noValidate: boolean
   }>(),
   {
     type: "text",
@@ -50,6 +51,7 @@ const props = withDefaults(
     disabled: false,
     focus: false,
     required: true,
+    noValidate: false,
     modelValue: "",
     label: "",
     placeholder: "",

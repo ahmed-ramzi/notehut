@@ -1,28 +1,47 @@
 <template>
-  <!-- Hidden Div -->
-  <div class="rounded-t-2xl h-14 w-full"></div>
-  <div class="fixed z-10 bottom-0 bg-slate-700 blur-sm opacity-50 rounded-t-2xl h-[58px] w-full"></div>
-
-  <div data-test="footerNav" class="fixed z-10 bottom-0 bg-white rounded-t-2xl h-14 w-full">
-    <div class="flex justify-between items-center px-6 h-full">
-      <div class="flex justify-center items-center cursor-pointer h-10 w-10 rounded-2xl bg-slate-200 active:opacity-50" @click="toggleMenu">
-        <HamburgerMenu data-test="navMenuBtn" dark />
-      </div>
-      <div class="relative w-10 h-full">
-        <CreateNoteIcon class="absolute -top-7 -right-3" />
-      </div>
-
-      <SearchIcon class="active:opacity-50 nh-search-icon" @click="$emit('onClickSearch')" />
+  <div class="shadow">
+    <div class="create-btn-container bg-yellow-500">
+      <div class="create-btn-position -top-4 w-16 h-16 circle-shadow"></div>
     </div>
+  </div>
+  <div data-test="footerNav" class="footer">
+    <FooterBtn class="nh-search-icon" @click="toggleMenu">
+      <Icon name="hamburger" class="w-6 h-6 text-slate-700 stoke-2" />
+    </FooterBtn>
+
+    <div class="create-btn-container">
+      <CreateNoteIcon class="create-btn-position -top-3" />
+    </div>
+
+    <FooterBtn class="nh-search-icon" @click="$emit('onClickSearch')">
+      <Icon name="search" class="w-6 h-6 text-slate-700" />
+    </FooterBtn>
   </div>
 </template>
 
 <script lang="ts" setup>
-import HamburgerMenu from "../icons/HamburgerMenu.vue"
-import CreateNoteIcon from "../icons/CreateNoteIcon.vue"
-import SearchIcon from "@/components/icons/SearchIcon.vue"
+import CreateNoteIcon from "../icons/custom/CreateNoteIcon.vue"
 import { useNavActions } from "@/store/navigators"
+import FooterBtn from "./FooterBtn.vue"
 const { toggleMenu } = useNavActions()
 
 defineEmits(["onClickSearch"])
 </script>
+
+<style scoped>
+.shadow {
+  @apply sticky z-10 bottom-0 bg-slate-400 blur-sm opacity-50 rounded-t-2xl h-[58px] w-full flex justify-center;
+}
+.circle-shadow {
+  @apply bg-slate-500 blur-sm opacity-90 rounded-full;
+}
+.footer {
+  @apply fixed z-10 bottom-0 bg-white rounded-t-2xl h-14 w-full flex justify-between items-center px-6;
+}
+.create-btn-container {
+  @apply relative w-10 h-full;
+}
+.create-btn-position {
+  @apply absolute  -right-3;
+}
+</style>

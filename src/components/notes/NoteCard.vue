@@ -1,8 +1,8 @@
 <template>
   <section data-test="noteCard" class="rounded-3xl cursor-pointer duration-500 active:opacity-80 relative pb-2" :class="[colorTheme]">
     <Transition name="fade">
-      <div v-if="longPressed" ref="deleteBtn" class="absolute -top-2 right-2 cursor-pointer z-10 bg-red-500 rounded-lg" @click="onDelete(note)">
-        <DeleteIcon data-test="deleteNoteBtn" />
+      <div v-if="longPressed" ref="deleteBtn" class="absolute -top-2 right-2 cursor-pointer z-10 p-1 ring-2 ring-white bg-red-500 rounded-lg" @click="onDelete(note)">
+        <Icon name="bin" class="w-5 h-5 text-white" />
       </div>
     </Transition>
 
@@ -47,10 +47,10 @@ import { useNotesListActions } from "@/store/notesList"
 import { onMounted, PropType, ref, watch } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import { PrivateNote, SharedNote } from "../../types/states"
-import DeleteIcon from "../icons/DeleteIcon.vue"
+
 import useDate from "@/composables/useDate"
 import { onLongPress, onClickOutside } from "@vueuse/core"
-import console from "console"
+import { Routes } from "@/router/routes"
 
 const props = defineProps({
   note: {
@@ -117,9 +117,9 @@ const openNote = async (note: SharedNote | PrivateNote): Promise<void> => {
     setNoteDetails(note)
     changeEditingState(true)
     if (groupId) {
-      await router.push({ name: "SharedEditingPanel", params: { groupId } })
+      await router.push({ name: Routes.SHARED_EDITING_PANEL, params: { groupId } })
     } else {
-      await router.push({ name: "EditPanel" })
+      await router.push({ name: Routes.EDIT_PANEL })
     }
   }
 }

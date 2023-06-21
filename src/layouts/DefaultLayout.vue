@@ -1,27 +1,11 @@
 <template>
   <main>
-    <!-- Header -->
-    <!-- TODO: TO REFACTOR -->
-    <section class="fixed top-0 px-3 pt-3 pb-2 z-20 w-full duration-300 space-y-2 bg-white" :class="!isPositionTop ? 'shadow-lg shadow-slate-500 rounded-b-2xl' : null">
-      <div class="flex items-center justify-between">
-        <h1 data-test="headerTitle" class="font-semibold">{{ name }}</h1>
-        <Avatar v-if="!disableAvatar" data-test="userAvatar" width="w-12" height="h-12" />
-      </div>
-
-      <Transition name="searchSlide" mode="out-in">
-        <div v-if="isSearchActive">
-          <form>
-            <TextInput name="search" placeholder="Search for note" class="nh-search drop-shadow-md" focus />
-          </form>
-        </div>
-      </Transition>
-    </section>
-    <!-- End Header -->
-
-    <section ref="el" class="h-full overflow-scroll px-3" :class="[isSearchActive ? ' pt-40' : 'pt-20', disableFooter ? 'pb-4' : 'pb-10']">
+    <HeaderComponent :back-btn="backBtn" :is-position-top="top" :is-search-active="isSearchActive" :hide-avatar="disableAvatar" @search="getSearchValue">{{
+      name
+    }}</HeaderComponent>
+    <section ref="el" class="h-full overflow-scroll px-3 py-4">
       <slot />
     </section>
-
     <section>
       <FooterNavigator v-if="!disableFooter" @on-click-search="toggleSearch" />
       <SideNavigator />
@@ -30,27 +14,24 @@
 </template>
 
 <script lang="ts" setup>
-import Avatar from "@/components/Avatar.vue"
+import HeaderComponent from "../components/common/HeaderComponent.vue"
 import { ref, toRefs, watch } from "vue"
 import { useScroll } from "@vueuse/core"
 import FooterNavigator from "@/components/navigators/FooterNavigator.vue"
 import SideNavigator from "@/components/navigators/side/SideNavigator.vue"
-import TextInput from "@/components/base/TextInput.vue"
-import { useForm } from "vee-validate"
-
-type SearchForm = {
-  search: string
-}
+import { Routes } from "../router/routes"
 
 withDefaults(
   defineProps<{
     name: string
     disableFooter?: boolean
     disableAvatar?: boolean
+    backBtn?: Routes | "back" | ""
   }>(),
   {
     disableFooter: false,
     disableAvatar: false,
+    backBtn: "",
   },
 )
 const emit = defineEmits<{
@@ -59,22 +40,21 @@ const emit = defineEmits<{
 
 const el = ref<HTMLElement | null>(null)
 const { arrivedState } = useScroll(el)
-const { top: isPositionTop } = toRefs(arrivedState)
+const { top } = toRefs(arrivedState)
 
 const isSearchActive = ref(false)
+const search = ref("")
 
-const { values } = useForm<SearchForm>({
-  initialValues: {
-    search: "",
-  },
-})
+const getSearchValue = (val: string) => {
+  search.value = val
+}
 
 const toggleSearch = () => {
   isSearchActive.value = !isSearchActive.value
 }
 
 watch(
-  () => values.search,
+  () => search.value,
   (val) => emit("search", val),
 )
 </script>

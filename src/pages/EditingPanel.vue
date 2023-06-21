@@ -1,7 +1,9 @@
 <template>
   <main>
     <section class="flex items-center gap-4 w-full">
-      <ActionBtn icon="<" label="Back" @click="onClickBack" />
+      <button class="active:opacity-50 active:scale-90 duration-300" @click="onClickBack">
+        <Icon name="chevron-left" class="w-7 h-7 text-gray-500" />
+      </button>
       <input
         ref="noteTitle"
         v-model="noteLabel"
@@ -33,11 +35,10 @@
 </template>
 
 <script lang="ts" setup>
-import { onUnmounted, ref, watch } from "vue"
+import { onMounted, onUnmounted, ref, watch } from "vue"
 import { useRoute, useRouter } from "vue-router"
 // import HeaderSection from "../layouts/HeaderSection.vue"
 import { useNoteDetailsState, useNoteDetailsActions, clearNoteDetailsState } from "../store/noteDetails"
-import ActionBtn from "@/components/icons/ActionBtn.vue"
 import { useNotesListActions } from "@/store/notesList"
 
 const route = useRoute()
@@ -91,6 +92,13 @@ watch(
   },
 )
 
+const noteTitle = ref<HTMLInputElement>()
+
+onMounted(() => {
+  if (noteTitle.value && route.query.new === "true") {
+    noteTitle.value.focus()
+  }
+})
 onUnmounted(() => {
   clearNoteDetailsState()
 })
