@@ -1,3 +1,5 @@
+[![Better Stack Badge](https://uptime.betterstack.com/status-badges/v1/monitor/r6qf.svg)](https://uptime.betterstack.com/?utm_source=status_badge)
+
 # notehut
 
 ## Usage
