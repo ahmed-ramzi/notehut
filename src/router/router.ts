@@ -77,7 +77,7 @@ export const routes = [
     },
   },
   {
-    path: "/registerByRamzi",
+    path: "/register",
     name: Routes.SIGN_UP,
     component: () => import("../components/auth/Registeration.vue"),
   },
