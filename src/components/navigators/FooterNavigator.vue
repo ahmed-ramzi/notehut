@@ -1,6 +1,6 @@
 <template>
   <div class="shadow">
-    <div class="create-btn-container bg-yellow-500">
+    <div v-if="!hideCreateBtnShadow" class="create-btn-container">
       <div class="create-btn-position -top-4 w-16 h-16 circle-shadow"></div>
     </div>
   </div>
@@ -10,7 +10,7 @@
     </FooterBtn>
 
     <div class="create-btn-container">
-      <CreateNoteIcon class="create-btn-position -top-3" />
+      <CreateNoteIcon @hide-btn-shadow="setHideShadow" class="create-btn-position -top-3" />
     </div>
 
     <FooterBtn class="nh-search-icon" @click="$emit('onClickSearch')">
@@ -23,9 +23,15 @@
 import CreateNoteIcon from "../icons/custom/CreateNoteIcon.vue"
 import { useNavActions } from "@/store/navigators"
 import FooterBtn from "./FooterBtn.vue"
+import { ref } from "vue"
 const { toggleMenu } = useNavActions()
 
 defineEmits(["onClickSearch"])
+
+const hideCreateBtnShadow = ref<boolean>(false)
+const setHideShadow = (value: boolean) => {
+  hideCreateBtnShadow.value = value
+}
 </script>
 
 <style scoped>

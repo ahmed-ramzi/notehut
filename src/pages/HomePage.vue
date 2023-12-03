@@ -42,6 +42,12 @@ const getSearchValue = (val: string) => {
 }
 
 const filteredNotes = computed(() => {
-  return notes.value?.filter((item) => item.title.toLowerCase().includes(search.value.toLowerCase()) || item.contents.toLowerCase().includes(search.value.toLowerCase())).reverse()
+  return notes.value
+    ?.filter((item) => {
+      const searchValue = search.value ? search.value.toLowerCase() : ""
+      const itemsSearched = item.title?.toLowerCase().includes(searchValue) || item.contents?.toLowerCase().includes(searchValue)
+      return itemsSearched
+    })
+    .reverse()
 })
 </script>
