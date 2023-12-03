@@ -22,6 +22,10 @@ const props = defineProps({
   },
 })
 
+const emit = defineEmits<{
+  (e: "hideBtnShadow", value: boolean): void
+}>()
+
 const { createNote } = useNoteDetailsActions()
 const router = useRouter()
 
@@ -32,10 +36,13 @@ const { privateNotesCount, sharedNotesCount } = useNotesListGetters()
 
 const hideBtn = computed((): boolean => {
   if (groupId && !sharedNotesCount.value && !props.ignoreHiddingBtn) {
+    emit("hideBtnShadow", true)
     return true
   } else if (!groupId && !privateNotesCount.value && !props.ignoreHiddingBtn) {
+    emit("hideBtnShadow", true)
     return true
   }
+  emit("hideBtnShadow", false)
   return false
 })
 
